@@ -1,0 +1,88 @@
+{
+  "size": [0.6, 0.4],
+  "assets": [
+    {
+      "id": "conv-1",
+      "label": "Conveyor 1",
+      "kind": "conveyor",
+      "position": [-0.17, 0, -0.13],
+      "guards": ["conv-1-rated"],
+      "params": { "base_speed": 0.5, "length": 0.22 },
+      "feeds": ["lift-2"]
+    },
+    {
+      "id": "lift-2",
+      "label": "Pallet lift 2",
+      "kind": "lift",
+      "position": [0.06, 0, -0.085],
+      "guards": ["shelf-s2-beam"],
+      "params": { "depth": 0.07, "rest": 0.012, "half_x": 0.025, "half_y": 0.008, "half_z": 0.02 }
+    },
+    {
+      "id": "shelf-s2",
+      "label": "Shelf S2",
+      "kind": "shelf",
+      "position": [0.06, 0, -0.16],
+      "guards": [],
+      "params": { "beam_y": 0.105, "beam_h": 0.015, "width": 0.12, "depth": 0.065 }
+    },
+    {
+      "id": "arm-cell-3",
+      "label": "Robot arm, cell 3",
+      "kind": "arm",
+      "position": [0.19, 0, -0.02],
+      "guards": ["walkway-w1"],
+      "params": { "start": -60, "target": 44, "decel": 1200, "reach": 0.1, "tool": 0.01, "height": 0.06 }
+    },
+    {
+      "id": "oven-b",
+      "label": "Oven, Zone B",
+      "kind": "oven",
+      "position": [-0.19, 0, 0.08],
+      "guards": ["oven-b-limit"],
+      "params": { "current": 380, "ramp": 2 }
+    }
+  ],
+  "zones": [
+    {
+      "id": "walkway-w1",
+      "label": "Walkway W1",
+      "kind": "box",
+      "min": [0.02, 0, 0.075],
+      "max": [0.29, 0.2, 0.17],
+      "marking": "walkway"
+    },
+    {
+      "id": "shelf-s2-beam",
+      "label": "Shelf S2 beam",
+      "kind": "box",
+      "min": [0.0, 0.105, -0.195],
+      "max": [0.12, 0.12, -0.125],
+      "marking": "none"
+    },
+    {
+      "id": "zone-b",
+      "label": "Zone B",
+      "kind": "box",
+      "min": [-0.29, 0, 0.0],
+      "max": [-0.09, 0.2, 0.18],
+      "marking": "zone"
+    },
+    {
+      "id": "oven-b-limit",
+      "label": "Zone B hard limit",
+      "kind": "limit",
+      "asset_id": "oven-b",
+      "max": 420,
+      "unit": "°C"
+    },
+    {
+      "id": "conv-1-rated",
+      "label": "Conveyor 1 rated speed",
+      "kind": "limit",
+      "asset_id": "conv-1",
+      "max": 0.6,
+      "unit": "m/s"
+    }
+  ]
+}

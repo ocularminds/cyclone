@@ -1,0 +1,4 @@
+{
+  "note": "C49: recorded live held intents and their verified Decision Dossiers. Empty until a live run (needs H1 credentials). Populated by relay/src/record.ts; checked by relay tests at build time.",
+  "records": []
+}

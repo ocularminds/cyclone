@@ -1,0 +1,18 @@
+{
+  "tenant_id": "6f1c2a7e-3b4d-4e5f-9a0b-1c2d3e4f5a6b",
+  "agents": [
+    { "id": "line-agent", "label": "Line Agent", "sigil": "chevron" },
+    { "id": "cell-agent", "label": "Cell Agent", "sigil": "ring" },
+    { "id": "thermal-agent", "label": "Thermal Agent", "sigil": "wave" }
+  ],
+  "rules": [
+    {
+      "id": "conveyor-under-5",
+      "agent_id": "line-agent",
+      "tool": "set_conveyor_speed",
+      "param": "speed_pct",
+      "max": 5,
+      "label": "Auto-execute conveyor changes under +5%"
+    }
+  ]
+}

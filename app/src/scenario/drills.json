@@ -1,0 +1,37 @@
+{
+  "id": "drills",
+  "title": "Drill pool",
+  "templates": [
+    {
+      "key": "drill-lift-low",
+      "agent_id": "line-agent",
+      "tool": "lift_pallet",
+      "args": { "lift": 2, "pallet": "P-21", "bay": "S2-3", "height_mm": 1200 },
+      "target": { "asset_id": "lift-2" },
+      "policy": { "rule_id": "lift.routine", "requires": "single" },
+      "risk": { "level": 0, "reasons": ["Routine pallet move"] },
+      "summary": "Stage pallet P-21 into bay S2-3.",
+      "rationale": "Standard staging move ahead of the afternoon wave.",
+      "ttl_s": 1800,
+      "amend": { "param": "height_mm", "min": 900, "max": 1500, "step": 50, "unit": "mm" },
+      "is_drill": true,
+      "downstream": { "system": "warehouse-wms", "operation": "lift_pallet" }
+    },
+    {
+      "key": "drill-arm-200",
+      "agent_id": "cell-agent",
+      "tool": "set_arm_velocity",
+      "args": { "cell": 3, "joint": "axis_3", "deg_s": 200 },
+      "target": { "asset_id": "arm-cell-3" },
+      "policy": { "rule_id": "arm.velocity.walkway_adjacent", "requires": "two_hand" },
+      "risk": { "level": 1, "reasons": ["Cell 3 sits next to walkway W1"] },
+      "summary": "Cell 3 axis 3 to 200°/s, a small step up.",
+      "rationale": "A small step up from 170°/s to absorb the late order.",
+      "ttl_s": 1800,
+      "amend": { "param": "deg_s", "min": 60, "max": 300, "step": 10, "safe_max": 180, "unit": "°/s" },
+      "is_drill": true,
+      "downstream": { "system": "cell-controller", "operation": "set_arm_velocity" }
+    }
+  ],
+  "beats": []
+}

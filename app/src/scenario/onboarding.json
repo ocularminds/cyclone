@@ -1,0 +1,84 @@
+{
+  "id": "onboarding",
+  "title": "First shift",
+  "ends_with_summary": true,
+  "templates": [
+    {
+      "key": "conveyor",
+      "agent_id": "line-agent",
+      "tool": "set_conveyor_speed",
+      "args": { "line": 1, "speed_pct": 10 },
+      "target": { "asset_id": "conv-1" },
+      "policy": { "rule_id": "conveyor.speed.small_change", "requires": "single" },
+      "risk": { "level": 0, "reasons": ["Speed change of +10% or less"] },
+      "summary": "Speed up conveyor 1 by 10% to clear the backlog.",
+      "rationale": "Order backlog on line 1 is 14% above plan. A 10% belt increase clears it before the 06:00 pick, and the belt stays under its rated speed.",
+      "ttl_s": 600,
+      "amend": { "param": "speed_pct", "min": 0, "max": 20, "step": 1, "unit": "%" },
+      "downstream": { "system": "line-plc", "operation": "set_conveyor_speed" }
+    },
+    {
+      "key": "arm",
+      "agent_id": "cell-agent",
+      "tool": "set_arm_velocity",
+      "args": { "cell": 3, "joint": "axis_3", "deg_s": 250 },
+      "target": { "asset_id": "arm-cell-3" },
+      "policy": { "rule_id": "arm.velocity.walkway_adjacent", "requires": "two_hand" },
+      "risk": { "level": 2, "reasons": ["Cell 3 sits next to walkway W1", "Axis velocity above 200°/s"] },
+      "summary": "Raise cell 3 axis 3 to 250°/s to recover cycle time.",
+      "rationale": "Cell 3 is running 9% behind its cycle-time target. Raising axis 3 from 160 to 250°/s recovers the gap; braking distance grows with speed.",
+      "ttl_s": 900,
+      "amend": { "param": "deg_s", "min": 60, "max": 300, "step": 10, "safe_max": 180, "unit": "°/s" },
+      "downstream": { "system": "cell-controller", "operation": "set_arm_velocity" }
+    },
+    {
+      "key": "arm-reproposal",
+      "agent_id": "cell-agent",
+      "tool": "set_arm_velocity",
+      "args": { "cell": 3, "joint": "axis_3", "deg_s": 180 },
+      "target": { "asset_id": "arm-cell-3" },
+      "policy": { "rule_id": "arm.velocity.walkway_adjacent", "requires": "two_hand" },
+      "risk": { "level": 1, "reasons": ["Cell 3 sits next to walkway W1"] },
+      "summary": "Re-proposal: cell 3 axis 3 at 180°/s, as you suggested.",
+      "rationale": "Re-proposed within the suggested limit. 180°/s recovers most of the cycle-time gap while keeping braking clear of walkway W1.",
+      "ttl_s": 900,
+      "amend": { "param": "deg_s", "min": 60, "max": 300, "step": 10, "safe_max": 180, "unit": "°/s" },
+      "downstream": { "system": "cell-controller", "operation": "set_arm_velocity" }
+    },
+    {
+      "key": "oven",
+      "agent_id": "thermal-agent",
+      "tool": "set_oven_setpoint",
+      "args": { "zone": "B", "setpoint_c": 450 },
+      "target": { "asset_id": "oven-b" },
+      "policy": { "rule_id": "oven.setpoint.hard_limit", "requires": "forbidden" },
+      "risk": { "level": 3, "reasons": ["Exceeds the Zone B hard limit of 420°C"] },
+      "summary": "Set the Zone B oven to 450°C to halve cure time.",
+      "rationale": "Glaze batch 7 is late. Curing at 450°C halves dwell time and recovers the delivery slot.",
+      "ttl_s": 900,
+      "downstream": { "system": "thermal-controller", "operation": "set_oven_setpoint" }
+    },
+    {
+      "key": "drill-lift",
+      "agent_id": "line-agent",
+      "tool": "lift_pallet",
+      "args": { "lift": 2, "pallet": "P-14", "bay": "S2-3", "height_mm": 1150 },
+      "target": { "asset_id": "lift-2" },
+      "policy": { "rule_id": "lift.routine", "requires": "single" },
+      "risk": { "level": 0, "reasons": ["Routine pallet move"] },
+      "summary": "Stage pallet P-14 into bay S2-3 for the morning pick.",
+      "rationale": "Morning pick list needs P-14 at bay S2-3. Lift 2 is idle; this is the standard staging move.",
+      "ttl_s": 900,
+      "amend": { "param": "height_mm", "min": 900, "max": 1500, "step": 50, "unit": "mm" },
+      "is_drill": true,
+      "downstream": { "system": "warehouse-wms", "operation": "lift_pallet" }
+    }
+  ],
+  "beats": [
+    { "beat": "first_token", "template": "conveyor", "at": 6, "hints": ["glow", "pinch"] },
+    { "beat": "second_token", "template": "arm", "after": "conveyor", "delay_s": 2, "hints": ["handle", "dial", "hold"] },
+    { "beat": "third_token", "template": "oven", "after": "arm", "delay_s": 2, "hints": ["lock", "push"] },
+    { "beat": "drill", "template": "drill-lift", "after": "oven", "delay_s": 2 }
+  ],
+  "counter_offers": { "arm": "arm-reproposal" }
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Cyclone: the calm eye where humans decide what AI agents do. A hands-first WebXR desk for approving AI agent actions in the physical world." />
+    <link rel="icon" href="data:," />
+    <title>Cyclone</title>
+    <style>
+      :root { --ink: #2b2622; --paper: #f6efe2; --accent: #4a8fe0; }
+      body { margin: 0; background: #e9e0cf; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink); }
+      #scene-container { position: fixed; inset: 0; }
+      #intro {
+        position: fixed; left: 16px; top: 16px; max-width: min(420px, calc(100vw - 32px));
+        background: var(--paper); border: 2px solid #6e4f37; border-radius: 14px; padding: 18px 20px;
+        box-shadow: 0 8px 30px rgba(43, 38, 34, 0.18); z-index: 2;
+      }
+      #intro h1 { margin: 0 0 4px; font-size: 26px; letter-spacing: -0.5px; }
+      #intro p { margin: 6px 0; line-height: 1.4; font-size: 14px; }
+      #intro .tag { font-weight: 600; }
+      #intro .small { font-size: 12px; color: #5d6b78; }
+      #enter {
+        margin-top: 10px; font: 600 16px system-ui, sans-serif; color: #fff; background: var(--ink);
+        border: 0; border-radius: 10px; padding: 12px 18px; cursor: pointer;
+      }
+      #enter[disabled] { opacity: 0.5; cursor: default; }
+      body.immersive #intro { display: none; }
+    </style>
+  </head>
+  <body>
+    <div id="scene-container"></div>
+    <section id="intro" aria-label="Cyclone">
+      <h1>Cyclone</h1>
+      <p class="tag">The calm eye where humans decide what AI agents do.</p>
+      <p>When an agent wants to change something in the physical world, a policy gate holds it and a token lands on your desk. Look to inspect, pull the timeline to rehearse, twist to amend, then decide with your hands: place it to execute, hold it with both hands for critical actions, push it off the desk edge to veto.</p>
+      <p id="mode" class="small">Demo mode. No login, no backend. Physical execution is simulated.</p>
+      <p class="small">Hands only, seated, everything within arm's reach. Ghosts are rehearsals from each machine's kinematic model, not predictions.</p>
+      <button id="enter" type="button">Enter</button>
+    </section>
+    <script type="module" src="/src/index.ts"></script>
+  </body>
+</html>

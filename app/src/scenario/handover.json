@@ -1,0 +1,98 @@
+{
+  "id": "handover",
+  "title": "Shift handover",
+  "ends_with_summary": true,
+  "templates": [
+    {
+      "key": "conveyor-4",
+      "agent_id": "line-agent",
+      "tool": "set_conveyor_speed",
+      "args": { "line": 1, "speed_pct": 4 },
+      "target": { "asset_id": "conv-1" },
+      "policy": { "rule_id": "conveyor.speed.small_change", "requires": "single" },
+      "risk": { "level": 0, "reasons": ["Speed change of +10% or less"] },
+      "summary": "Nudge conveyor 1 up 4% for the overnight restock.",
+      "rationale": "Restock volume arrived 4% above forecast overnight; a matching belt increase keeps the buffer flat.",
+      "ttl_s": 1800,
+      "amend": { "param": "speed_pct", "min": 0, "max": 20, "step": 1, "unit": "%" },
+      "downstream": { "system": "line-plc", "operation": "set_conveyor_speed" }
+    },
+    {
+      "key": "arm-170",
+      "agent_id": "cell-agent",
+      "tool": "set_arm_velocity",
+      "args": { "cell": 3, "joint": "axis_3", "deg_s": 170 },
+      "target": { "asset_id": "arm-cell-3" },
+      "policy": { "rule_id": "arm.velocity.walkway_adjacent", "requires": "two_hand" },
+      "risk": { "level": 1, "reasons": ["Cell 3 sits next to walkway W1"] },
+      "summary": "Raise cell 3 axis 3 to 170°/s for the morning batch.",
+      "rationale": "Morning batch is 6% larger. 170°/s keeps cycle time on target and stays under the walkway ceiling.",
+      "ttl_s": 1800,
+      "amend": { "param": "deg_s", "min": 60, "max": 300, "step": 10, "safe_max": 180, "unit": "°/s" },
+      "downstream": { "system": "cell-controller", "operation": "set_arm_velocity" }
+    },
+    {
+      "key": "conveyor-3",
+      "agent_id": "line-agent",
+      "tool": "set_conveyor_speed",
+      "args": { "line": 1, "speed_pct": 3 },
+      "target": { "asset_id": "conv-1" },
+      "policy": { "rule_id": "conveyor.speed.small_change", "requires": "single" },
+      "risk": { "level": 0, "reasons": ["Speed change of +10% or less"] },
+      "summary": "Conveyor 1 up another 3% as the pick wave starts.",
+      "rationale": "Pick wave 1 starts at 06:10; 3% more belt speed matches the picker headcount.",
+      "ttl_s": 1800,
+      "amend": { "param": "speed_pct", "min": 0, "max": 20, "step": 1, "unit": "%" },
+      "downstream": { "system": "line-plc", "operation": "set_conveyor_speed" }
+    },
+    {
+      "key": "oven-400",
+      "agent_id": "thermal-agent",
+      "tool": "set_oven_setpoint",
+      "args": { "zone": "B", "setpoint_c": 400 },
+      "target": { "asset_id": "oven-b" },
+      "policy": { "rule_id": "oven.setpoint.within_limit", "requires": "single" },
+      "risk": { "level": 1, "reasons": ["Setpoint change of +20°C"] },
+      "summary": "Bring the Zone B oven to 400°C for glaze batch 8.",
+      "rationale": "Batch 8 uses the standard glaze profile at 400°C; the oven is idling at 380°C.",
+      "ttl_s": 1800,
+      "downstream": { "system": "thermal-controller", "operation": "set_oven_setpoint" }
+    },
+    {
+      "key": "conveyor-2",
+      "agent_id": "line-agent",
+      "tool": "set_conveyor_speed",
+      "args": { "line": 1, "speed_pct": 2 },
+      "target": { "asset_id": "conv-1" },
+      "policy": { "rule_id": "conveyor.speed.small_change", "requires": "single" },
+      "risk": { "level": 0, "reasons": ["Speed change of +10% or less"] },
+      "summary": "Conveyor 1 up 2% to hold the buffer.",
+      "rationale": "Buffer before lift 2 is drifting down; 2% holds it level through the wave.",
+      "ttl_s": 1800,
+      "amend": { "param": "speed_pct", "min": 0, "max": 20, "step": 1, "unit": "%" },
+      "downstream": { "system": "line-plc", "operation": "set_conveyor_speed" }
+    },
+    {
+      "key": "lift-1400",
+      "agent_id": "line-agent",
+      "tool": "lift_pallet",
+      "args": { "lift": 2, "pallet": "P-09", "bay": "S2-3", "height_mm": 1400 },
+      "target": { "asset_id": "lift-2" },
+      "policy": { "rule_id": "lift.routine", "requires": "single" },
+      "risk": { "level": 0, "reasons": ["Routine pallet move"] },
+      "summary": "Stage pallet P-09 into bay S2-3.",
+      "rationale": "Standard staging move for the second pick wave.",
+      "ttl_s": 1800,
+      "amend": { "param": "height_mm", "min": 900, "max": 1500, "step": 50, "unit": "mm" },
+      "downstream": { "system": "warehouse-wms", "operation": "lift_pallet" }
+    }
+  ],
+  "beats": [
+    { "beat": "held_1", "template": "conveyor-4", "at": 3 },
+    { "beat": "held_2", "template": "arm-170", "at": 3.6 },
+    { "beat": "held_3", "template": "conveyor-3", "at": 4.2 },
+    { "beat": "held_4", "template": "oven-400", "at": 4.8 },
+    { "beat": "late_1", "template": "lift-1400", "after": "conveyor-3", "delay_s": 6 },
+    { "beat": "late_2", "template": "conveyor-2", "after": "lift-1400", "delay_s": 4 }
+  ]
+}
