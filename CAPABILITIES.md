@@ -51,7 +51,7 @@ Evidence: unit tests `app/tests/*.test.ts` (50) and `relay/tests` (46); emulator
 | C41 | No in-app brand strings | ✅ | `tests/brand.test.ts`; relay scrubs brand words from rendered summaries. |
 | C42 | No human models; walkway markings | ✅ | All geometry procedural; walkway is a hatched floor marking; no figures. |
 | C43 | Hands-only full run | ✅ | Both e2e suites run in hand-tracking mode only. |
-| C44 | Deploy to GitHub Pages | ⛔ | Workflow added (`.github/workflows/pages.yml`). Repo is private and empty on GitHub: publishing needs the owner to allow Pages (public repo or paid plan). |
+| C44 | Deploy to GitHub Pages | ✅ | Live at https://ocularminds.github.io/cyclone/ via `.github/workflows/pages.yml` (typecheck, tests, build, deploy). Verified 2026-10-29: loads on desktop in demo mode, emulator injected, first token arrives, no failed requests or console errors. Keep unchanged through ~11 Dec. |
 | C45 | README | ✅ | |
 | C46 | SUBMISSION | ✅ | 479-word description; claims match the build. Launch date ⛔ H6. |
 | C47 | VIDEO + capture mode + end card | 🟨 | `VIDEO.md`; `capture.mjs` ✅ (deterministic, end card 4 seals / 0 tokens). Recording ⛔ H4. |

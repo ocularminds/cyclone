@@ -15,6 +15,8 @@ Hands only, seated, everything within arm's reach.
 
 ## Try it
 
+**Public demo:** https://ocularminds.github.io/cyclone/
+
 - **Headset (Quest 3/3S, Meta VR Glasses browser):** open the public URL and press **Enter**. Seated at a table is
   best: the twin anchors to the detected table; with no table it appears on a plinth at desk height after 3 s.
 - **Desktop browser:** the same URL injects the Immersive Web Emulator so you can drive emulated hands.
