@@ -1,0 +1,269 @@
+{
+  "protocol_version": "1.1",
+  "bundle_id": "8f3b2c1e-5a6d-4e7f-9b8a-0c1d2e3f4a5b",
+  "policy_id": "cyclone-micro-factory",
+  "org_id": "REPLACE-WITH-CYCLONE-ORG-UUID",
+  "version": "cyclone-2026-10-28.1",
+  "effective_from": "2026-10-28T00:00:00.000Z",
+  "metadata": {
+    "cyclone": {
+      "note": "Cyclone presentation mapping, read by relay/src/policy.ts. The policy gate does not evaluate it. Verdicts map onto the gesture a human must make on the desk.",
+      "approver_role": "CYCLONE_OPERATOR",
+      "actions": {
+        "AUTO_APPROVE": "ALLOW",
+        "ESCALATE": "ESCALATE",
+        "AUTO_REJECT": "BLOCK",
+        "REQUIRE_REVIEW": "REVIEW_REQUIRED",
+        "REQUEST_INFO": "REVIEW_REQUIRED"
+      },
+      "statuses": {
+        "ALLOW": "not_held",
+        "ESCALATE": "rule",
+        "BLOCK": "forbidden",
+        "REVIEW_REQUIRED": "forbidden",
+        "ERROR": "forbidden"
+      },
+      "rules": {
+        "oven.setpoint.hard_limit": {
+          "requires": "forbidden",
+          "risk": [{ "level": 3, "reasons": ["Exceeds the Zone B hard limit of 420°C"] }]
+        },
+        "arm.velocity.hard_max": {
+          "requires": "forbidden",
+          "risk": [{ "level": 3, "reasons": ["Axis velocity above the 300°/s machine maximum"] }]
+        },
+        "conveyor.speed.large_change": {
+          "requires": "forbidden",
+          "risk": [{ "level": 3, "reasons": ["Speed change above +10%"] }]
+        },
+        "lift.height.envelope": {
+          "requires": "forbidden",
+          "risk": [{ "level": 3, "reasons": ["Lift height above the 1500 mm envelope"] }]
+        },
+        "conveyor.speed.small_change": {
+          "requires": "single",
+          "risk": [{ "level": 0, "reasons": ["Speed change of +10% or less"] }],
+          "amend": { "param": "speed_pct", "min": 0, "max": 20, "step": 1, "safe_max": 10, "unit": "%" }
+        },
+        "arm.velocity.walkway_adjacent": {
+          "requires": "two_hand",
+          "risk": [
+            { "param": "deg_s", "lte": 180, "level": 1, "reasons": ["Cell 3 sits next to walkway W1"] },
+            { "level": 2, "reasons": ["Cell 3 sits next to walkway W1", "Axis velocity above the 180°/s walkway ceiling"] }
+          ],
+          "amend": { "param": "deg_s", "min": 60, "max": 300, "step": 10, "safe_max": 180, "unit": "°/s" }
+        },
+        "oven.setpoint.within_limit": {
+          "requires": "single",
+          "risk": [{ "level": 1, "reasons": ["Oven setpoint change within the Zone B hard limit"] }],
+          "amend": { "param": "setpoint_c", "min": 300, "max": 420, "step": 5, "safe_max": 420, "unit": "°C" }
+        },
+        "lift.routine": {
+          "requires": "single",
+          "risk": [{ "level": 0, "reasons": ["Routine pallet move"] }],
+          "amend": { "param": "height_mm", "min": 900, "max": 1500, "step": 50, "unit": "mm" }
+        },
+        "cyclone.default.hold": {
+          "requires": "forbidden",
+          "risk": [{ "level": 3, "reasons": ["Action not covered by the Cyclone policy"] }]
+        }
+      }
+    }
+  },
+  "rules": [
+    {
+      "rule_id": "oven.setpoint.hard_limit",
+      "name": "Oven setpoint above the Zone B hard limit",
+      "decision_domain": "*",
+      "when": {
+        "all": [
+          { "field": "decision_type", "operator": "in", "value": ["set_oven_setpoint"] },
+          { "field": "action.parameters.setpoint_c", "operator": "gt", "value": 420 }
+        ]
+      },
+      "then": { "action": "AUTO_REJECT", "severity": "urgent" },
+      "priority": 1000,
+      "enabled": true,
+      "rationale": "Hard limit: Zone B never runs above 420°C, so 450°C is refused outright."
+    },
+    {
+      "rule_id": "arm.velocity.hard_max",
+      "name": "Arm axis velocity above machine maximum",
+      "decision_domain": "*",
+      "when": {
+        "all": [
+          { "field": "decision_type", "operator": "in", "value": ["set_arm_velocity"] },
+          { "field": "action.parameters.deg_s", "operator": "gt", "value": 300 }
+        ]
+      },
+      "then": { "action": "AUTO_REJECT", "severity": "urgent" },
+      "priority": 990,
+      "enabled": true
+    },
+    {
+      "rule_id": "conveyor.speed.large_change",
+      "name": "Conveyor speed change above +10%",
+      "decision_domain": "*",
+      "when": {
+        "all": [
+          { "field": "decision_type", "operator": "in", "value": ["set_conveyor_speed"] },
+          { "field": "action.parameters.speed_pct", "operator": "gt", "value": 10 }
+        ]
+      },
+      "then": { "action": "AUTO_REJECT", "severity": "elevated" },
+      "priority": 980,
+      "enabled": true
+    },
+    {
+      "rule_id": "lift.height.envelope",
+      "name": "Pallet lift above its height envelope",
+      "decision_domain": "*",
+      "when": {
+        "all": [
+          { "field": "decision_type", "operator": "in", "value": ["lift_pallet"] },
+          { "field": "action.parameters.height_mm", "operator": "gt", "value": 1500 }
+        ]
+      },
+      "then": { "action": "AUTO_REJECT", "severity": "elevated" },
+      "priority": 970,
+      "enabled": true
+    },
+    {
+      "rule_id": "cyclone.approval.two_hand",
+      "name": "Two-hand human approval of arm velocity next to the walkway",
+      "decision_domain": "*",
+      "when": {
+        "all": [
+          { "field": "decision_type", "operator": "in", "value": ["set_arm_velocity"] },
+          { "field": "action.parameters.deg_s", "operator": "lte", "value": 300 },
+          { "field": "agent_safe.human_approval.result", "operator": "in", "value": ["VERIFIED"] },
+          { "field": "agent_safe.human_approval.approver_role", "operator": "in", "value": ["CYCLONE_OPERATOR"] },
+          { "field": "agent_safe.human_approval.method", "operator": "in", "value": ["two_hand_hold", "one_hand_gaze_hold"] }
+        ]
+      },
+      "then": { "action": "AUTO_APPROVE" },
+      "priority": 800,
+      "enabled": true,
+      "rationale": "An ESCALATE becomes an ALLOW only when a rule matches the human-approval facts (docs/agentsafe.md §2b)."
+    },
+    {
+      "rule_id": "cyclone.approval.single",
+      "name": "Single-gesture human approval of routine changes",
+      "decision_domain": "*",
+      "when": {
+        "all": [
+          { "field": "decision_type", "operator": "in", "value": ["set_conveyor_speed", "set_oven_setpoint", "lift_pallet"] },
+          { "field": "agent_safe.human_approval.result", "operator": "in", "value": ["VERIFIED"] },
+          { "field": "agent_safe.human_approval.approver_role", "operator": "in", "value": ["CYCLONE_OPERATOR"] },
+          { "field": "agent_safe.human_approval.method", "operator": "in", "value": ["place", "gaze_pinch", "two_hand_hold"] }
+        ]
+      },
+      "then": { "action": "AUTO_APPROVE" },
+      "priority": 790,
+      "enabled": true
+    },
+    {
+      "rule_id": "conveyor.speed.small_change",
+      "name": "Conveyor speed change of +10% or less",
+      "decision_domain": "*",
+      "when": {
+        "all": [
+          { "field": "decision_type", "operator": "in", "value": ["set_conveyor_speed"] },
+          { "field": "action.parameters.speed_pct", "operator": "lte", "value": 10 }
+        ]
+      },
+      "then": {
+        "action": "ESCALATE",
+        "severity": "routine",
+        "assignee_role": "CYCLONE_OPERATOR",
+        "authority": {
+          "reason_codes": ["CYCLONE_SINGLE_APPROVAL"],
+          "selector": { "kind": "ROLE", "role_id": "CYCLONE_OPERATOR" },
+          "expires_in_seconds": 300
+        }
+      },
+      "priority": 500,
+      "enabled": true
+    },
+    {
+      "rule_id": "arm.velocity.walkway_adjacent",
+      "name": "Arm velocity change in cell 3, next to walkway W1",
+      "decision_domain": "*",
+      "when": {
+        "all": [
+          { "field": "decision_type", "operator": "in", "value": ["set_arm_velocity"] },
+          { "field": "action.parameters.cell", "operator": "in", "value": [3] }
+        ]
+      },
+      "then": {
+        "action": "ESCALATE",
+        "severity": "elevated",
+        "assignee_role": "CYCLONE_OPERATOR",
+        "authority": {
+          "reason_codes": ["CYCLONE_TWO_HAND_APPROVAL", "WALKWAY_ADJACENT"],
+          "selector": { "kind": "ROLE", "role_id": "CYCLONE_OPERATOR" },
+          "expires_in_seconds": 300
+        }
+      },
+      "priority": 500,
+      "enabled": true,
+      "rationale": "Next to the walkway the arm needs a deliberate two-hand approval; 180°/s is the ceiling an amendment may bring it down to."
+    },
+    {
+      "rule_id": "oven.setpoint.within_limit",
+      "name": "Oven setpoint change within the Zone B hard limit",
+      "decision_domain": "*",
+      "when": {
+        "all": [
+          { "field": "decision_type", "operator": "in", "value": ["set_oven_setpoint"] },
+          { "field": "action.parameters.setpoint_c", "operator": "lte", "value": 420 }
+        ]
+      },
+      "then": {
+        "action": "ESCALATE",
+        "severity": "elevated",
+        "assignee_role": "CYCLONE_OPERATOR",
+        "authority": {
+          "reason_codes": ["CYCLONE_SINGLE_APPROVAL"],
+          "selector": { "kind": "ROLE", "role_id": "CYCLONE_OPERATOR" },
+          "expires_in_seconds": 300
+        }
+      },
+      "priority": 500,
+      "enabled": true
+    },
+    {
+      "rule_id": "lift.routine",
+      "name": "Routine pallet lift within its height envelope",
+      "decision_domain": "*",
+      "when": {
+        "all": [
+          { "field": "decision_type", "operator": "in", "value": ["lift_pallet"] },
+          { "field": "action.parameters.height_mm", "operator": "lte", "value": 1500 }
+        ]
+      },
+      "then": {
+        "action": "ESCALATE",
+        "severity": "routine",
+        "assignee_role": "CYCLONE_OPERATOR",
+        "authority": {
+          "reason_codes": ["CYCLONE_SINGLE_APPROVAL"],
+          "selector": { "kind": "ROLE", "role_id": "CYCLONE_OPERATOR" },
+          "expires_in_seconds": 300
+        }
+      },
+      "priority": 500,
+      "enabled": true,
+      "rationale": "The policy sees a routine move; only the rehearsal shows the shelf clip, which is what the drill teaches."
+    },
+    {
+      "rule_id": "cyclone.default.hold",
+      "name": "Hold anything else for a human",
+      "decision_domain": "*",
+      "when": { "all": [{ "field": "decision_type", "operator": "EXISTS" }] },
+      "then": { "action": "ESCALATE", "severity": "elevated", "assignee_role": "CYCLONE_OPERATOR" },
+      "priority": 1,
+      "enabled": true
+    }
+  ]
+}
