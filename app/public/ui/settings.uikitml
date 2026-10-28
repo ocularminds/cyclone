@@ -1,0 +1,68 @@
+<!--
+  Cyclone settings (C31). Opened from the settings puck on the desk by poke
+  or gaze + pinch. Panel, Button and ButtonLabel come from the bundled
+  Horizon kit. Sizes are UIKit units (centimetres).
+-->
+<style>
+  .root {
+    flex-direction: column;
+    width: 22;
+    padding-top: 1.2;
+    padding-bottom: 1.2;
+    padding-left: 1.4;
+    padding-right: 1.4;
+    gap: 0.6;
+  }
+
+  .title {
+    font-size: 1.4;
+    font-weight: 700;
+    color: #2b2622;
+  }
+
+  .note {
+    font-size: 0.75;
+    color: #5d6b78;
+  }
+
+  .row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.6;
+  }
+
+  .button {
+    width: 9.6;
+    height: 2.6;
+  }
+
+  .label {
+    font-size: 0.9;
+  }
+</style>
+<Panel class="root">
+  <div class="title">Cyclone settings</div>
+  <div class="note">Poke a button, or look at it and pinch.</div>
+  <div class="row">
+    <Button id="eyes" class="button"><ButtonLabel id="eyes-label" class="label">Eyes-only: off</ButtonLabel></Button>
+    <Button id="onehand" class="button"><ButtonLabel id="onehand-label" class="label">One-handed: off</ButtonLabel></Button>
+  </div>
+  <div class="row">
+    <Button id="contrast" class="button"><ButtonLabel id="contrast-label" class="label">High contrast: off</ButtonLabel></Button>
+    <Button id="captions" class="button"><ButtonLabel id="captions-label" class="label">Captions: on</ButtonLabel></Button>
+  </div>
+  <div class="row">
+    <Button id="passthrough" class="button"><ButtonLabel id="passthrough-label" class="label">Passthrough: on</ButtonLabel></Button>
+    <Button id="amend" class="button"><ButtonLabel id="amend-label" class="label">Amend: approve</ButtonLabel></Button>
+  </div>
+  <div class="row">
+    <Button id="mode" class="button"><ButtonLabel id="mode-label" class="label">Gate: demo</ButtonLabel></Button>
+    <Button id="shift" class="button"><ButtonLabel id="shift-label" class="label">Replay first shift</ButtonLabel></Button>
+  </div>
+  <div class="row">
+    <Button id="reset" class="button"><ButtonLabel id="reset-label" class="label">Reset all data</ButtonLabel></Button>
+    <Button id="close" class="button"><ButtonLabel id="close-label" class="label">Close</ButtonLabel></Button>
+  </div>
+  <div id="status" class="note">Demo mode. Execution is simulated.</div>
+</Panel>

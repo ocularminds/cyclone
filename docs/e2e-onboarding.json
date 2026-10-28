@@ -1,0 +1,90 @@
+{
+  "at": "2026-10-28T21:16:54.895Z",
+  "results": [
+    {
+      "name": "anchored (plane or plinth fallback within 3 s)",
+      "ok": true,
+      "detail": "plinth"
+    },
+    {
+      "name": "first token ≤ 15 s (C14)",
+      "ok": true,
+      "detail": "10.8 s"
+    },
+    {
+      "name": "look at token → card opens (C02)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "place in slot → APPROVE (C05)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "seal glyph === token glyph (C10)",
+      "ok": true,
+      "detail": "9a2a9db679d0e879"
+    },
+    {
+      "name": "satisfying moment ≤ 90 s (C14)",
+      "ok": true,
+      "detail": "24.0 s"
+    },
+    {
+      "name": "arm rehearsal breaches walkway (C03)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "pull handle → scrub forward (C03)",
+      "ok": true,
+      "detail": "scrub=0.86"
+    },
+    {
+      "name": "twist dial → 180°/s, breach clears (C04)",
+      "ok": true,
+      "detail": "value=180 breach=null"
+    },
+    {
+      "name": "release before 1.5 s aborts, no decision (C06)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "two-hand hold 1.5 s → APPROVE_AMENDED (C06, C12)",
+      "ok": true,
+      "detail": "{\"cell\":3,\"joint\":\"axis_3\",\"deg_s\":180}"
+    },
+    {
+      "name": "forbidden: slot locked, token returns (C08)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "push off desk edge → REJECT veto_push (C07)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "drill revealed only after decision; miss recorded (C16)",
+      "ok": true,
+      "detail": "0% caught (0/1)"
+    },
+    {
+      "name": "shift summary matches the log (C18)",
+      "ok": true,
+      "detail": "{\"decisions\":4,\"approved\":3,\"amended\":1,\"vetoed\":1,\"escalated\":0,\"expired\":0,\"auto\":0,\"drillsCaught\":0,\"drillsMissed\":1}"
+    }
+  ],
+  "beats": [
+    "bloom@0.0",
+    "first_token@6.0",
+    "first_seal@21.3",
+    "second_token@23.3",
+    "third_token@77.5",
+    "drill@101.3",
+    "drill_missed@112.6",
+    "summary@112.6"
+  ]
+}
