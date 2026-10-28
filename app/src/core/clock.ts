@@ -8,7 +8,11 @@ export class Clock {
   private paused = false;
   private readonly epoch: number;
 
-  constructor(epoch = Date.now()) {
+  /** `quantum` (ms) rounds ISO timestamps so capture runs hash identically (C47). */
+  constructor(
+    epoch = Date.now(),
+    private readonly quantum = 1,
+  ) {
     this.epoch = epoch;
   }
 
@@ -45,7 +49,8 @@ export class Clock {
 
   /** Session time projected onto the wall clock (stable ISO timestamps). */
   iso(offsetMs = 0): string {
-    return new Date(this.epoch + this.elapsed + offsetMs).toISOString();
+    const t = Math.round((this.elapsed + offsetMs) / this.quantum) * this.quantum;
+    return new Date(this.epoch + t).toISOString();
   }
 
   /** Session ms for an ISO instant produced by `iso()`. */

@@ -85,7 +85,7 @@ export class Cyclone {
 
   constructor(readonly boot: BootOptions) {
     const capture = boot.capture !== 'off';
-    this.clock = new Clock(capture ? Date.UTC(2026, 10, 18, 6, 0, 0) : Date.now());
+    this.clock = capture ? new Clock(Date.UTC(2026, 10, 18, 6, 0, 0), 1000) : new Clock();
     this.rng = new Rng(boot.seed);
     // capture runs use their own namespace: the shot run starts clean, the end card reads its seals
     this.store = capture ? new Store('cyclone.capture.') : new Store();

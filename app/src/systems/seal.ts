@@ -129,6 +129,13 @@ export class SealSystem extends createSystem({
     this.app.cue('unfold', 'Seal picked up: replaying its rehearsal');
   }
 
+  /** Honest issuer labels (C39): a provisional anonymous workspace is said plainly. */
+  static tier(t: string): string {
+    if (t === 'owned') return 'owned workspace';
+    if (t === 'provisional_anonymous') return 'provisional anonymous workspace (not an owned identity)';
+    return 'unknown issuer';
+  }
+
   private lines(s: SealView): Line[] {
     const r = s.record;
     const glyph = Glyph.from(r.amended_hash ?? r.intent_hash);
@@ -140,7 +147,7 @@ export class SealSystem extends createSystem({
     if (isLive(v)) {
       const ok = s.verified === true;
       out.push({ text: ok ? 'Verified: signatures, coverage, official trust anchor' : 'Unverified — never executable', size: 0.0075, weight: 600, color: ok ? '#2f6fb8' : '#a8287f' });
-      out.push({ text: `Issuer: ${v.issuer_tier}`, size: 0.0068 });
+      out.push({ text: `Issuer: ${SealSystem.tier(v.issuer_tier)}`, size: 0.0068 });
       out.push({ text: v.assurance_scope_summary, size: 0.0064, color: '#5d6b78' });
     } else {
       out.push({

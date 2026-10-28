@@ -50,7 +50,14 @@
   "dev": {
     "emulator": {
       "device": "metaQuest3",
-      "environment": "living_room"
+      "environment": "living_room",
+      "activation": {
+        "source": "^(localhost|127\\.0\\.0\\.1|[a-z0-9-]+\\.github\\.io)$"
+      },
+      "injectOnBuild": true,
+      "userAgentException": {
+        "source": "OculusBrowser|Quest|MetaVR|Pico|Wolvic"
+      }
     }
   }
 }
