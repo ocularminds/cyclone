@@ -1,0 +1,60 @@
+{
+  "at": "2026-10-28T22:03:06.478Z",
+  "results": [
+    {
+      "name": "escalate pad → ESCALATE, token parks in rack (C09)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "pinch the settings puck → panel opens (C31)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "one hand + gaze on the seal 1.5 s → APPROVE (C26)",
+      "ok": true,
+      "detail": "one_hand_gaze_hold"
+    },
+    {
+      "name": "eyes-only: pinch on the chute vetoes the inspected token (C25)",
+      "ok": true,
+      "detail": "gaze_pinch"
+    },
+    {
+      "name": "push a resting token off the edge → veto (C07)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "drill caught → calibration 100% (C16)",
+      "ok": true,
+      "detail": "100% caught (1/1)"
+    },
+    {
+      "name": "pick up a seal → its rehearsal replays (C11)",
+      "ok": true,
+      "detail": "Replay: reject 23:00"
+    },
+    {
+      "name": "session hidden → clock frozen (C29)",
+      "ok": true,
+      "detail": "t 123.01 → 123.01 over 3 s"
+    },
+    {
+      "name": "handover: overnight queue loads, first token ≤ 15 s (C15)",
+      "ok": true,
+      "detail": "4 held at 11.3 s"
+    },
+    {
+      "name": "ring full → rule offered (C17)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "drop rule on agent → matching intent auto-executes and auto-seals (C17)",
+      "ok": true,
+      "detail": "APPROVE,APPROVE,APPROVE,AUTO_APPROVE_RULE"
+    }
+  ]
+}

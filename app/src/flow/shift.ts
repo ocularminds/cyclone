@@ -293,6 +293,7 @@ export class Shift {
   }
 
   private async autoApprove(token: Token, rule: RuleTemplate): Promise<void> {
+    token.status = 'deciding';
     const decision: Decision = {
       intent_id: token.id,
       decision: 'AUTO_APPROVE_RULE',
@@ -308,7 +309,8 @@ export class Shift {
       this.log.log({ t: this.clock.ms, type: 'decision', intent_id: token.id, decision: 'AUTO_APPROVE_RULE' });
       this.events.emit('auto', { token, record, rule });
     } catch {
-      // Gate refused the rule path: fall back to a normal held token.
+      // Gate refused the rule path (e.g. live mode): fall back to a normal held token.
+      token.status = 'held';
       this.events.emit('arrived', token);
     }
   }
@@ -320,6 +322,10 @@ export class Shift {
     if (ok && rule) {
       this.log.log({ t: this.clock.ms, type: 'rule', note: `accepted ${ruleId}` });
       this.events.emit('accepted', { rule });
+      // the desk gets quieter at once: matching intents already waiting auto-execute too
+      for (const t of this.waiting()) {
+        if (t.status === 'held' && !t.tampered && this.trust.match(t.intent)?.id === ruleId) void this.autoApprove(t, rule);
+      }
     }
     return ok;
   }

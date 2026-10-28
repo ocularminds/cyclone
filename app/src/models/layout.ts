@@ -14,7 +14,7 @@ export class Layout {
   static readonly TWIN: XYZ = [0, 0, -0.31];
   static readonly TRAY: XYZ = [-0.1, 0, -0.06];
   static readonly TRAY_SLOTS = 4;
-  static readonly TRAY_PITCH = 0.045;
+  static readonly TRAY_PITCH = 0.05;
   static readonly SLOT: XYZ = [0.05, 0, -0.06];
   static readonly PAD: XYZ = [0.135, 0, -0.06];
   static readonly RACK: XYZ = [0.215, 0, -0.095];

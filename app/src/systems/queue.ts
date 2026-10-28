@@ -60,6 +60,7 @@ export class IntentQueueSystem extends createSystem({
         v.moveTo(Layout.rackSpot(this.rackCount++), 'rack');
       }),
       shift.events.on('sealed', ({ token }) => this.leave(token.id, 'leaving')),
+      shift.events.on('auto', ({ token }) => this.leave(token.id, 'leaving')),
       shift.events.on('expired', (t) => {
         const v = this.stage.views.get(t.id);
         if (v) this.app.cue('expire', 'Expired: auto-rejected, nothing executed', IntentQueueSystem.arr(v.home));
@@ -90,7 +91,8 @@ export class IntentQueueSystem extends createSystem({
     entity.addComponent(OneHandGrabbable, { rotate: true, translate: true });
     const view = new TokenView(token, entity, parts);
     this.stage.views.set(token.id, view);
-    const spot = Layout.traySpot(this.trayIndex());
+    view.spot = this.trayIndex();
+    const spot = Layout.traySpot(view.spot);
     parts.root.position.set(spot[0], spot[1] + 0.25, spot[2]);
     view.moveTo(spot, 'tray');
     view.thread = this.thread(token);
@@ -131,13 +133,22 @@ export class IntentQueueSystem extends createSystem({
     if (this.stage.focus === id) this.stage.focus = null;
   }
 
-  /** Re-pack tray spots after tokens leave. */
+  /** Re-pack tray spots when tokens leave; a pushed token drifts home 1.5 s after the last push. */
   private reflow(): void {
     let i = 0;
+    const now = this.app.clock.ms;
     for (const v of this.stage.views.values()) {
-      if (v.place !== 'tray') continue;
-      const spot = Layout.traySpot(i++);
-      if (v.home.x !== spot[0] || v.home.y !== spot[1] || v.home.z !== spot[2]) v.moveTo(spot, 'tray');
+      if (v.place !== 'tray') {
+        v.spot = -1;
+        continue;
+      }
+      const index = i++;
+      const pushed = v.pushedAt >= 0 && now - v.pushedAt < 1500;
+      if (v.spot === index && !(v.pushedAt >= 0 && !pushed)) continue;
+      if (pushed) continue;
+      v.spot = index;
+      v.pushedAt = -1;
+      v.moveTo(Layout.traySpot(index), 'tray');
     }
   }
 

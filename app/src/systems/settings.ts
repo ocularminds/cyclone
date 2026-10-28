@@ -1,5 +1,7 @@
 import {
   createSystem,
+  Grabbed,
+  OneHandGrabbable,
   PokeInteractable,
   Pressed,
   RayInteractable,
@@ -18,13 +20,14 @@ import type { Stage } from '../stage';
 type Toggle = 'eyesOnly' | 'oneHanded' | 'highContrast' | 'captions' | 'passthrough' | 'amendedApproval';
 
 /**
- * SettingsSystem (C19, C27, C31): a small puck on the desk — poke it or look
- * and pinch — opens a UIKitML panel with eyes-only, one-handed, high
+ * SettingsSystem (C19, C27, C31): a small puck on the desk — poke it, pinch it,
+ * or look and pinch — opens a UIKitML panel with eyes-only, one-handed, high
  * contrast, captions, passthrough, the demo amendment path, demo/live and a
  * reset. Every control is reachable hands-first.
  */
 export class SettingsSystem extends createSystem({
   puckPressed: { required: [Station, Pressed] },
+  puckPinched: { required: [Station, Grabbed] },
 }) {
   private app!: Cyclone;
   private stage!: Stage;
@@ -47,9 +50,14 @@ export class SettingsSystem extends createSystem({
     this.puck = this.world.createTransformEntity(Furniture.puck(), { parent: this.stage.rootEntity!, persistent: true });
     this.puck.addComponent(Station, { kind: 'puck' });
     this.puck.addComponent(PokeInteractable);
+    // a near pinch opens it too; the puck itself never moves
+    this.puck.addComponent(OneHandGrabbable, { translate: false, rotate: false });
     this.stage.rayTargets.push(this.puck);
     this.cleanupFuncs.push(
       this.queries.puckPressed.subscribe('qualify', (e) => {
+        if (e === this.puck) void this.toggle();
+      }),
+      this.queries.puckPinched.subscribe('qualify', (e) => {
         if (e === this.puck) void this.toggle();
       }),
       this.app.settings.changes.on('change', () => this.refresh()),
@@ -58,6 +66,7 @@ export class SettingsSystem extends createSystem({
 
   private async toggle(): Promise<void> {
     this.open = !this.open;
+    this.stage.settingsOpen = this.open;
     this.app.cue('unfold', this.open ? 'Settings open' : 'Settings closed', [...Layout.PUCK]);
     if (this.open && !this.panel) await this.build();
     if (this.panelEntity?.object3D) this.panelEntity.object3D.visible = this.open;

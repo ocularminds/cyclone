@@ -19,7 +19,8 @@ type RelayMessage =
  * client never sees a policy-gate key; it authenticates with a relay session.
  */
 export class LiveAdapter implements PolicyGateAdapter {
-  capabilities: GateCapabilities = { supportsAmendedApproval: true, source: 'live' };
+  /** Amended approval is undocumented upstream (DECISIONS D20a): off until the relay says otherwise. */
+  capabilities: GateCapabilities = { supportsAmendedApproval: false, source: 'live' };
   private socket: WebSocket | null = null;
   private readonly listeners = new Set<(e: IntentEvent) => void>();
   private retry = 0;

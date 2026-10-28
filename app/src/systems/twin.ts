@@ -17,7 +17,9 @@ import { Machine, Station } from '../components';
 import { Furniture } from '../models/desk';
 import { Layout } from '../models/layout';
 import { Machines } from '../models/machines';
+import type { SignedRecord } from '../contracts/intent';
 import type { BoxZone } from '../sim/envelope';
+import { Motion, type Pose } from '../sim/kinematics';
 import { Stage } from '../stage';
 
 type PlaneLike = { polygon: Array<{ x: number; z: number }>; orientation?: string; semanticLabel?: string };
@@ -41,6 +43,12 @@ export class TwinSystem extends createSystem({
   private readonly w = new Vector3();
   private readonly q = new Quaternion();
   private idle = 0;
+  private readonly pose: Pose = Motion.blank();
+  /** Args each machine currently runs with (base state until an approval executes). */
+  private readonly running = new Map<string, { tool: string; args: Record<string, unknown> }>();
+  /** Simulated execution of an approved action on the real twin (never a real machine). */
+  private readonly executing = new Map<string, { tool: string; args: Record<string, unknown>; t: number; duration: number }>();
+  private beltOffset = 0;
 
   init(): void {
     this.app = this.globals.cyclone as Cyclone;
@@ -84,6 +92,16 @@ export class TwinSystem extends createSystem({
     sun.position.set(0.4, 1, 0.6);
     this.scene.add(hemi, sun, new AmbientLight('#ffffff', 0.25));
 
+    this.initRunning();
+    const execute = ({ record }: { record: SignedRecord }) => {
+      const kind = record.decision.decision;
+      if (kind !== 'APPROVE' && kind !== 'APPROVE_AMENDED' && kind !== 'AUTO_APPROVE_RULE') return;
+      if (!record.tool || !record.asset_id) return;
+      const args = record.rehearsal.args;
+      const r = this.app.rehearsal.run(record.tool, record.asset_id, args);
+      this.executing.set(record.asset_id, { tool: record.tool, args, t: 0, duration: Math.max(1.5, Math.min(8, r.duration)) });
+    };
+    this.cleanupFuncs.push(this.app.shift.events.on('sealed', execute), this.app.shift.events.on('auto', execute));
     this.queries.planes.subscribe('qualify', () => {
       if (this.stage.anchor !== 'plane') this.waiting = Math.min(this.waiting, 2.5);
     });
@@ -189,7 +207,50 @@ export class TwinSystem extends createSystem({
     this.idle = 0;
   }
 
+  /** Idle state per machine kind: belt at base speed, arm parked, oven at current temperature, lift at rest. */
+  private initRunning(): void {
+    const tools: Record<string, string> = { conveyor: 'set_conveyor_speed', arm: 'set_arm_velocity', oven: 'set_oven_setpoint', lift: 'lift_pallet' };
+    for (const asset of this.app.rehearsal.twin.assets) {
+      const tool = tools[asset.kind];
+      if (!tool) continue;
+      const args: Record<string, unknown> =
+        asset.kind === 'conveyor' ? { speed_pct: 0 } : asset.kind === 'oven' ? { setpoint_c: asset.params.current ?? 380 } : asset.kind === 'arm' ? { deg_s: 120 } : { height_mm: 1400 };
+      this.running.set(asset.id, { tool, args });
+    }
+  }
+
+  private animateMachines(delta: number): void {
+    const still = this.app.boot.capture === 'endcard';
+    for (const [id, rig] of this.stage.rigs) {
+      const run = this.running.get(id);
+      const asset = this.app.rehearsal.asset(id);
+      if (!run || !asset) continue;
+      const exec = this.executing.get(id);
+      if (exec) {
+        exec.t += delta / exec.duration;
+        this.app.rehearsal.poseAt(exec.tool, id, exec.args, Math.min(1, exec.t), this.pose);
+        Machines.pose(rig, asset.position, this.pose);
+        if (exec.t >= 1) {
+          this.executing.delete(id);
+          this.running.set(id, { tool: exec.tool, args: exec.args });
+        }
+        continue;
+      }
+      if (rig.kind === 'conveyor') {
+        const speed = (asset.params.base_speed ?? 0.5) * (1 + Number(run.args.speed_pct ?? 0) / 100);
+        if (!still) this.beltOffset += speed * 0.1 * delta;
+        this.pose.dof = this.beltOffset;
+        Machines.pose(rig, asset.position, this.pose);
+      } else {
+        // machines rest at the end state of their last executed motion
+        this.app.rehearsal.poseAt(run.tool, id, run.args, rig.kind === 'lift' ? 0 : 1, this.pose);
+        Machines.pose(rig, asset.position, this.pose);
+      }
+    }
+  }
+
   update(delta: number): void {
+    this.animateMachines(delta);
     // head and gaze in desk frame for every other system
     if (!this.sessionActive && this.stage.anchor === 'pending') this.place('plinth');
     this.camera.getWorldPosition(this.v);

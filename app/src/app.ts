@@ -87,7 +87,9 @@ export class Cyclone {
     const capture = boot.capture !== 'off';
     this.clock = new Clock(capture ? Date.UTC(2026, 10, 18, 6, 0, 0) : Date.now());
     this.rng = new Rng(boot.seed);
-    this.store = capture ? new Store('cyclone.capture.', null) : new Store();
+    // capture runs use their own namespace: the shot run starts clean, the end card reads its seals
+    this.store = capture ? new Store('cyclone.capture.') : new Store();
+    if (boot.capture === 'shot') this.store.clear();
     this.firstVisit = this.store.read<number>('visits', 0) === 0;
     this.store.write('visits', this.store.read<number>('visits', 0) + 1);
     this.settings = new Settings(this.store, capture ? { captions: true } : {});
@@ -96,7 +98,13 @@ export class Cyclone {
     this.trust = new TrustBook(this.store, this.cast.rules);
     this.calibration = new Calibration(this.store);
     this.signer = new DemoSigner(this.store);
-    this.scenario = (boot.scenario === 'onboarding' ? onboarding : handover) as ScenarioFile;
+    this.scenario = (
+      boot.capture === 'endcard'
+        ? { id: 'endcard', title: 'End card', templates: [], beats: [] }
+        : boot.scenario === 'onboarding'
+          ? onboarding
+          : handover
+    ) as ScenarioFile;
     this.engine = new ScenarioEngine(this.cast, this.scenario, this.clock, this.rng, {
       drills: (drills as ScenarioFile).templates,
       drillChance: capture || boot.scenario === 'onboarding' ? 0 : 0.5,

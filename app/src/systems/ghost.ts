@@ -120,6 +120,7 @@ export class GhostRehearsalSystem extends createSystem({
       this.app.bus.on('replay', ({ tool, asset_id, args, label }) => {
         const result = this.app.rehearsal.run(tool, asset_id, args);
         this.replay = { result, t: 0, label, loops: 2 };
+        this.stage.replay = label;
       }),
       this.app.bus.on('hint', ({ hint }) => {
         if (hint === 'handle') this.wiggle.handle = 1.2;
@@ -185,7 +186,10 @@ export class GhostRehearsalSystem extends createSystem({
       if (r.t >= 1) {
         r.loops -= 1;
         r.t = r.loops > 0 ? 0 : 1;
-        if (r.loops <= 0) this.replay = null;
+        if (r.loops <= 0) {
+          this.replay = null;
+          this.stage.replay = null;
+        }
       }
       result = r.result;
       t = Math.min(1, r.t);
@@ -277,7 +281,7 @@ export class GhostRehearsalSystem extends createSystem({
     if (!rig) return;
     const asset = this.app.rehearsal.asset(result.asset_id)!;
     this.app.rehearsal.poseAt(result.tool, result.asset_id, result.args, t, this.pose);
-    this.applyPose(rig, asset.position, this.pose);
+    Machines.pose(rig, asset.position, this.pose);
 
     // trail of the probe path
     const pos = this.trail.geometry.getAttribute('position') as BufferAttribute;
@@ -324,32 +328,5 @@ export class GhostRehearsalSystem extends createSystem({
 
   private deskPoint(p: readonly [number, number, number]): [number, number, number] {
     return [p[0] + Layout.TWIN[0], p[1] + Layout.TWIN[1], p[2] + Layout.TWIN[2]];
-  }
-
-  /** Map a model pose onto a rig's movable part (shared with TwinSystem idle motion). */
-  applyPose(rig: Rig, origin: readonly number[], pose: Pose): void {
-    const part = rig.part;
-    if (!part) return;
-    switch (rig.kind) {
-      case 'arm':
-        part.rotation.y = (-pose.dof * Math.PI) / 180;
-        break;
-      case 'lift':
-        part.position.set(pose.center[0] - origin[0], pose.center[1] - origin[1], pose.center[2] - origin[2]);
-        break;
-      case 'conveyor':
-        part.position.x = pose.dof;
-        break;
-      case 'oven': {
-        const heat = Math.max(0, Math.min(1, (pose.dof - 300) / 200));
-        const col = rig.extras[0];
-        if (col) {
-          col.scale.y = 0.3 + heat * 1.4;
-          col.position.y = 0.035 * col.scale.y;
-        }
-        part.scale.set(1, 0.3 + heat * 0.7, 1);
-        break;
-      }
-    }
   }
 }

@@ -17,6 +17,10 @@ export class TokenView {
   lift = 0;
   thread: Object3D | null = null;
   holdTime = 0;
+  /** Tray slot index; -1 when not in the tray. */
+  spot = -1;
+  /** Session ms of the last open-hand push (a pushed token drifts home after a pause). */
+  pushedAt = -1;
   /** Seconds the hold has been broken; tolerates brief hand-tracking loss. */
   offTime = 0;
   hint: string | null = null;
@@ -74,6 +78,9 @@ export class Stage {
   scrub = 0;
   /** True while a hold replays the ghost at real speed (C06). */
   holding = false;
+  /** Label of the replay the ghost is playing (drill reveal, ledger seal), if any. */
+  replay: string | null = null;
+  settingsOpen = false;
 
   /** Head and gaze in desk frame, refreshed each frame by TwinSystem. */
   readonly head = new Vector3(...Layout.HEAD);

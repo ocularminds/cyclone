@@ -10,7 +10,7 @@ import {
   type Material,
   type Object3D,
 } from '@iwsdk/core';
-import type { AssetSpec } from '../sim/kinematics';
+import type { AssetSpec, Pose } from '../sim/kinematics';
 import type { BoxZone } from '../sim/envelope';
 import { Palette } from './palette';
 
@@ -79,6 +79,7 @@ export class Machines {
       }
     }
     const carrier = new Group();
+    carrier.userData.length = length;
     root.add(carrier);
     const colours = [Palette.warm.sand, Palette.warm.mustard, Palette.warm.terracotta];
     for (let i = 0; i < 3; i++) {
@@ -195,6 +196,38 @@ export class Machines {
     mesh.position.set((zone.min[0] + zone.max[0]) / 2, 0.0015, (zone.min[2] + zone.max[2]) / 2);
     mesh.name = `marking:${zone.id}`;
     return mesh;
+  }
+
+  /** Map a model pose onto a rig's movable part (twin execution and the ghost share this). */
+  static pose(rig: Rig, origin: readonly number[], pose: Pose): void {
+    const part = rig.part;
+    if (!part) return;
+    switch (rig.kind) {
+      case 'arm':
+        part.rotation.y = (-pose.dof * Math.PI) / 180;
+        break;
+      case 'lift':
+        part.position.set(pose.center[0] - origin[0], pose.center[1] - origin[1], pose.center[2] - origin[2]);
+        break;
+      case 'conveyor': {
+        // parcels ride the belt and wrap at its end
+        const length = (part.userData.length as number) ?? 0.22;
+        part.children.forEach((c, i) => {
+          c.position.x = ((((i * length) / 3 + pose.dof) % length) + length) % length - length / 2;
+        });
+        break;
+      }
+      case 'oven': {
+        const heat = Math.max(0, Math.min(1, (pose.dof - 300) / 200));
+        const col = rig.extras[0];
+        if (col) {
+          col.scale.y = 0.3 + heat * 1.4;
+          col.position.y = 0.035 * col.scale.y;
+        }
+        part.scale.set(1, 0.3 + heat * 0.7, 1);
+        break;
+      }
+    }
   }
 
   private static texture(c: HTMLCanvasElement): CanvasTexture {

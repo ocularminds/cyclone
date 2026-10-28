@@ -70,6 +70,7 @@ export class DecisionGestureSystem extends createSystem({
   }
 
   private toTray(v: TokenView): void {
+    v.spot = -1; // the queue re-packs it into a free tray spot
     v.moveTo(v.home, 'tray');
     v.place = 'tray';
     v.holdTime = 0;
@@ -110,7 +111,10 @@ export class DecisionGestureSystem extends createSystem({
       this.decide(v, 'REJECT', 'veto_push');
       return;
     }
-    if (this.near(p, Layout.SLOT, Layout.SLOT_RADIUS * 1.6)) {
+    // the nearer of slot and pad wins where their capture zones overlap
+    const dSlot = Math.hypot(p.x - Layout.SLOT[0], p.z - Layout.SLOT[2]);
+    const dPad = Math.hypot(p.x - Layout.PAD[0], p.z - Layout.PAD[2]);
+    if (dSlot <= dPad && this.near(p, Layout.SLOT, Layout.SLOT_RADIUS * 1.6)) {
       if (intent.policy.requires === 'forbidden') {
         this.lockFlash = 1;
         this.decide(v, 'APPROVE', 'place'); // refused by policy → lock cue + back to tray
@@ -124,7 +128,7 @@ export class DecisionGestureSystem extends createSystem({
       }
       return;
     }
-    if (this.near(p, Layout.PAD, Layout.PAD_RADIUS * 1.6)) {
+    if (dPad < dSlot && this.near(p, Layout.PAD, Layout.PAD_RADIUS * 1.6)) {
       v.moveTo([Layout.PAD[0], 0.014, Layout.PAD[2]], 'slot');
       this.app.cue('escalate', `Escalated for a second reviewer: ${intent.summary ?? intent.tool}`, [p.x, p.y, p.z]);
       this.decide(v, 'ESCALATE', 'escalate_place');
@@ -209,26 +213,39 @@ export class DecisionGestureSystem extends createSystem({
     if (!holding) this.holdCue = false;
   }
 
+  /**
+   * Push with an open hand: if the palm's path this frame sweeps through a
+   * resting token, the token is shoved ahead of the palm along the motion
+   * (sweep test, so fast hands and coarse tracking still connect).
+   */
   private push(v: TokenView, hand: Vector3, prev: Vector3): void {
-    const dx = hand.x - this.p.x;
-    const dz = hand.z - this.p.z;
-    const dist = Math.hypot(dx, dz);
-    const reach = Layout.TOKEN_R + 0.02;
-    if (dist >= reach || Math.abs(hand.y - this.p.y) > 0.04) return;
     const mx = hand.x - prev.x;
     const mz = hand.z - prev.z;
-    const speed = Math.hypot(mx, mz);
-    if (speed < 0.0008 || speed > 0.2) return;
-    // only motion toward the token pushes it
-    if (mx * -dx + mz * -dz <= 0) return;
-    const pushX = this.p.x + mx;
-    const pushZ = this.p.z + mz;
-    v.object.position.x += mx;
-    v.object.position.z += mz;
-    v.home.set(pushX, v.home.y, pushZ);
+    const len = Math.hypot(mx, mz);
+    if (len < 0.0008 || len > 0.25 || Math.abs(hand.y - this.p.y) > 0.05) return;
+    const ux = mx / len;
+    const uz = mz / len;
+    const cx = this.p.x - prev.x;
+    const cz = this.p.z - prev.z;
+    const along = cx * ux + cz * uz;
+    if (along <= 0) return; // token is behind the palm's motion
+    const t = Math.min(len, along);
+    const reach = Layout.TOKEN_R + 0.02;
+    if (Math.hypot(cx - ux * t, cz - uz * t) > reach) return;
+    // keep the token just ahead of the palm
+    const ahead = (this.p.x - hand.x) * ux + (this.p.z - hand.z) * uz;
+    const shove = Math.max(0, reach - ahead);
+    if (shove <= 0) return;
+    const pushX = this.p.x + ux * shove;
+    const pushZ = this.p.z + uz * shove;
+    v.object.position.x += pushX - this.p.x;
+    v.object.position.z += pushZ - this.p.z;
+    v.home.set(v.home.x + pushX - this.p.x, v.home.y, v.home.z + pushZ - this.p.z);
     v.from.copy(v.home);
     v.tween = 1;
-    if (!this.stage.onDesk(pushX, pushZ)) this.land(v, this.p.set(pushX, this.p.y, pushZ));
+    v.pushedAt = this.app.clock.ms;
+    this.p.set(pushX, this.p.y, pushZ);
+    if (!this.stage.onDesk(pushX, pushZ)) this.land(v, this.p);
   }
 
   /** Dead-man's hold: both palms on the token (or one + gaze on the seal) for 1.5 s (C06, C26). */

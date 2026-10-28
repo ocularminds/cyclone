@@ -29,6 +29,21 @@ export default async function run({ frame }) {
       at: world(v.object),
       hold: v.holdTime,
     }));
+    const named = (prefix) => {
+      const out = [];
+      stage.root.traverse((o) => {
+        if (o.name?.startsWith(prefix)) out.push({ id: o.name.slice(prefix.length), at: world(o), visible: o.visible });
+      });
+      return out;
+    };
+    const seals = [];
+    stage.root.traverse((o) => {
+      if (o.name === 'seal') seals.push(world(o));
+    });
+    const rules = [];
+    stage.root.traverse((o) => {
+      if (o.name === 'rule') rules.push(world(o));
+    });
     const handle = byName('handle');
     const dial = byName('dial');
     return {
@@ -49,6 +64,13 @@ export default async function run({ frame }) {
       handle: handle ? world(handle) : null,
       handleVisible: handle?.visible ?? false,
       dial: dial ? world(dial) : null,
+      replay: stage.replay,
+      agents: named('agent:'),
+      seals,
+      rules,
+      puck: byName('puck') ? world(byName('puck')) : null,
+      settingsOpen: stage.settingsOpen,
+      trust: Object.fromEntries(app.cast.agents.map((a) => [a.id, app.trust.ring(a.id)])),
       ledger: app.ledger.own().map((r) => ({
         decision: r.decision.decision,
         gesture: r.decision.gesture,
