@@ -6,11 +6,27 @@
   "project_url": "https://devpost.com/software/cyclone-the-calm-eye-for-ai-agents-decisions",
   "editor_url": "https://devpost.com/submit-to/31024-meta-vr-start-developer-competition-2026/manage/submissions/1292406-cyclone/finalization",
   "state": "DRAFT",
-  "steps_complete": "3/5",
-  "saved": ["project name", "elevator pitch", "cover thumbnail", "467-word story", "11 technology tags", "3 links", "public YouTube video", "6 gallery images with captions", "technical capability and hand-interaction answers", "tentative launch date"],
+  "steps_complete": "4/5",
+  "saved": [
+    "project name",
+    "elevator pitch",
+    "cover thumbnail",
+    "467-word story",
+    "11 technology tags",
+    "3 links",
+    "public YouTube video",
+    "6 gallery images with captions",
+    "technical capability and hand-interaction answers",
+    "tentative launch date",
+    "four owner-confirmed eligibility declarations"
+  ],
   "verified_public_preview": true,
-  "remaining": ["Owner confirmation of the four required eligibility declarations", "Action-time approval of the Official Rules and Devpost Terms of Service", "Final Submit project action and confirmation"],
+  "remaining": [
+    "Action-time approval of the Official Rules and Devpost Terms of Service",
+    "Final Submit project action and confirmation"
+  ],
   "terms_accepted": false,
   "submitted": false,
-  "private_account_fields_exported": false
+  "private_account_fields_exported": false,
+  "eligibility_confirmed_by_owner": true
 }

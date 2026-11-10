@@ -58,5 +58,5 @@ the repository's stricter headset-recording requirement remains a separate H4 it
 The existing [Devpost project](https://devpost.com/software/cyclone-the-calm-eye-for-ai-agents-decisions) now has
 the corrected pitch/story, public video, six captioned images and technical answers. The Devpost story adds
 a short challenges/lessons paragraph and remains below 500 words (467). See [artifacts](docs/devpost/README.md)
-and the [browser-verified status](docs/devpost/status.json). Eligibility declarations and final legal acceptance
-remain pending; the user has authorized proceeding with submission.
+and the [browser-verified status](docs/devpost/status.json). The owner has confirmed the four eligibility declarations, which are saved. Final legal acceptance remains
+pending; the user has authorized proceeding with submission.
