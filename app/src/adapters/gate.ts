@@ -10,6 +10,7 @@ export type GateErrorCode =
   | 'AMEND_UNSUPPORTED'
   | 'UNKNOWN_INTENT'
   | 'UNAUTHORIZED'
+  | 'PENDING'
   | 'UNAVAILABLE';
 
 /** A refusal from the policy gate. The intent stays held (fail closed). */
@@ -36,6 +37,8 @@ export interface PolicyGateAdapter {
   connect(): Promise<void>;
   onIntent(cb: (event: IntentEvent) => void): () => void;
   resolve(decision: Decision, reviewed?: Rehearsed): Promise<SignedRecord>;
+  /** Read/check the same record without submitting another decision. */
+  recover?(intentId: string): Promise<SignedRecord>;
   /** Per-frame hook (demo engine schedule); live adapters ignore it. */
   tick(): void;
   disconnect(): void;

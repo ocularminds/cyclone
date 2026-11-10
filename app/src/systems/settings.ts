@@ -19,6 +19,7 @@ import { Palette } from '../models/palette';
 import { ControlStyle } from '../ui/control';
 import { Preferences, type PreferencesEffect } from '../state/preferences';
 import { ReadingLayer } from '../ui/reading-layer';
+import { PanelReach } from '../ui/reach';
 import type { Stage } from '../stage';
 
 
@@ -45,6 +46,7 @@ export class SettingsSystem extends createSystem({
   private preferences!: Preferences;
   private readonly target = new Vector3();
   private readonly look = new Vector3();
+  private readonly reach = new PanelReach();
 
   init(): void {
     this.app = this.globals.cyclone as Cyclone;
@@ -120,6 +122,7 @@ export class SettingsSystem extends createSystem({
     this.target.copy(this.stage.head).addScaledVector(this.stage.gaze, 0.54);
     this.panel.position.copy(this.target);
     this.panel.lookAt(this.look.copy(this.stage.head).applyMatrix4(this.stage.root.matrixWorld));
+    this.reach.placed(this.stage.head);
   }
 
   private apply(effect: PreferencesEffect): void {
@@ -191,6 +194,9 @@ export class SettingsSystem extends createSystem({
 
   update(delta: number): void {
     if (this.caption && (this.caption.age += delta) > 4) { this.caption = null; this.refresh(); }
-    if (this.open && this.panel) ReadingLayer.apply(this.panel);
+    if (this.open && this.panel) {
+      if (this.reach.outside(this.panel, this.stage.head, this.stage.gaze, 0.28, 0.26)) this.place();
+      ReadingLayer.apply(this.panel);
+    }
   }
 }

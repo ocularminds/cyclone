@@ -1,0 +1,390 @@
+{
+  "command": "NODE_ENV=production node tests/build-audit.mjs",
+  "note": "Evidence-only plugin; no chunk transformations. Module rendered sizes precede final chunk minification and SDK post-processing; they are attribution estimates, not transfer sizes.",
+  "node": "v25.9.0",
+  "chunks": [
+    {
+      "file": "assets/index-BMBlUpu0.js",
+      "isEntry": true,
+      "bytes": 7961180,
+      "moduleCount": 2080,
+      "groups": [
+        {
+          "name": "@pmndrs/uikit-lucide",
+          "renderedBytes": 4695502
+        },
+        {
+          "name": "three",
+          "renderedBytes": 2486265
+        },
+        {
+          "name": "app / virtual",
+          "renderedBytes": 1864633
+        },
+        {
+          "name": "@iwsdk/xr-input",
+          "renderedBytes": 868790
+        },
+        {
+          "name": "@iwsdk/core",
+          "renderedBytes": 622633
+        },
+        {
+          "name": "@pmndrs/uikit",
+          "renderedBytes": 270443
+        },
+        {
+          "name": "zod",
+          "renderedBytes": 268659
+        },
+        {
+          "name": "@pmndrs/uikit-horizon",
+          "renderedBytes": 185414
+        },
+        {
+          "name": "three-mesh-bvh",
+          "renderedBytes": 180745
+        },
+        {
+          "name": "yoga-layout",
+          "renderedBytes": 133832
+        },
+        {
+          "name": "@iwsdk/scene-composition",
+          "renderedBytes": 132520
+        },
+        {
+          "name": "entities",
+          "renderedBytes": 68214
+        },
+        {
+          "name": "@drawcall/uikitml",
+          "renderedBytes": 63699
+        },
+        {
+          "name": "@pmndrs/pointer-events",
+          "renderedBytes": 59417
+        },
+        {
+          "name": "@iwsdk/locomotor",
+          "renderedBytes": 48468
+        },
+        {
+          "name": "@pmndrs/handle",
+          "renderedBytes": 47074
+        },
+        {
+          "name": "elics",
+          "renderedBytes": 35132
+        },
+        {
+          "name": "@noble/ed25519",
+          "renderedBytes": 22066
+        },
+        {
+          "name": "@pmndrs/uikit-pub-sub",
+          "renderedBytes": 7525
+        },
+        {
+          "name": "@preact/signals-core",
+          "renderedBytes": 4904
+        }
+      ],
+      "largestModules": [
+        {
+          "name": "\u0000/@iwer-injection-runtime",
+          "group": "app / virtual",
+          "renderedBytes": 1598270
+        },
+        {
+          "name": "three/build/three.core.js",
+          "group": "three",
+          "renderedBytes": 1120215
+        },
+        {
+          "name": "@iwsdk/xr-input/dist/gamepad/generated-profiles.js",
+          "group": "@iwsdk/xr-input",
+          "renderedBytes": 663445
+        },
+        {
+          "name": "three/build/three.module.js",
+          "group": "three",
+          "renderedBytes": 627959
+        },
+        {
+          "name": "three/examples/jsm/lights/RectAreaLightTexturesLib.js",
+          "group": "three",
+          "renderedBytes": 309639
+        },
+        {
+          "name": "yoga-layout/dist/binaries/yoga-wasm-base64-esm.js",
+          "group": "yoga-layout",
+          "renderedBytes": 121050
+        },
+        {
+          "name": "@pmndrs/uikit-horizon/dist/theme.js",
+          "group": "@pmndrs/uikit-horizon",
+          "renderedBytes": 114003
+        },
+        {
+          "name": "three/examples/jsm/loaders/GLTFLoader.js",
+          "group": "three",
+          "renderedBytes": 112912
+        },
+        {
+          "name": "zod/v4/core/schemas.js",
+          "group": "zod",
+          "renderedBytes": 76372
+        },
+        {
+          "name": "three/examples/jsm/loaders/SVGLoader.js",
+          "group": "three",
+          "renderedBytes": 72413
+        },
+        {
+          "name": "three/examples/jsm/loaders/EXRLoader.js",
+          "group": "three",
+          "renderedBytes": 66458
+        },
+        {
+          "name": "@iwsdk/scene-composition/dist/validation.js",
+          "group": "@iwsdk/scene-composition",
+          "renderedBytes": 54319
+        }
+      ],
+      "containsServerVerifier": false
+    },
+    {
+      "file": "assets/world-initializer-Cg_e-Ch4.js",
+      "isEntry": false,
+      "bytes": 44984,
+      "moduleCount": 9,
+      "groups": [
+        {
+          "name": "@iwsdk/core",
+          "renderedBytes": 103869
+        }
+      ],
+      "largestModules": [
+        {
+          "name": "@iwsdk/core/dist/mcp/ecs-debug-tools.js",
+          "group": "@iwsdk/core",
+          "renderedBytes": 26200
+        },
+        {
+          "name": "@iwsdk/core/dist/mcp/scene-tools.js",
+          "group": "@iwsdk/core",
+          "renderedBytes": 25338
+        },
+        {
+          "name": "@iwsdk/core/dist/init/world-initializer.js",
+          "group": "@iwsdk/core",
+          "renderedBytes": 19356
+        },
+        {
+          "name": "@iwsdk/core/dist/mcp/ui-debug-tools.js",
+          "group": "@iwsdk/core",
+          "renderedBytes": 16199
+        },
+        {
+          "name": "@iwsdk/core/dist/gaze/gaze-system.js",
+          "group": "@iwsdk/core",
+          "renderedBytes": 6806
+        },
+        {
+          "name": "@iwsdk/core/dist/mcp/mcp-runtime.js",
+          "group": "@iwsdk/core",
+          "renderedBytes": 4795
+        },
+        {
+          "name": "@iwsdk/core/dist/input/input-manager.js",
+          "group": "@iwsdk/core",
+          "renderedBytes": 2861
+        },
+        {
+          "name": "@iwsdk/core/dist/input/stateful-keyboard.js",
+          "group": "@iwsdk/core",
+          "renderedBytes": 2004
+        },
+        {
+          "name": "@iwsdk/core/dist/init/player-camera.js",
+          "group": "@iwsdk/core",
+          "renderedBytes": 310
+        }
+      ],
+      "containsServerVerifier": false
+    },
+    {
+      "file": "assets/_virtual_iwsdk-disabled-bundled-fonts-CyX98Mcx.js",
+      "isEntry": false,
+      "bytes": 776,
+      "moduleCount": 1,
+      "groups": [
+        {
+          "name": "app / virtual",
+          "renderedBytes": 1012
+        }
+      ],
+      "largestModules": [
+        {
+          "name": "\u0000virtual:iwsdk-disabled-bundled-fonts",
+          "group": "app / virtual",
+          "renderedBytes": 1012
+        }
+      ],
+      "containsServerVerifier": false
+    },
+    {
+      "file": "assets/worker-BkRtSCqm.js",
+      "isEntry": false,
+      "bytes": 198824,
+      "moduleCount": 1,
+      "groups": [
+        {
+          "name": "@iwsdk/locomotor",
+          "renderedBytes": 198810
+        }
+      ],
+      "largestModules": [
+        {
+          "name": "@iwsdk/locomotor/dist/worker/worker.js",
+          "group": "@iwsdk/locomotor",
+          "renderedBytes": 198810
+        }
+      ],
+      "containsServerVerifier": false
+    },
+    {
+      "file": "assets/index-Brupejm_.js",
+      "isEntry": false,
+      "bytes": 6817,
+      "moduleCount": 2,
+      "groups": [
+        {
+          "name": "comlink",
+          "renderedBytes": 12129
+        },
+        {
+          "name": "@zappar/msdf-generator",
+          "renderedBytes": 4781
+        }
+      ],
+      "largestModules": [
+        {
+          "name": "comlink/dist/esm/comlink.mjs",
+          "group": "comlink",
+          "renderedBytes": 12129
+        },
+        {
+          "name": "@zappar/msdf-generator/dist/index.js",
+          "group": "@zappar/msdf-generator",
+          "renderedBytes": 4781
+        }
+      ],
+      "containsServerVerifier": false
+    },
+    {
+      "file": "assets/msdf-worker-BUaSHgMS.js",
+      "isEntry": false,
+      "bytes": 455987,
+      "moduleCount": 1,
+      "groups": [
+        {
+          "name": "@pmndrs/uikit",
+          "renderedBytes": 457751
+        }
+      ],
+      "largestModules": [
+        {
+          "name": "@pmndrs/uikit/dist/loaders/msdf-worker.js",
+          "group": "@pmndrs/uikit",
+          "renderedBytes": 457751
+        }
+      ],
+      "containsServerVerifier": false
+    },
+    {
+      "file": "assets/index-BpYzXtG0.js",
+      "isEntry": false,
+      "bytes": 21125,
+      "moduleCount": 6,
+      "groups": [
+        {
+          "name": "@iwsdk/core",
+          "renderedBytes": 49162
+        },
+        {
+          "name": "elics",
+          "renderedBytes": 91
+        }
+      ],
+      "largestModules": [
+        {
+          "name": "@iwsdk/core/dist/physics/physics-system.js",
+          "group": "@iwsdk/core",
+          "renderedBytes": 37692
+        },
+        {
+          "name": "@iwsdk/core/dist/physics/utils.js",
+          "group": "@iwsdk/core",
+          "renderedBytes": 6702
+        },
+        {
+          "name": "@iwsdk/core/dist/physics/physics-transport.js",
+          "group": "@iwsdk/core",
+          "renderedBytes": 3530
+        },
+        {
+          "name": "@iwsdk/core/dist/physics/physics-worker-protocol.js",
+          "group": "@iwsdk/core",
+          "renderedBytes": 1238
+        },
+        {
+          "name": "elics/lib/query-helpers.js",
+          "group": "elics",
+          "renderedBytes": 91
+        },
+        {
+          "name": "@iwsdk/core/dist/physics/index.js",
+          "group": "@iwsdk/core",
+          "renderedBytes": 0
+        }
+      ],
+      "containsServerVerifier": false
+    },
+    {
+      "file": "assets/physics-runtime-Lbm7Uv6r.js",
+      "isEntry": false,
+      "bytes": 6340,
+      "moduleCount": 3,
+      "groups": [
+        {
+          "name": "@iwsdk/core",
+          "renderedBytes": 17613
+        },
+        {
+          "name": "app / virtual",
+          "renderedBytes": 153
+        }
+      ],
+      "largestModules": [
+        {
+          "name": "@iwsdk/core/dist/physics/physics-runtime.js",
+          "group": "@iwsdk/core",
+          "renderedBytes": 17246
+        },
+        {
+          "name": "@iwsdk/core/dist/physics/physics-worker-utils.js",
+          "group": "@iwsdk/core",
+          "renderedBytes": 367
+        },
+        {
+          "name": "\u0000virtual:iwsdk-disabled-havok",
+          "group": "app / virtual",
+          "renderedBytes": 153
+        }
+      ],
+      "containsServerVerifier": false
+    }
+  ]
+}

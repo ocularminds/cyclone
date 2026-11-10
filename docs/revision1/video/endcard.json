@@ -1,0 +1,33 @@
+{
+  "source": "Actual IWSDK emulator; synthetic hands, demo execution, uncut capture",
+  "name": "endcard",
+  "events": [],
+  "duration": 9.021100000023841,
+  "size": [
+    756,
+    469
+  ],
+  "type": "video/webm;codecs=vp9,opus",
+  "records": [
+    {
+      "id": "74c5fe3d-c127-4269-bf26-b99320430c9f",
+      "tool": "set_conveyor_speed",
+      "decision": "APPROVE"
+    },
+    {
+      "id": "828813ce-da45-4a4d-a44a-24a78c531e24",
+      "tool": "set_arm_velocity",
+      "decision": "APPROVE_AMENDED"
+    },
+    {
+      "id": "4fe8dca2-ab3c-424e-b443-eef728541309",
+      "tool": "set_oven_setpoint",
+      "decision": "REJECT"
+    },
+    {
+      "id": "1f11d024-b546-444b-8bec-121c2cae0b87",
+      "tool": "lift_pallet",
+      "decision": "REJECT"
+    }
+  ]
+}

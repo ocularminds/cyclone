@@ -1,0 +1,134 @@
+{
+  "commit": "eed5299bb19510476735cc90fedca9aaae4dee4e",
+  "source": "public Intent v1 conformance corpus; unrelated provider/runtime profiles excluded",
+  "vectors": [
+    {
+      "path": "conformance/agent-safe-intent-v1.json",
+      "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/conformance/agent-safe-intent-v1.json",
+      "sha256": "dccc4d831d8b3b39b0db49e6ad66a5c542f254b241d5d98145e72471a018d1e2",
+      "local": "relay/src/fixtures/vectors/agent-safe-intent-v1.json",
+      "already_present": true,
+      "same_bytes": true
+    },
+    {
+      "path": "conformance/frameworks/langchain.json",
+      "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/conformance/frameworks/langchain.json",
+      "sha256": "426781e7b8983019526a289386f577a01fec972137dda2f9909e63b9f98119bd",
+      "local": "relay/src/fixtures/vectors/frameworks/langchain.json",
+      "already_present": true,
+      "same_bytes": true
+    },
+    {
+      "path": "conformance/frameworks/mcp.json",
+      "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/conformance/frameworks/mcp.json",
+      "sha256": "d4503ce338e68261ae2ee07c7143c2400d583319c8becffbf31a2cce058eeeb9",
+      "local": "relay/src/fixtures/vectors/frameworks/mcp.json",
+      "already_present": true,
+      "same_bytes": true
+    },
+    {
+      "path": "conformance/frameworks/openai.json",
+      "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/conformance/frameworks/openai.json",
+      "sha256": "7a178ff7dde6854b238964da9fa381654fedd166c978f7296b05a6bd19ed9f29",
+      "local": "relay/src/fixtures/vectors/frameworks/openai.json",
+      "already_present": true,
+      "same_bytes": true
+    },
+    {
+      "path": "conformance/frameworks/vercel.json",
+      "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/conformance/frameworks/vercel.json",
+      "sha256": "e8927d5ac2d791e9cb6a709a3348eec0746ba75fd81b1255f2d695893e7dbff1",
+      "local": "relay/src/fixtures/vectors/frameworks/vercel.json",
+      "already_present": true,
+      "same_bytes": true
+    },
+    {
+      "path": "conformance/vectors/array-index-keys.json",
+      "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/conformance/vectors/array-index-keys.json",
+      "sha256": "134275501b6856e08a4158bc3587533bdb80a47992df5dc665b07410247bfebb",
+      "local": "relay/src/fixtures/vectors/array-index-keys.json",
+      "already_present": false,
+      "same_bytes": null
+    },
+    {
+      "path": "conformance/vectors/composed-vs-decomposed.json",
+      "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/conformance/vectors/composed-vs-decomposed.json",
+      "sha256": "c0316a15388c28ca58c4b4e3a07d66e79e7680983f204203bbeba2468cbac44f",
+      "local": "relay/src/fixtures/vectors/composed-vs-decomposed.json",
+      "already_present": true,
+      "same_bytes": true
+    },
+    {
+      "path": "conformance/vectors/compromised-principal.json",
+      "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/conformance/vectors/compromised-principal.json",
+      "sha256": "f9b2fdedc9f7b458fab30dbf871bdf28d0aa1a63d81272bb82f2e50a07b388d4",
+      "local": "relay/src/fixtures/vectors/compromised-principal.json",
+      "already_present": true,
+      "same_bytes": true
+    },
+    {
+      "path": "conformance/vectors/fractional-exponent.json",
+      "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/conformance/vectors/fractional-exponent.json",
+      "sha256": "ee9fc5b80ddfbfd530bf054da1a02e23dab8e15808aff4d8de3b869e725174e5",
+      "local": "relay/src/fixtures/vectors/fractional-exponent.json",
+      "already_present": true,
+      "same_bytes": true
+    },
+    {
+      "path": "conformance/vectors/negative-zero.json",
+      "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/conformance/vectors/negative-zero.json",
+      "sha256": "158650d9dfb3051b3d41a697645d921d08513990bb0d41def3a279582a6ca896",
+      "local": "relay/src/fixtures/vectors/negative-zero.json",
+      "already_present": true,
+      "same_bytes": true
+    },
+    {
+      "path": "conformance/vectors/nested-arrays.json",
+      "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/conformance/vectors/nested-arrays.json",
+      "sha256": "012e1ee3c9b807383d54630f8b9b5b7b772b956b992776bcfed9a662ed81258d",
+      "local": "relay/src/fixtures/vectors/nested-arrays.json",
+      "already_present": true,
+      "same_bytes": true
+    },
+    {
+      "path": "conformance/vectors/policy-projection-absent.json",
+      "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/conformance/vectors/policy-projection-absent.json",
+      "sha256": "f3b09b040cced68bf205e8a1e96fbdef8608d11c59654501c6de9d9c5effec8a",
+      "local": "relay/src/fixtures/vectors/policy-projection-absent.json",
+      "already_present": true,
+      "same_bytes": true
+    },
+    {
+      "path": "conformance/vectors/policy-projection.json",
+      "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/conformance/vectors/policy-projection.json",
+      "sha256": "441b32eadb6f5d0326d9f2b01f041fc5843f775a59158f8c90ee7f01a31ed7df",
+      "local": "relay/src/fixtures/vectors/policy-projection.json",
+      "already_present": true,
+      "same_bytes": true
+    },
+    {
+      "path": "conformance/vectors/target-precondition.json",
+      "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/conformance/vectors/target-precondition.json",
+      "sha256": "e9e480f80ed11747bd347bf75b6ee13c1ad1ad5f4bf25172e827dbc464c0ca8a",
+      "local": "relay/src/fixtures/vectors/target-precondition.json",
+      "already_present": true,
+      "same_bytes": true
+    },
+    {
+      "path": "conformance/vectors/unicode-astral.json",
+      "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/conformance/vectors/unicode-astral.json",
+      "sha256": "c7c3ef8b68caa6a3c124bc21ec7e36ed3e2b1c098f0962bb4030c3e6a0bd9d79",
+      "local": "relay/src/fixtures/vectors/unicode-astral.json",
+      "already_present": true,
+      "same_bytes": true
+    },
+    {
+      "path": "conformance/vectors/utf16-sort-order.json",
+      "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/conformance/vectors/utf16-sort-order.json",
+      "sha256": "5f4917263a3a61f6b507d4347f5311d05e4237deac77e22092a21673130110b0",
+      "local": "relay/src/fixtures/vectors/utf16-sort-order.json",
+      "already_present": true,
+      "same_bytes": true
+    }
+  ]
+}

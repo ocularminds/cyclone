@@ -1,6 +1,6 @@
 # Policy-gate integration reference (Decionis AgentSafe)
 
-Compiled 2026-10-28 from public sources only; every endpoint, field and header is quoted from the
+Compiled 2026-10-28; updated 2026-11-10 for revision 1 from public sources only. Every endpoint, field and header is quoted from the
 cited source, and anything they do not state is marked **not documented**. Docs only: the app
 renders "policy gate" (AGENTS.md §2).
 
@@ -350,18 +350,19 @@ from `binding`, accept whole bindings and refuse §3 refusals, and reproduce eac
 entry (`path`, `value`, `binding`, `canonical_json`, `intent_hash`) with no two hashes equal.
 Vectors without `protocol_version` in `binding` are canonicalization-only cases.
 
-**Files** (saved byte-for-byte from ASP @ `923f1c7` to `relay/src/fixtures/vectors/`):
+**Files** (saved byte-for-byte and refreshed at ASP @ `eed5299bb19510476735cc90fedca9aaae4dee4e` on 2026-11-10;
+provenance and SHA-256 in `docs/revision1/corpus.json`):
 `agent-safe-intent-v1.json` (pinned hash
 `sha256:aff2fd3aa1a7557a77f20afa5583f56eb0c39529304b31f69ee78e1e7b53e316`),
 `composed-vs-decomposed.json`, `compromised-principal.json` (base + 8 mutations),
 `fractional-exponent.json`, `negative-zero.json`, `nested-arrays.json`,
 `policy-projection.json` (base + 5), `policy-projection-absent.json`,
-`target-precondition.json` (base + 4), `unicode-astral.json`, `utf16-sort-order.json`; and
+`target-precondition.json` (base + 4), `unicode-astral.json`, `utf16-sort-order.json`, `array-index-keys.json`; and
 `frameworks/{langchain,mcp,openai,vercel}.json`. The CLI does not recurse into subdirectories:
 
 ```bash
 npx @decionis/verify intent relay/src/fixtures/vectors relay/src/fixtures/vectors/frameworks
-# 0.5.0 today: 14 reproduced, 1 failed (policy-projection.json, BINDING_INVALID), exit 1
+# 0.5.0 on 2026-11-10: 15 reproduced, 1 failed (policy-projection.json, BINDING_INVALID), exit 1
 ```
 
 ## 7. Fixtures written
@@ -394,6 +395,49 @@ npx @decionis/verify intent relay/src/fixtures/vectors relay/src/fixtures/vector
    live holds; overnight items can only be records (dossiers) or re-proposals.
 8. AGENTS.md §5.1 `intent_hash` ("sha256 hex of canonical {tool,args,target,rule_id}") conflicts
    with the spec (whole binding, `sha256:` prefix); `HeldIntent` should carry the binding.
-9. `@decionis/verify@0.5.0` intent CLI fails `policy-projection.json`; C13's "exit 0" acceptance
-   needs a newer verifier, or the parity test must call `intentHash()` directly.
+9. `@decionis/verify@0.5.0` (still the latest published version on 2026-11-10) fails `policy-projection.json`.
+   C13's CLI exit-0 acceptance needs an upstream schema-compatible verifier. Direct `intentHash()` parity
+   is a separate check and cannot replace conformance. All 16 current Intent v1 corpus files are retained.
 10. OAS `PolicyRule.then` has no `allowance`, yet the grants description cites `then.allowance`.
+
+## 9. Revision 1: signed association, recovery and demo export
+
+Rechecked on 2026-11-10 against the public repository at
+[`eed5299bb19510476735cc90fedca9aaae4dee4e`](https://github.com/decionis/agent-safe-pipeline/tree/eed5299bb19510476735cc90fedca9aaae4dee4e),
+the current OpenAPI document, and npm's latest verifier (still 0.5.0). Exact source hashes are in
+`docs/revision1/sources.json`. No provisioned service call was made.
+
+- [Decision Dossiers](https://github.com/decionis/agent-safe-pipeline/blob/eed5299bb19510476735cc90fedca9aaae4dee4e/docs/decision-dossiers.md),
+  “Two records, side by side”, equates the gate's `intentHash` with
+  `execution_binding.payload.digest`, and links the signed decision ID, verdict, grant-issued flag,
+  expiry and idempotency key. The whole Intent v1 hash commits to `intent_id` and the action parameters.
+- [ExecutionBinding](https://github.com/decionis/agent-safe-pipeline/blob/eed5299bb19510476735cc90fedca9aaae4dee4e/docs/authority/execution-binding.md)
+  documents the downstream target, canonical bytes and refusal of mismatched `action_hash`.
+- [The synthetic dossier corpus](https://github.com/decionis/agent-safe-pipeline/blob/eed5299bb19510476735cc90fedca9aaae4dee4e/dossiers/README.md)
+  supplies the Protocol 1.1 proof profile and required signed artifacts. Its execution-binding artifact
+  uses proof version 2.1, binding schema `1.0`, and RFC8785/JCS canonicalization. A local fixture key
+  proves signature behavior only; it is never a production issuer.
+
+`Association.check` accepts only the verified `/portable_artifact` and `/execution_binding` paths.
+It reproduces the authoritative held binding, validates a distinct mutation when present, and checks
+signed dossier/decision/evaluation IDs, APPROVE/ALLOW authority, exact action digest, target fields,
+idempotency key, expiry and the portable artifact's digest of the execution binding. Missing coverage,
+an unrelated valid proof, wrong keys, or a profile without that association remains unverified. The
+earlier hold's BLOCK/ESCALATE dossier cannot verify a later local veto/escalation gesture. The service
+does not sign the headset's model snapshot; that remains separately digested local evidence.
+
+The relay persists a dispatch attempt before requesting a grant, then preserves an ALLOW independently
+of proof retrieval. Recovery reads the same dossier, refreshes JWKS and revises the same record.
+An uncertain result can be reconciled by a matching authenticated resolved webhook; otherwise it
+remains uncertain. No retry path calls the authority grant endpoint or a physical actuator. Live
+execution always remains `not_requested`. The documented claim/finalize boundary is future PLC work.
+
+The public API still supplies no amended-approval request contract. The relay always reports
+`supportsAmendedApproval: false`, even if its obsolete environment flag is set. A changed proposal
+needs a fresh binding/evaluation. H1 must supply a supported service contract before that changes.
+
+C50 uses the public verifier's common proof-bundle `2.0` format for a signed local portable document,
+without Protocol 1.1 execution-authority claims. The browser exports one JSON containing
+`dossier_payload`, public `keys`, and an explicit demo source label. Both the signature and required
+artifact check pass the CLI; selecting that local JWKS does not establish an official trust anchor.
+The private per-install key is never exported. This is separate from H1/C49's genuine service dossiers.

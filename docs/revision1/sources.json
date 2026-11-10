@@ -1,0 +1,65 @@
+[
+  {
+    "file": "intent.md",
+    "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/master/spec/intent/v1/README.md",
+    "sha256": "3a2486ede03125884091643e66e629fbad244fcc2da3126a25359e577e6487ca",
+    "bytes": 20147,
+    "transport": "curl, TLS verified"
+  },
+  {
+    "file": "dossiers.md",
+    "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/master/dossiers/README.md",
+    "sha256": "420ede149374b1efb93b797f2711bb2a7bbd81bdb15ba1e7be9154e4c483c29a",
+    "bytes": 5206,
+    "transport": "curl, TLS verified"
+  },
+  {
+    "file": "execution.md",
+    "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/master/docs/execution-intent.md",
+    "sha256": "a6bc191d23550bd66e9c7ba758961fd6aac288fc1603f75f1e115b18d8edd688",
+    "bytes": 9389,
+    "transport": "curl, TLS verified"
+  },
+  {
+    "file": "approval.md",
+    "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/master/docs/human-approval.md",
+    "sha256": "85a25b961245864009bf880208a8bffdea4688b3be44b46aaa13f4415d5d2b8e",
+    "bytes": 11651,
+    "transport": "curl, TLS verified"
+  },
+  {
+    "file": "dossier.html",
+    "url": "https://docs.decionis.com/decision-dossier",
+    "sha256": "a8c6a0191d285e5dbe64b96b3991453ce0b4b68110034d19cde84c108ccae0db",
+    "bytes": 116112,
+    "transport": "curl, TLS verified"
+  },
+  {
+    "file": "openapi.json",
+    "url": "https://decionis.com/.well-known/openapi.json",
+    "sha256": "afd5d7a62b8ad5e924e4fb619ef51a97ef5bf0de5275acf9b6449a4866f17fbf",
+    "bytes": 1564833,
+    "transport": "curl, TLS verified"
+  },
+  {
+    "file": "iwsdk.md",
+    "url": "https://iwsdk.dev/skill.md",
+    "sha256": "c5fc590cf956008a6f29573086aa58f7341a2cc09cad671c45067c77f641db42",
+    "bytes": 35503,
+    "transport": "curl, TLS verified"
+  },
+  {
+    "file": "execution-binding.md",
+    "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/docs/authority/execution-binding.md",
+    "sha256": "36e7d0207423c85a31f636562b28ef7f98c849541a10562df53cacc3f0c1d43f",
+    "bytes": 6074,
+    "transport": "curl, TLS verified"
+  },
+  {
+    "file": "decision-dossiers.md",
+    "url": "https://raw.githubusercontent.com/decionis/agent-safe-pipeline/eed5299bb19510476735cc90fedca9aaae4dee4e/docs/decision-dossiers.md",
+    "sha256": "4e3f01bbaa3c72ebebdab21da81dfc9690a69b90eeb2e4346e32a58e77306c54",
+    "bytes": 5023,
+    "transport": "curl, TLS verified"
+  }
+]

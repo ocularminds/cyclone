@@ -1,0 +1,956 @@
+{
+  "at": "2026-11-10T06:12:14.427Z",
+  "source": "Actual IWER WebAudio graph; injected cue fixtures. No human/device sound-quality claim.",
+  "checks": [
+    {
+      "name": "AudioContext is running after XR entry",
+      "ok": true
+    },
+    {
+      "name": "scenario intent appears and settles in its tray within one second",
+      "ok": true,
+      "detail": {
+        "elapsedMs": 606.7999999821186,
+        "place": "tray"
+      }
+    },
+    {
+      "name": "all four machine voices sit on their target assets",
+      "ok": true,
+      "detail": [
+        {
+          "id": "conv-1",
+          "kind": "conveyor",
+          "world": [
+            -0.17000000178813934,
+            1.1800000667572021,
+            -0.7199999988079071
+          ],
+          "panner": [
+            -0.16998212039470673,
+            1.1798570156097412,
+            -0.719928503036499
+          ],
+          "error": 0.00016091929763151314,
+          "wave": "sawtooth",
+          "base": 55,
+          "hz": 55,
+          "expectedHz": 55,
+          "risk": 0
+        },
+        {
+          "id": "lift-2",
+          "kind": "lift",
+          "world": [
+            0.05999999865889549,
+            1.1800000667572021,
+            -0.6750000044703484
+          ],
+          "panner": [
+            0.05999552831053734,
+            1.1798570156097412,
+            -0.6749284863471985
+          ],
+          "error": 0.00015999517724986077,
+          "wave": "square",
+          "base": 65.4,
+          "hz": 65.4000015258789,
+          "expectedHz": 65.4,
+          "risk": 0
+        },
+        {
+          "id": "arm-cell-3",
+          "kind": "arm",
+          "world": [
+            0.1899999976158142,
+            1.1800000667572021,
+            -0.6100000031292439
+          ],
+          "panner": [
+            0.1899821162223816,
+            1.1798570156097412,
+            -0.6099284887313843
+          ],
+          "error": 0.00016092757415123204,
+          "wave": "triangle",
+          "base": 82.4,
+          "hz": 97.93573760986328,
+          "expectedHz": 97.99066627622422,
+          "risk": 1
+        },
+        {
+          "id": "oven-b",
+          "kind": "oven",
+          "world": [
+            -0.1899999976158142,
+            1.1800000667572021,
+            -0.510000005364418
+          ],
+          "panner": [
+            -0.1899821162223816,
+            1.1798570156097412,
+            -0.5100715160369873
+          ],
+          "error": 0.00016092591870886733,
+          "wave": "sine",
+          "base": 41.2,
+          "hz": 48.96786880493164,
+          "expectedHz": 48.99533313811211,
+          "risk": 1
+        }
+      ]
+    },
+    {
+      "name": "machines have distinct waveforms and pitches",
+      "ok": true
+    },
+    {
+      "name": "held risk raises only its machine pitch",
+      "ok": true,
+      "detail": [
+        {
+          "id": "conv-1",
+          "risk": 0,
+          "hz": 55,
+          "expected": 55
+        },
+        {
+          "id": "lift-2",
+          "risk": 0,
+          "hz": 65.4000015258789,
+          "expected": 65.4
+        },
+        {
+          "id": "arm-cell-3",
+          "risk": 1,
+          "hz": 97.93573760986328,
+          "expected": 97.99066627622422
+        },
+        {
+          "id": "oven-b",
+          "risk": 1,
+          "hz": 48.96786880493164,
+          "expected": 48.99533313811211
+        }
+      ]
+    },
+    {
+      "name": "every visible thread ends on its intent target",
+      "ok": true,
+      "detail": [
+        {
+          "intent": "6b747cff-7db3-49a8-bae8-e30040a5779e",
+          "asset": "arm-cell-3",
+          "actual": [
+            0.1899999976158142,
+            1.2300000675022602,
+            -0.6100000143051147
+          ],
+          "expected": [
+            0.1899999976158142,
+            1.2300000667572022,
+            -0.6100000031292439
+          ],
+          "error": 1.1200678627497006e-8
+        },
+        {
+          "intent": "72d0974a-bd89-4b52-b322-46a7004e3879",
+          "asset": "oven-b",
+          "actual": [
+            -0.1899999976158142,
+            1.2300000675022602,
+            -0.510000005364418
+          ],
+          "expected": [
+            -0.1899999976158142,
+            1.2300000667572022,
+            -0.510000005364418
+          ],
+          "error": 7.450580152834618e-10
+        },
+        {
+          "intent": "22360a23-745a-4978-a9eb-e35388560be7",
+          "asset": "conv-1",
+          "actual": [
+            -0.17000000178813934,
+            1.2300000675022602,
+            -0.7199999988079071
+          ],
+          "expected": [
+            -0.17000000178813934,
+            1.2300000667572022,
+            -0.7199999988079071
+          ],
+          "error": 7.450580152834618e-10
+        },
+        {
+          "intent": "fe5deed2-4d2f-431f-8ee6-a17d6a0c70ee",
+          "asset": "conv-1",
+          "actual": [
+            -0.17000000178813934,
+            1.2300000675022602,
+            -0.7199999988079071
+          ],
+          "expected": [
+            -0.17000000178813934,
+            1.2300000667572022,
+            -0.7199999988079071
+          ],
+          "error": 7.450580152834618e-10
+        }
+      ]
+    },
+    {
+      "name": "drop: one audio call at the stated position",
+      "ok": true
+    },
+    {
+      "name": "drop: matching caption rendered",
+      "ok": true
+    },
+    {
+      "name": "unfold: one audio call at the stated position",
+      "ok": true
+    },
+    {
+      "name": "unfold: matching caption rendered",
+      "ok": true
+    },
+    {
+      "name": "scrub: one audio call at the stated position",
+      "ok": true
+    },
+    {
+      "name": "scrub: matching caption rendered",
+      "ok": true
+    },
+    {
+      "name": "lock: one audio call at the stated position",
+      "ok": true
+    },
+    {
+      "name": "lock: matching caption rendered",
+      "ok": true
+    },
+    {
+      "name": "hold: one audio call at the stated position",
+      "ok": true
+    },
+    {
+      "name": "hold: matching caption rendered",
+      "ok": true
+    },
+    {
+      "name": "seal: one audio call at the stated position",
+      "ok": true
+    },
+    {
+      "name": "seal: matching caption rendered",
+      "ok": true
+    },
+    {
+      "name": "veto: one audio call at the stated position",
+      "ok": true
+    },
+    {
+      "name": "veto: matching caption rendered",
+      "ok": true
+    },
+    {
+      "name": "drill: one audio call at the stated position",
+      "ok": true
+    },
+    {
+      "name": "drill: matching caption rendered",
+      "ok": true
+    },
+    {
+      "name": "escalate: one audio call at the stated position",
+      "ok": true
+    },
+    {
+      "name": "escalate: matching caption rendered",
+      "ok": true
+    },
+    {
+      "name": "deny: one audio call at the stated position",
+      "ok": true
+    },
+    {
+      "name": "deny: matching caption rendered",
+      "ok": true
+    },
+    {
+      "name": "rule: one audio call at the stated position",
+      "ok": true
+    },
+    {
+      "name": "rule: matching caption rendered",
+      "ok": true
+    },
+    {
+      "name": "expire: one audio call at the stated position",
+      "ok": true
+    },
+    {
+      "name": "expire: matching caption rendered",
+      "ok": true
+    },
+    {
+      "name": "risk: one audio call at the stated position",
+      "ok": true
+    },
+    {
+      "name": "risk: matching caption rendered",
+      "ok": true
+    },
+    {
+      "name": "actual audio graph produces a non-silent signal",
+      "ok": true,
+      "detail": {
+        "rms": 0.011959845911753501
+      }
+    }
+  ],
+  "voices": [
+    {
+      "id": "conv-1",
+      "kind": "conveyor",
+      "world": [
+        -0.17000000178813934,
+        1.1800000667572021,
+        -0.7199999988079071
+      ],
+      "panner": [
+        -0.16998212039470673,
+        1.1798570156097412,
+        -0.719928503036499
+      ],
+      "error": 0.00016091929763151314,
+      "wave": "sawtooth",
+      "base": 55,
+      "hz": 55,
+      "expectedHz": 55,
+      "risk": 0
+    },
+    {
+      "id": "lift-2",
+      "kind": "lift",
+      "world": [
+        0.05999999865889549,
+        1.1800000667572021,
+        -0.6750000044703484
+      ],
+      "panner": [
+        0.05999552831053734,
+        1.1798570156097412,
+        -0.6749284863471985
+      ],
+      "error": 0.00015999517724986077,
+      "wave": "square",
+      "base": 65.4,
+      "hz": 65.4000015258789,
+      "expectedHz": 65.4,
+      "risk": 0
+    },
+    {
+      "id": "arm-cell-3",
+      "kind": "arm",
+      "world": [
+        0.1899999976158142,
+        1.1800000667572021,
+        -0.6100000031292439
+      ],
+      "panner": [
+        0.1899821162223816,
+        1.1798570156097412,
+        -0.6099284887313843
+      ],
+      "error": 0.00016092757415123204,
+      "wave": "triangle",
+      "base": 82.4,
+      "hz": 97.93573760986328,
+      "expectedHz": 97.99066627622422,
+      "risk": 1
+    },
+    {
+      "id": "oven-b",
+      "kind": "oven",
+      "world": [
+        -0.1899999976158142,
+        1.1800000667572021,
+        -0.510000005364418
+      ],
+      "panner": [
+        -0.1899821162223816,
+        1.1798570156097412,
+        -0.5100715160369873
+      ],
+      "error": 0.00016092591870886733,
+      "wave": "sine",
+      "base": 41.2,
+      "hz": 48.96786880493164,
+      "expectedHz": 48.99533313811211,
+      "risk": 1
+    }
+  ],
+  "threads": [
+    {
+      "intent": "6b747cff-7db3-49a8-bae8-e30040a5779e",
+      "asset": "arm-cell-3",
+      "actual": [
+        0.1899999976158142,
+        1.2300000675022602,
+        -0.6100000143051147
+      ],
+      "expected": [
+        0.1899999976158142,
+        1.2300000667572022,
+        -0.6100000031292439
+      ],
+      "error": 1.1200678627497006e-8
+    },
+    {
+      "intent": "72d0974a-bd89-4b52-b322-46a7004e3879",
+      "asset": "oven-b",
+      "actual": [
+        -0.1899999976158142,
+        1.2300000675022602,
+        -0.510000005364418
+      ],
+      "expected": [
+        -0.1899999976158142,
+        1.2300000667572022,
+        -0.510000005364418
+      ],
+      "error": 7.450580152834618e-10
+    },
+    {
+      "intent": "22360a23-745a-4978-a9eb-e35388560be7",
+      "asset": "conv-1",
+      "actual": [
+        -0.17000000178813934,
+        1.2300000675022602,
+        -0.7199999988079071
+      ],
+      "expected": [
+        -0.17000000178813934,
+        1.2300000667572022,
+        -0.7199999988079071
+      ],
+      "error": 7.450580152834618e-10
+    },
+    {
+      "intent": "fe5deed2-4d2f-431f-8ee6-a17d6a0c70ee",
+      "asset": "conv-1",
+      "actual": [
+        -0.17000000178813934,
+        1.2300000675022602,
+        -0.7199999988079071
+      ],
+      "expected": [
+        -0.17000000178813934,
+        1.2300000667572022,
+        -0.7199999988079071
+      ],
+      "error": 7.450580152834618e-10
+    }
+  ],
+  "captions": [
+    {
+      "name": "drop",
+      "caption": "Audio check: drop",
+      "labels": [
+        {
+          "name": "rehearsal-caption",
+          "text": "Rehearsal 0%"
+        },
+        {
+          "name": "card-caption",
+          "text": "Audio check: drop"
+        },
+        {
+          "name": "decision-card",
+          "text": "Robot arm, cell 3 Cell Agent / Review 170 °/s Requested change Morning batch is 6% larger. 170°/s keeps cycle time... Within rehearsal envelope"
+        },
+        {
+          "name": "",
+          "text": "170 °/s"
+        },
+        {
+          "name": "agent-label:line-agent",
+          "text": "Line"
+        },
+        {
+          "name": "agent-label:cell-agent",
+          "text": "Cell"
+        },
+        {
+          "name": "agent-label:thermal-agent",
+          "text": "Thermal"
+        },
+        {
+          "name": "rule-label",
+          "text": "Conveyor 1: 0 to +5%, routine only, 8 hours Drop on Line Agent to accept. Revoke in Settings."
+        }
+      ]
+    },
+    {
+      "name": "unfold",
+      "caption": "Audio check: unfold",
+      "labels": [
+        {
+          "name": "rehearsal-caption",
+          "text": "Rehearsal 0%"
+        },
+        {
+          "name": "card-caption",
+          "text": "Audio check: unfold"
+        },
+        {
+          "name": "decision-card",
+          "text": "Robot arm, cell 3 Cell Agent / Review 170 °/s Requested change Morning batch is 6% larger. 170°/s keeps cycle time... Within rehearsal envelope"
+        },
+        {
+          "name": "",
+          "text": "170 °/s"
+        },
+        {
+          "name": "agent-label:line-agent",
+          "text": "Line"
+        },
+        {
+          "name": "agent-label:cell-agent",
+          "text": "Cell"
+        },
+        {
+          "name": "agent-label:thermal-agent",
+          "text": "Thermal"
+        },
+        {
+          "name": "rule-label",
+          "text": "Conveyor 1: 0 to +5%, routine only, 8 hours Drop on Line Agent to accept. Revoke in Settings."
+        }
+      ]
+    },
+    {
+      "name": "scrub",
+      "caption": "Audio check: scrub",
+      "labels": [
+        {
+          "name": "rehearsal-caption",
+          "text": "Rehearsal 0%"
+        },
+        {
+          "name": "card-caption",
+          "text": "Audio check: scrub"
+        },
+        {
+          "name": "decision-card",
+          "text": "Robot arm, cell 3 Cell Agent / Review 170 °/s Requested change Morning batch is 6% larger. 170°/s keeps cycle time... Within rehearsal envelope"
+        },
+        {
+          "name": "",
+          "text": "170 °/s"
+        },
+        {
+          "name": "agent-label:line-agent",
+          "text": "Line"
+        },
+        {
+          "name": "agent-label:cell-agent",
+          "text": "Cell"
+        },
+        {
+          "name": "agent-label:thermal-agent",
+          "text": "Thermal"
+        },
+        {
+          "name": "rule-label",
+          "text": "Conveyor 1: 0 to +5%, routine only, 8 hours Drop on Line Agent to accept. Revoke in Settings."
+        }
+      ]
+    },
+    {
+      "name": "lock",
+      "caption": "Audio check: lock",
+      "labels": [
+        {
+          "name": "rehearsal-caption",
+          "text": "Rehearsal 0%"
+        },
+        {
+          "name": "card-caption",
+          "text": "Audio check: lock"
+        },
+        {
+          "name": "decision-card",
+          "text": "Robot arm, cell 3 Cell Agent / Review 170 °/s Requested change Morning batch is 6% larger. 170°/s keeps cycle time... Within rehearsal envelope"
+        },
+        {
+          "name": "",
+          "text": "170 °/s"
+        },
+        {
+          "name": "agent-label:line-agent",
+          "text": "Line"
+        },
+        {
+          "name": "agent-label:cell-agent",
+          "text": "Cell"
+        },
+        {
+          "name": "agent-label:thermal-agent",
+          "text": "Thermal"
+        },
+        {
+          "name": "rule-label",
+          "text": "Conveyor 1: 0 to +5%, routine only, 8 hours Drop on Line Agent to accept. Revoke in Settings."
+        }
+      ]
+    },
+    {
+      "name": "hold",
+      "caption": "Audio check: hold",
+      "labels": [
+        {
+          "name": "rehearsal-caption",
+          "text": "Rehearsal 0%"
+        },
+        {
+          "name": "card-caption",
+          "text": "Audio check: hold"
+        },
+        {
+          "name": "decision-card",
+          "text": "Robot arm, cell 3 Cell Agent / Review 170 °/s Requested change Morning batch is 6% larger. 170°/s keeps cycle time... Within rehearsal envelope"
+        },
+        {
+          "name": "",
+          "text": "170 °/s"
+        },
+        {
+          "name": "agent-label:line-agent",
+          "text": "Line"
+        },
+        {
+          "name": "agent-label:cell-agent",
+          "text": "Cell"
+        },
+        {
+          "name": "agent-label:thermal-agent",
+          "text": "Thermal"
+        },
+        {
+          "name": "rule-label",
+          "text": "Conveyor 1: 0 to +5%, routine only, 8 hours Drop on Line Agent to accept. Revoke in Settings."
+        }
+      ]
+    },
+    {
+      "name": "seal",
+      "caption": "Audio check: seal",
+      "labels": [
+        {
+          "name": "rehearsal-caption",
+          "text": "Rehearsal 0%"
+        },
+        {
+          "name": "card-caption",
+          "text": "Audio check: seal"
+        },
+        {
+          "name": "decision-card",
+          "text": "Robot arm, cell 3 Cell Agent / Review 170 °/s Requested change Morning batch is 6% larger. 170°/s keeps cycle time... Within rehearsal envelope"
+        },
+        {
+          "name": "",
+          "text": "170 °/s"
+        },
+        {
+          "name": "agent-label:line-agent",
+          "text": "Line"
+        },
+        {
+          "name": "agent-label:cell-agent",
+          "text": "Cell"
+        },
+        {
+          "name": "agent-label:thermal-agent",
+          "text": "Thermal"
+        },
+        {
+          "name": "rule-label",
+          "text": "Conveyor 1: 0 to +5%, routine only, 8 hours Drop on Line Agent to accept. Revoke in Settings."
+        }
+      ]
+    },
+    {
+      "name": "veto",
+      "caption": "Audio check: veto",
+      "labels": [
+        {
+          "name": "rehearsal-caption",
+          "text": "Rehearsal 0%"
+        },
+        {
+          "name": "card-caption",
+          "text": "Audio check: veto"
+        },
+        {
+          "name": "decision-card",
+          "text": "Robot arm, cell 3 Cell Agent / Review 170 °/s Requested change Morning batch is 6% larger. 170°/s keeps cycle time... Within rehearsal envelope"
+        },
+        {
+          "name": "",
+          "text": "170 °/s"
+        },
+        {
+          "name": "agent-label:line-agent",
+          "text": "Line"
+        },
+        {
+          "name": "agent-label:cell-agent",
+          "text": "Cell"
+        },
+        {
+          "name": "agent-label:thermal-agent",
+          "text": "Thermal"
+        },
+        {
+          "name": "rule-label",
+          "text": "Conveyor 1: 0 to +5%, routine only, 8 hours Drop on Line Agent to accept. Revoke in Settings."
+        }
+      ]
+    },
+    {
+      "name": "drill",
+      "caption": "Audio check: drill",
+      "labels": [
+        {
+          "name": "rehearsal-caption",
+          "text": "Rehearsal 0%"
+        },
+        {
+          "name": "card-caption",
+          "text": "Audio check: drill"
+        },
+        {
+          "name": "decision-card",
+          "text": "Robot arm, cell 3 Cell Agent / Review 170 °/s Requested change Morning batch is 6% larger. 170°/s keeps cycle time... Within rehearsal envelope"
+        },
+        {
+          "name": "",
+          "text": "170 °/s"
+        },
+        {
+          "name": "agent-label:line-agent",
+          "text": "Line"
+        },
+        {
+          "name": "agent-label:cell-agent",
+          "text": "Cell"
+        },
+        {
+          "name": "agent-label:thermal-agent",
+          "text": "Thermal"
+        },
+        {
+          "name": "rule-label",
+          "text": "Conveyor 1: 0 to +5%, routine only, 8 hours Drop on Line Agent to accept. Revoke in Settings."
+        }
+      ]
+    },
+    {
+      "name": "escalate",
+      "caption": "Audio check: escalate",
+      "labels": [
+        {
+          "name": "rehearsal-caption",
+          "text": "Rehearsal 0%"
+        },
+        {
+          "name": "card-caption",
+          "text": "Audio check: escalate"
+        },
+        {
+          "name": "decision-card",
+          "text": "Robot arm, cell 3 Cell Agent / Review 170 °/s Requested change Morning batch is 6% larger. 170°/s keeps cycle time... Within rehearsal envelope"
+        },
+        {
+          "name": "",
+          "text": "170 °/s"
+        },
+        {
+          "name": "agent-label:line-agent",
+          "text": "Line"
+        },
+        {
+          "name": "agent-label:cell-agent",
+          "text": "Cell"
+        },
+        {
+          "name": "agent-label:thermal-agent",
+          "text": "Thermal"
+        },
+        {
+          "name": "rule-label",
+          "text": "Conveyor 1: 0 to +5%, routine only, 8 hours Drop on Line Agent to accept. Revoke in Settings."
+        }
+      ]
+    },
+    {
+      "name": "deny",
+      "caption": "Audio check: deny",
+      "labels": [
+        {
+          "name": "rehearsal-caption",
+          "text": "Rehearsal 0%"
+        },
+        {
+          "name": "card-caption",
+          "text": "Audio check: deny"
+        },
+        {
+          "name": "decision-card",
+          "text": "Robot arm, cell 3 Cell Agent / Review 170 °/s Requested change Morning batch is 6% larger. 170°/s keeps cycle time... Within rehearsal envelope"
+        },
+        {
+          "name": "",
+          "text": "170 °/s"
+        },
+        {
+          "name": "agent-label:line-agent",
+          "text": "Line"
+        },
+        {
+          "name": "agent-label:cell-agent",
+          "text": "Cell"
+        },
+        {
+          "name": "agent-label:thermal-agent",
+          "text": "Thermal"
+        },
+        {
+          "name": "rule-label",
+          "text": "Conveyor 1: 0 to +5%, routine only, 8 hours Drop on Line Agent to accept. Revoke in Settings."
+        }
+      ]
+    },
+    {
+      "name": "rule",
+      "caption": "Audio check: rule",
+      "labels": [
+        {
+          "name": "rehearsal-caption",
+          "text": "Rehearsal 0%"
+        },
+        {
+          "name": "card-caption",
+          "text": "Audio check: rule"
+        },
+        {
+          "name": "decision-card",
+          "text": "Robot arm, cell 3 Cell Agent / Review 170 °/s Requested change Morning batch is 6% larger. 170°/s keeps cycle time... Within rehearsal envelope"
+        },
+        {
+          "name": "",
+          "text": "170 °/s"
+        },
+        {
+          "name": "agent-label:line-agent",
+          "text": "Line"
+        },
+        {
+          "name": "agent-label:cell-agent",
+          "text": "Cell"
+        },
+        {
+          "name": "agent-label:thermal-agent",
+          "text": "Thermal"
+        },
+        {
+          "name": "rule-label",
+          "text": "Conveyor 1: 0 to +5%, routine only, 8 hours Drop on Line Agent to accept. Revoke in Settings."
+        }
+      ]
+    },
+    {
+      "name": "expire",
+      "caption": "Audio check: expire",
+      "labels": [
+        {
+          "name": "rehearsal-caption",
+          "text": "Rehearsal 0%"
+        },
+        {
+          "name": "card-caption",
+          "text": "Audio check: expire"
+        },
+        {
+          "name": "decision-card",
+          "text": "Robot arm, cell 3 Cell Agent / Review 170 °/s Requested change Morning batch is 6% larger. 170°/s keeps cycle time... Within rehearsal envelope"
+        },
+        {
+          "name": "",
+          "text": "170 °/s"
+        },
+        {
+          "name": "agent-label:line-agent",
+          "text": "Line"
+        },
+        {
+          "name": "agent-label:cell-agent",
+          "text": "Cell"
+        },
+        {
+          "name": "agent-label:thermal-agent",
+          "text": "Thermal"
+        },
+        {
+          "name": "rule-label",
+          "text": "Conveyor 1: 0 to +5%, routine only, 8 hours Drop on Line Agent to accept. Revoke in Settings."
+        }
+      ]
+    },
+    {
+      "name": "risk",
+      "caption": "Audio check: risk",
+      "labels": [
+        {
+          "name": "rehearsal-caption",
+          "text": "Rehearsal 0%"
+        },
+        {
+          "name": "card-caption",
+          "text": "Audio check: risk"
+        },
+        {
+          "name": "decision-card",
+          "text": "Robot arm, cell 3 Cell Agent / Review 170 °/s Requested change Morning batch is 6% larger. 170°/s keeps cycle time... Within rehearsal envelope"
+        },
+        {
+          "name": "",
+          "text": "170 °/s"
+        },
+        {
+          "name": "agent-label:line-agent",
+          "text": "Line"
+        },
+        {
+          "name": "agent-label:cell-agent",
+          "text": "Cell"
+        },
+        {
+          "name": "agent-label:thermal-agent",
+          "text": "Thermal"
+        },
+        {
+          "name": "rule-label",
+          "text": "Conveyor 1: 0 to +5%, routine only, 8 hours Drop on Line Agent to accept. Revoke in Settings."
+        }
+      ]
+    }
+  ],
+  "mimeType": "audio/webm;codecs=opus"
+}

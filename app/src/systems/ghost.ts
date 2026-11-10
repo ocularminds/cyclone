@@ -162,7 +162,16 @@ export class GhostRehearsalSystem extends createSystem({
     const view = this.stage.focus ? this.stage.views.get(this.stage.focus) : undefined;
     if (!view) return out.set(0, 0.06, 0);
     // clear of the lifted token so a pinch on one never grabs the other
-    return out.set(view.home.x, view.home.y + 0.03, view.home.z + Layout.TOKEN_R + 0.045);
+    out.set(view.home.x, view.home.y + 0.03, view.home.z + Layout.TOKEN_R + 0.045);
+    // The complete rail/dial cluster (including the dial label) fits inside a
+    // 12 cm sphere. Clamp its centre, keeping the cluster in front of the user.
+    out.x -= 0.04; out.y += 0.012; out.z += GhostRehearsalSystem.RAIL / 2;
+    out.sub(this.stage.head);
+    out.z = Math.min(out.z, -0.125);
+    if (out.lengthSq() > 0.49 * 0.49) out.setLength(0.49);
+    out.add(this.stage.head);
+    out.x += 0.04; out.y -= 0.012; out.z -= GhostRehearsalSystem.RAIL / 2;
+    return out;
   }
 
   private placeHandle(): void {

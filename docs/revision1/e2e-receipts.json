@@ -1,0 +1,126 @@
+{
+  "at": "2026-11-10T05:54:43.762Z",
+  "source": "IWSDK IWER, hand input; model/legacy/tamper fixtures are test setup",
+  "results": [
+    {
+      "name": "first-shift receipts available for reload test",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "arm receipt retains original and amended values",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "completed first shift opens handover",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "signed snapshots survive reload unchanged",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "demo signature verifies after reload",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "model-revision fixture changes the current rehearsal",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "pickup selects the intended receipt",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "receipt 1: actual bounds and loaded fonts",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "receipt 1: caption is clear of text and hit targets",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "receipt 1.25: actual bounds and loaded fonts",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "receipt 1.25: caption is clear of text and hit targets",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "receipt distinguishes a valid local demo signature",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "receipt states simulated execution separately",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Original replays retained samples after model change",
+      "ok": true,
+      "detail": "{\"active\":\"Stored original rehearsal\",\"visible\":true,\"firstMismatch\":-1}"
+    },
+    {
+      "name": "Reviewed replays retained samples after model change",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "receipt Close returns to the desk",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "pickup selects the intended receipt",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy receipt explicitly has no original evidence",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy replay does not silently recompute",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "receipt Close returns to the desk",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "pickup selects the intended receipt",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "tampered record is visibly invalid, never verified",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "tampered seal has unverified appearance",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "receipt Close returns to the desk",
+      "ok": true,
+      "detail": ""
+    }
+  ]
+}

@@ -19,10 +19,11 @@ const held = (s, tool) => s.tokens.find((t) => t.tool === tool && t.status === '
 
 // fresh first-visit state, then into XR with hands only
 d.cli(['browser', 'run', 'tests/e2e/reset.mjs']);
-d.page(`location.search = '?mode=onboarding'`);
+d.page(`location.search = '${process.env.CYCLONE_VIDEO ? '?mode=onboarding&capture=1' : '?mode=onboarding'}'`);
 d.sleep(5000);
 d.cli(['xr', 'enter']);
 d.cli(['xr', 'set-input-mode'], { mode: 'hand' });
+if (process.env.CYCLONE_VIDEO) d.cli(['browser', 'run', 'tests/e2e/video-start.mjs']);
 d.sleep(1500);
 d.calibrate();
 let s = d.waitFor('anchor', (x) => x.ready && x.anchor !== 'pending');
@@ -158,6 +159,7 @@ for(const scale of [1,1.25]){
 }
 d.shot('summary-125');d.page(`window.cyclone.app.settings.set('textScale',1)`);
 console.log('beats:', s.beats.join(' · '));
+if (process.env.CYCLONE_VIDEO) d.cli(['browser', 'run', 'tests/e2e/video-stop.mjs']);
 
 writeFileSync(process.env.CYCLONE_EVIDENCE ? `${process.env.CYCLONE_EVIDENCE}/e2e-onboarding.json` : '../docs/e2e-onboarding.json', JSON.stringify({ at: new Date().toISOString(), source: 'IWSDK IWER, hands only', results, beats: s.beats }, null, 2));
 if(process.env.CYCLONE_EVIDENCE)writeFileSync(`${process.env.CYCLONE_EVIDENCE}/card-bounds.json`,JSON.stringify(bounds,null,2));

@@ -1,5 +1,8 @@
 import type { Decision, DecisionKind, Gesture, ReasonCode } from '../../app/src/contracts/intent';
 import { IntentHasher } from '../../app/src/core/hash';
+import { intentHash, stableJsonStringify } from '@decionis/verify';
+import { Association } from './association';
+import { Verifier } from './verify';
 import { GesturePolicy } from '../../app/src/flow/policy';
 import type { Attestor } from './attest';
 import type { RelayConfig } from './config';
@@ -82,17 +85,27 @@ export class Resolver {
     const e = this.store.get(d.intent_id);
     if (!e?.intent || !e.binding) throw new RelayError(404, 'UNKNOWN_INTENT', 'No such held intent.');
     const intent = e.intent;
+    if (d.decision !== 'APPROVE_AMENDED' && (d.amended_args !== undefined || d.amended_hash !== undefined)) {
+      throw RelayError.badRequest('Only an amended decision may carry amended arguments or a mutation hash.');
+    }
+    if (d.decision !== 'REJECT' && d.reason !== undefined) throw RelayError.badRequest('A rejection reason cannot accompany an approval or escalation.');
     // C13 — what you see is what you sign: bound to the held payload, recomputed here.
-    const { intent_hash } = await IntentHasher.hash(e.binding);
-    if (d.intent_hash !== intent.intent_hash || intent_hash !== intent.intent_hash) {
+    const { intent_hash } = intentHash(e.binding);
+    if (d.intent_hash !== intent.intent_hash || intent_hash !== intent.intent_hash ||
+      intent.tool !== e.binding.action.type || intent.target.asset_id !== e.binding.action.resource ||
+      stableJsonStringify(intent.args) !== stableJsonStringify(e.binding.action.parameters)) {
       throw new RelayError(409, 'HASH_MISMATCH', 'The decision is not bound to the held payload.');
     }
     // Idempotent per intent_id: the same decision returns the same record.
     if (e.final) {
-      if (e.final.decision.decision === d.decision) return e.final;
+      if (Association.sameDecision(e.final.decision, d)) return e.final;
       throw new RelayError(409, 'UNKNOWN_INTENT', 'Already resolved.');
     }
-    if (d.decision === 'ESCALATE' && e.escalation) return e.escalation;
+    if (d.decision === 'ESCALATE' && e.escalation) {
+      if (Association.sameDecision(e.escalation.decision, d)) return e.escalation;
+      throw new RelayError(409, 'UNKNOWN_INTENT', 'A different escalation is already recorded.');
+    }
+    if (e.state === 'uncertain') throw new RelayError(409, 'UNAVAILABLE', 'An earlier authorization has an unknown result. Reconcile it; do not approve again.');
     if (e.state === 'withdrawn') throw new RelayError(410, 'EXPIRED', e.note ?? 'Withdrawn from the desk.');
     const expiredReject = d.decision === 'REJECT' && d.reason?.code === 'expired';
     if (this.cfg.now() >= Date.parse(intent.expires_at) && !expiredReject) {
@@ -133,42 +146,54 @@ export class Resolver {
       throw new RelayError(503, 'UNAVAILABLE', 'Live approvals are not configured on the relay yet; the intent stays held.');
     }
     const intent = e.intent!;
-    return this.upstreamStep(e, async () => {
-      const attestation = this.attestor!.sign({
+    const attestation = this.attestor!.sign({
         tenant_id: e.binding!.tenant_id,
         intent_id: intent.intent_id,
         intent_hash: intent.intent_hash,
         subject,
         gesture: d.gesture,
-      });
-      let res: AuthorityDecision;
-      try {
-        res = await this.upstream.grant(e.binding!, intent.intent_hash, {
+    });
+    const pending = this.sealer.prepare(intent, d, intent.args, { status: 'unknown', source: 'relay' }, {
+      path: 'uncertain', detail: 'Authorization sent; its result is not yet known.',
+    });
+    // Durable before dispatch. A crash or timeout can never turn this attempt
+    // back into a fresh approval. No execution token is stored or forwarded.
+    e.final = pending; e.state = 'deciding'; this.store.save();
+    let res: AuthorityDecision;
+    try {
+      res = await this.upstream.grant(e.binding!, intent.intent_hash, {
           mode: 'ENFORCEMENT',
           evidence: { humanApproval: { provider: 'attestation', attestation } },
-        });
-      } catch (err) {
+      });
+    } catch (err) {
+      // Documented pre-evaluation refusals establish that no approval ran.
+      if (err instanceof UpstreamError && (err.status === 401 || err.status === 403 ||
+        /^(PRESENCE_ATTESTATION_|INTENT_HASH_MISMATCH)/.test(err.error))) {
+        delete e.final; e.state = 'held'; this.store.save();
         throw Resolver.upstreamFailure(err);
       }
-      if (res.status !== 'ALLOW') {
-        if (res.status === 'BLOCK') intent.policy = { ...intent.policy, requires: 'forbidden' };
-        const why = res.reason_codes?.length ? ` (${res.reason_codes.join(', ')})` : '';
-        throw new RelayError(403, 'FORBIDDEN', `The policy gate answered ${res.status}${why}; the intent stays held.`);
-      }
-      const record = await this.sealer.seal(intent, d, intent.args, res.dossier_id, {
-        path: 'grant',
-        decision_id: res.decision_id,
-        status: res.status,
-      });
-      return this.finish(e, record, true);
-    });
+      const verification = Verifier.unavailable('Authorization result unknown. Recover the same record; do not approve again.', new Date(this.cfg.now()).toISOString()).verification;
+      return this.finish(e, { ...pending, verification, revision: 2 }, true);
+    }
+    if (['BLOCK', 'ESCALATE', 'REVIEW_REQUIRED'].includes(res?.status)) {
+      delete e.final; e.state = 'held';
+      if (res.status === 'BLOCK') intent.policy = { ...intent.policy, requires: 'forbidden' };
+      this.store.save();
+      throw new RelayError(403, 'FORBIDDEN', `The policy gate answered ${res.status}; the intent stays held.`);
+    }
+    if (res?.status !== 'ALLOW' || res.action_hash !== intent.intent_hash || !res.decision_id) {
+      const verification = Verifier.unavailable('The authorization response does not identify this exact intent. Reconcile the sent request; do not approve again.', new Date(this.cfg.now()).toISOString()).verification;
+      return this.finish(e, { ...pending, verification, revision: 2 }, true);
+    }
+    pending.authorization = { status: 'approved', source: 'policy_gate', decision_id: res.decision_id, dossier_id: res.dossier_id };
+    pending.relay = { path: 'grant', status: res.status, decision_id: res.decision_id };
+    // Save the authoritative fact before fetching proof, including before a restart.
+    this.finish(e, pending, true);
+    return this.finish(e, await this.sealer.check(pending), true);
   }
 
   /** C12: amended approval. Pre-checks run here; the upstream call itself is undocumented (H1). */
   private async amended(e: Entry, d: Decision): Promise<LiveRecord> {
-    if (!this.cfg.amendedApproval) {
-      throw new RelayError(422, 'AMEND_UNSUPPORTED', 'This policy gate does not accept amended approvals; send a counter-offer.');
-    }
     if (!d.amended_args || !d.amended_hash) throw RelayError.badRequest('amended_args and amended_hash are required.');
     let amendedHash: string;
     try {
@@ -251,15 +276,36 @@ export class Resolver {
   }
 
   private finish(e: Entry, record: LiveRecord, final: boolean): LiveRecord {
+    const wasResolved = e.state === 'resolved' || e.state === 'expired';
     if (final) {
       e.final = record;
-      e.state = 'resolved';
-    }
+      e.state = record.authorization?.status === 'unknown' ? 'uncertain' : record.authorization?.status === 'expired' ? 'expired' : 'resolved';
+    } else e.escalation = record;
     this.store.save();
     this.recorder?.record(e, record);
     this.hub.broadcast({ type: 'record.sealed', intent_id: e.intent_id, record });
-    if (final) this.hub.broadcast({ type: 'intent.resolved', intent_id: e.intent_id, record });
+    if (final && !wasResolved && e.state !== 'uncertain') this.hub.broadcast({ type: 'intent.resolved', intent_id: e.intent_id, record });
     return record;
+  }
+
+  record(id: string): LiveRecord {
+    const e = this.store.get(id), record = e?.final ?? e?.escalation;
+    if (!record) throw new RelayError(404, 'UNKNOWN_INTENT', 'No decision record is available yet.');
+    return record;
+  }
+
+  /** Authenticated recovery is read/verify only: never call grant, cancel, or execute. */
+  async recover(id: string): Promise<LiveRecord> {
+    return this.serial(id, async () => {
+      const e = this.store.get(id)!;
+      let record = this.record(id);
+      if (record.authorization?.status === 'unknown' && e.hook?.outcome === 'ALLOW' &&
+        e.hook.intent_hash === record.intent_hash && e.hook.decision_id && e.hook.dossier_id) {
+        record = { ...record, authorization: { status: 'approved', source: 'policy_gate', decision_id: e.hook.decision_id, dossier_id: e.hook.dossier_id } };
+        this.finish(e, record, true);
+      }
+      return this.finish(e, await this.sealer.check(record, true), Boolean(e.final));
+    });
   }
 
   /** Fail closed on expiry (C29): live TTL is wall clock; the relay seals REJECT(expired). */

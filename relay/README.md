@@ -33,7 +33,7 @@ npm run policy:push       # POST /v1/protocol/policies/bundles with policy/cyclo
 | `RELAY_WEBHOOK_BEARER` | Optional Bearer token the webhook delivery carries |
 | `RELAY_WEBHOOK_UNSIGNED=1` | Dev only: accept unsigned webhooks (otherwise refused, fail closed) |
 | `RELAY_REQUIRE_WEBHOOK=1` | Present an ESCALATE only after its webhook confirms the agent's handoff |
-| `RELAY_AMENDED_APPROVAL=1` | Advertise `supportsAmendedApproval` (default false, DECISIONS D20a) |
+| `RELAY_AMENDED_APPROVAL` | Obsolete; cannot enable the undocumented route. `supportsAmendedApproval` is always false (D51) |
 | `RELAY_UPSTREAM_REJECT=1`, `RELAY_UPSTREAM_ESCALATE=1` | Route veto / escalate to their (undocumented) stubs |
 | `RELAY_JWKS_URL` / `RELAY_JWKS_FILE` | Dossier keys: pinned production URL (default) or a local file (never an official anchor) |
 | `RELAY_DATA_DIR` | Held intents + records persist here (`relay/.data`, git-ignored) |
@@ -44,8 +44,10 @@ npm run policy:push       # POST /v1/protocol/policies/bundles with policy/cyclo
 | Route | Auth | What |
 | --- | --- | --- |
 | `GET /capabilities` | none (no secret in it) | `{ supportsAmendedApproval, source: "live" }` |
-| `GET /ws?session=…` | session or agent token | `intent.held` (snapshot on connect, then live), `intent.expired`, `intent.resolved`, `record.sealed` |
+| `GET /ws?session=…` | session or agent token | Current held intents and records on connect, then `intent.held`, `intent.expired`, `intent.resolved`, monotonic `record.sealed` updates |
 | `POST /intents/{id}/decision` | `Bearer <session>` | `Decision` → `SignedRecord`. 400 malformed · 401/403 auth · 404 unknown · 409 hash mismatch / already resolved · 410 expired · 403 `FORBIDDEN` (gesture, forbidden slot, policy gate did not allow) · 422 `AMEND_UNSUPPORTED` / `AMEND_DENIED` · 501 amended approval stub · 503 not configured / upstream refused. Body `{ code, detail }` |
+| `GET /intents/{id}/record` | `Bearer <session>` | Current durable record, including an uncertain or pending decision; no authority request |
+| `POST /intents/{id}/verification` | `Bearer <session>` | Re-fetch the same dossier and refresh verification keys; preserve record ID and increment revision. No grant or execution call |
 | `POST /webhooks/policy-gate` | HMAC (+ optional Bearer) | `authority.escalation_required` / `authority.escalation_resolved` (§1) |
 | `POST /held` | `Bearer <agent token>` | `{ binding, intent_hash, authority: { status, decision_id, dossier_id, escalation_id, reason_codes }, presentation }` |
 | `GET /health` | none | What is configured (no secrets) |
@@ -65,11 +67,19 @@ npm run policy:push       # POST /v1/protocol/policies/bundles with policy/cyclo
    inbox because the attestation is bound to `intent_id` + `intent_hash` (what you see is what you sign), the
    response is a normal decision with `dossier_id`, and its refusals are documented; the case inbox has no
    hash in its body, needs a "person" actor, and does not say whether it yields a dossier.
-4. The returned dossier is fetched (§5) and verified with `verifyDossierProofBundle` against the pinned JWKS.
-   `verified` is true only with valid signatures **and** `required_artifact_coverage_verified` **and** trust
-   anchor `DECIONIS_OFFICIAL`; otherwise the record seals as unverified. Veto, escalate and expiry seal with
-   the hold's own dossier (the ESCALATE / BLOCK decision). No dossier → unverified (fail closed).
-5. Expiry: a sweep seals `REJECT(expired)` at `expires_at` (wall clock) and broadcasts `intent.expired`.
+4. Before making that request, persist an uncertain record. Persist an `ALLOW` as an authorization fact before
+   fetching proof. A lost response is never reset to held and automatically resubmitted. The same decision is
+   idempotent; a different decision on the same intent is refused. A matching authenticated resolved webhook
+   can reconcile an uncertain result during recovery.
+5. Fetch and verify the dossier against the pinned JWKS. Require valid signatures, required artifact coverage,
+   `DECIONIS_OFFICIAL` trust anchor **and** the exact signed decision/action association documented in §9.
+   An unrelated valid dossier is insufficient. Veto, escalate and expiry may retain the earlier hold's dossier,
+   but it does **not** verify a later local gesture. Missing or mismatched proof stays explicitly unverified.
+6. `GET …/record` and `POST …/verification` recover the same record without another authority request. WebSocket
+   and HTTP revisions cannot overwrite newer proof or create another seal. All live records have execution
+   `not_requested`: even matching proof is evidence for a subsequent grant/claim workflow, not an execution receipt.
+7. Startup and periodic sweeps reject still-held expired intents at wall-clock TTL. Already-authorized or uncertain
+   dispatches never return to the held queue. Corrupt durable state stops startup rather than forgetting a dispatch.
 
 Live-mode choices the client should know: `AUTO_APPROVE_RULE` is refused (403) because a desk rule cannot
 speak for a person to the policy gate; the client falls back to a normal held token. A veto calls

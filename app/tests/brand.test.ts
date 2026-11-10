@@ -3,9 +3,14 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 // C41: no corporate names in anything the app can render. Protocol identifiers
-// (`agent-safe.intent/1`) and verifier enum values are data, never shown.
+// (`agent-safe.intent/1`), verifier enum values and exact proof-export schema
+// fields are data, never shown. Keep export exceptions scoped to their keys.
 const ROOT = join(__dirname, '..');
-const ALLOWED = [/agent-safe\.intent\/1/g, /DECIONIS_OFFICIAL/g];
+const ALLOWED = [
+  /agent-safe\.intent\/1/g, /DECIONIS_OFFICIAL/g,
+  /schema_version:\s*'decionis\.decision_dossier\/2\.0'/g,
+  /bundle_type:\s*'decionis\.decision_dossier\.proof_bundle'/g,
+];
 const BRAND = /decionis|agent\s?safe/i;
 
 function files(dir: string): string[] {

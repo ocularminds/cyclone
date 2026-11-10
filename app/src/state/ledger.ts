@@ -1,5 +1,6 @@
 import type { SignedRecord } from '../contracts/intent';
 import type { Store } from './store';
+import { Proof } from '../core/proof';
 
 /**
  * The ledger shelf's records (C10, C11, C19). Persisted across sessions;
@@ -11,13 +12,22 @@ export class Ledger {
   private fixtures: SignedRecord[] = [];
 
   constructor(private readonly store: Store) {
-    this.records = store.read<SignedRecord[]>('ledger', []);
+    const saved = store.read<unknown>('ledger', []);
+    this.records = Array.isArray(saved) ? saved.filter(Proof.readable) : [];
+    if (!Array.isArray(saved) || this.records.length !== saved.length) store.write('ledgerCorrupt', saved);
   }
 
-  add(record: SignedRecord): void {
-    if (this.records.some((r) => r.record_id === record.record_id)) return;
-    this.records.push(record);
+  add(record: SignedRecord): boolean {
+    if (!Proof.readable(record)) return false;
+    const index = this.records.findIndex(r => r.record_id === record.record_id);
+    if (index >= 0) {
+      const prior = this.records[index];
+      if (record.source !== 'live' || prior.source !== 'live' || !Proof.matches(record, prior.decision) ||
+        Proof.revision(record) <= Proof.revision(prior)) return false;
+      this.records[index] = { ...record, local_rehearsal: prior.local_rehearsal ?? record.local_rehearsal };
+    } else this.records.push(record);
     this.store.write('ledger', this.records);
+    return true;
   }
 
   seed(fixtures: SignedRecord[]): void {

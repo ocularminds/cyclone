@@ -24,7 +24,8 @@ describe('dossier verification (C39, AGENTS §8.3)', () => {
       expect(c.verification.trust_anchor, name).not.toBe('DECIONIS_OFFICIAL');
       expect(c.verification.trust_anchor, name).toBe('UNESTABLISHED');
       expect(c.verification.verified, name).toBe(false);
-      expect(c.verification.assurance_scope_summary).toMatch(/^Signatures valid · coverage complete · key source not the official anchor\. Established: evaluation/);
+      expect(c.verification.assurance_scope_summary).toMatch(/^Signatures valid · coverage complete · key source not the official anchor\./);
+      expect(c.verification.intent_binding_verified).toBe(false);
     }
   });
 
@@ -64,14 +65,14 @@ describe('dossier verification (C39, AGENTS §8.3)', () => {
     expect(c.verification.verified).toBe(false);
   });
 
-  it('only all three together verify: valid signatures + coverage + keys served from the pinned URL (mocked fetch)', async () => {
+  it('signature, coverage and mocked pinned keys still require an expected signed action association', async () => {
     const gate = new MockGate();
     const clock = new FakeClock();
     const upstream = new Upstream({ base: 'https://api.decionis.com', apiKey: null, orgId: null, fetch: gate.fetch });
     const v = Verifier.forConfig(Config.defaults({ now: clock.now }), upstream);
     expect(v.source).toBe('https://api.decionis.com/.well-known/decision-dossier-jwks.json');
     const c = await v.check(fixture('allow'), 'synthetic-dossier-allow-001');
-    expect(c.verification).toMatchObject({ verified: true, required_artifact_coverage_verified: true, trust_anchor: 'DECIONIS_OFFICIAL' });
+    expect(c.verification).toMatchObject({ verified: false, intent_binding_verified: false, required_artifact_coverage_verified: true, trust_anchor: 'DECIONIS_OFFICIAL' });
     // cached: one JWKS fetch for two checks
     await v.check(fixture('escalate'));
     expect(gate.seen.filter((s) => s.url.endsWith('decision-dossier-jwks.json'))).toHaveLength(1);

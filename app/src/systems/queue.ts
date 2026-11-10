@@ -67,6 +67,10 @@ export class IntentQueueSystem extends createSystem({
         if (this.stage.focus === token.id) this.stage.focus = null;
       }),
       shift.events.on('sealed', ({ token }) => this.leave(token.id, 'leaving')),
+      shift.events.on('record', record => {
+        const token = shift.get(record.intent_id);
+        if (token?.status === 'sealed') this.leave(token.id, 'leaving');
+      }),
       shift.events.on('auto', ({ token }) => this.leave(token.id, 'leaving')),
       shift.events.on('expired', (t) => {
         const v = this.stage.views.get(t.id);

@@ -78,6 +78,7 @@ export class Relay {
     await relay.app.register(websocket);
     relay.routes();
     await relay.app.ready();
+    await relay.resolver.sweep();
     return relay;
   }
 
@@ -118,7 +119,7 @@ export class Relay {
         return reply.code(err.statusCode).send({ code: 'BAD_REQUEST', detail: Brand.scrub(err.message) });
       }
       req.log.error(err);
-      return reply.code(500).send({ code: 'UNAVAILABLE', detail: 'Relay error; the intent stays held.' });
+      return reply.code(500).send({ code: 'UNAVAILABLE', detail: 'Relay error. Check the current decision record before retrying.' });
     });
 
     app.get('/health', async () => ({
@@ -126,14 +127,14 @@ export class Relay {
       upstream: this.upstream.configured,
       attestation: Boolean(this.attestor),
       webhook_signed: Boolean(cfg.webhook.secret),
-      amended_approval: cfg.amendedApproval,
+      amended_approval: false,
       held: this.store.held().length,
       peers: this.hub.size,
     }));
 
     // Public on purpose: it holds no secret, and the client must learn the real flag
     // (app/src/adapters/live.ts keeps its default when this call fails).
-    app.get('/capabilities', async () => ({ supportsAmendedApproval: cfg.amendedApproval, source: 'live' as const }));
+    app.get('/capabilities', async () => ({ supportsAmendedApproval: false, source: 'live' as const }));
 
     app.get(
       '/ws',
@@ -147,7 +148,8 @@ export class Relay {
         },
       },
       (socket) => {
-        this.hub.add(socket, this.store.held().map((e) => e.intent!));
+        this.hub.add(socket, this.store.held().map((e) => e.intent!),
+          this.store.all().flatMap(e => [e.escalation, e.final].filter((r): r is NonNullable<typeof r> => Boolean(r))));
         socket.on('close', () => this.hub.remove(socket));
         socket.on('error', () => this.hub.remove(socket));
       },
@@ -157,6 +159,15 @@ export class Relay {
       const who = this.auth.client(req.headers.authorization);
       const { intentId } = req.params as { intentId: string };
       return this.resolver.resolve(req.body, intentId, who.subject);
+    });
+
+    app.get('/intents/:intentId/record', async (req) => {
+      this.auth.client(req.headers.authorization);
+      return this.resolver.record((req.params as { intentId: string }).intentId);
+    });
+    app.post('/intents/:intentId/verification', async (req) => {
+      this.auth.client(req.headers.authorization);
+      return this.resolver.recover((req.params as { intentId: string }).intentId);
     });
 
     app.post('/held', async (req) => {

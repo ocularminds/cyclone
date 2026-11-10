@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-10T06:14:17.960Z",
+  "environmentConfigured": {
+    "DECIONIS_API_KEY": false,
+    "DECIONIS_ORG_ID": false,
+    "RELAY_ATTEST_KEY": false,
+    "RELAY_ATTEST_KID": false,
+    "RELAY_WEBHOOK_SECRET": false,
+    "RELAY_SESSIONS": false
+  },
+  "configFilePresent": {
+    ".env": false,
+    "relay/.env": false,
+    "agent/.env": false
+  },
+  "source": "Presence checks only; no credential values read or printed"
+}

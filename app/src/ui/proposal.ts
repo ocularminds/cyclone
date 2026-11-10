@@ -62,7 +62,7 @@ export class Proposal {
       line(parked ? token.status === 'escalated' ? 'Awaiting another reviewer. No execution.' : 'Do not repeat the decision. No execution confirmed.' : stage.holding || stage.holdFeedback.startsWith('Tracking') || stage.holdFeedback.startsWith('Hold cancelled') ? stage.holdFeedback : GesturePolicy.approvalHint(i, context), 0.01, ui.text, 700),
       line(`Rule: ${i.policy.rule_id}`, 0.0075, ui.muted),
       line(`Affected: ${Proposal.short(assets, 60)}`, 0.0075, ui.muted),
-      line(`${source} / ${seconds} s. Edge = veto.`, 0.009, ui.muted),
+      line(token.status === 'unverified' ? `${source} / Check the sent record below.` : `${source} / ${seconds} s. Edge = veto.`, 0.009, ui.muted),
     ];
   }
 }

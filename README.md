@@ -12,6 +12,8 @@ on the miniature; no real machine is driven. A signature, an authorization and p
 ## Try it
 
 [Open the public demo](https://ocularminds.github.io/cyclone/).
+[Watch the 2:49 emulator demo](https://ocularminds.github.io/cyclone/video/cyclone-revision1.mp4).
+The video labels simulated execution throughout; competition YouTube/Vimeo publication still needs account access.
 
 - On a headset, open the URL and select **Enter**. A suitable table anchors the miniature; after three seconds
   without one, a seated plinth appears. Physical Quest performance, room placement and narrow FoV checks remain H3.
@@ -67,13 +69,14 @@ node tests/e2e/drive.mjs       # four scenarios, hands only, including cancellat
 node tests/e2e/extras.mjs      # alternative inputs, escalation, replay and bounded rules
 node tests/e2e/design-ui.mjs   # every settings page at both text sizes, reset and rationale
 node tests/e2e/receipts.mjs    # after drive: reload, stored replay, legacy and tamper checks
+node tests/e2e/revision-ui.mjs # after a capture shift: proof export/retry and translated head positions
 node tests/e2e/spatial.mjs     # actual dial, timeline, ledger and rule geometry
 node tests/e2e/capture.mjs     # deterministic recording and end-card state
 node tests/e2e/occlusion.mjs   # stereo panel draw order plus hand-input regression
 ```
 
-Set `CYCLONE_EVIDENCE=../docs/design1` to save current evidence separately from the original baseline.
-See [the design implementation evidence](docs/design1/README.md) and [the capability register](CAPABILITIES.md)
+Set `CYCLONE_EVIDENCE=../docs/revision1` to save current evidence separately from the original baseline.
+See [the revision evidence](docs/revision1/README.md), [design evidence](docs/design1/README.md) and [the capability register](CAPABILITIES.md)
 for what was actually checked. Emulator results do not establish headset frame rate or real hand-tracking quality.
 
 ## Demo and live modes
@@ -83,21 +86,28 @@ Receipts say **Demo signature**. They retain original/reviewed bindings, values,
 paths and breach results. The signed snapshot has a separate local rehearsal digest; it does not change the
 Agent-Safe Intent v1 action hash. Ledger replay uses that retained evidence after reload. Older argument-only
 records remain readable and explicitly say that their original rehearsal is unavailable.
+**Receipt → Proof → Export proof** downloads a public demo proof bundle and JWKS in one JSON file.
+`npx @decionis/verify --file <export.json> --jwks <export.json>` checks its signatures. The key is local,
+never an official service trust anchor; neither that check nor the rehearsal establishes physical execution.
 
 **Take-it-away statement:** remove the external policy gate and the full loop still runs: twin, rehearsal,
 gestures, seals, drills, trust and handover. No login or backend is needed.
 
 Drill results distinguish catches, misses, corrections, escalations and timeouts. A timeout counts as a miss;
 an unresolved escalation is unassessed. False alarms are separate. A trust ring is a progression cue. Its offered
-demo rule applies only to the named agent, conveyor, unit and range (0 through +5%), routine risk, and single
+demo rule applies only to the named agent, conveyor, fixed line argument, unit and range (0 through +5%), routine risk, and single
 approval for eight hours. Drills never qualify. Rules can be revoked in settings. Live auto-approval is unavailable.
 
 **Live mode** uses a separately configured Node relay (`?gate=live&relay=<url>&token=<session>`).
 Missing configuration leaves the demo available. The UI requires matching action proof as well as signature,
-artifact coverage and official trust anchor before it can display an official verified seal. The current relay's
-signed-action binding work in technical R1 is still pending, so its responses conservatively remain unverified for
-the action. They never trigger a physical-execution animation. Provisioning and service-backed acceptance also
-remain H1. See [relay setup](relay/README.md), [policy setup](policy/README.md), and [documented integration limits](docs/agentsafe.md).
+artifact coverage and official trust anchor before it can display an official verified seal. The relay now checks
+the signature-covered decision and exact Intent v1 binding against the held action. Authorization, proof status
+and execution remain separate; **Retry check** retrieves the same record without requesting another approval.
+An uncertain network result stays pending across restart. No live result animates physical execution: there is
+no actuator integration. These cases pass local signed-fixture tests; provisioned service acceptance remains H1.
+Live amendment is advertised as unavailable because the public API only documents a fresh proposal for a changed
+binding. The demo exercises both amendment and counter-offer paths. See [relay setup](relay/README.md),
+[policy setup](policy/README.md), and [documented integration limits](docs/agentsafe.md).
 
 ## How we built it
 
@@ -105,7 +115,8 @@ remain H1. See [relay setup](relay/README.md), [policy setup](policy/README.md),
   WebAudio synthesises the sound. The Calm Precision system uses opaque semantic surfaces and local fonts.
 - Intent hashes use Agent-Safe Intent v1. The browser port matches `intentHash()` from `@decionis/verify` for
   scenario bindings, mutations, conformance vectors and edge cases. The upstream CLI corpus failure remains
-  documented in D20d; parity does not turn that failed CLI check into a pass. Token and seal glyphs derive from
+  documented in D53 (15 of 16 current corpus files pass; `policy-projection.json` fails in verifier 0.5.0);
+  parity does not turn that failed CLI check into a pass. Token and seal glyphs derive from
   the reviewed hash, including amendments.
 - `relay/` integrates Decionis AgentSafe and runs `@decionis/verify` server-side. It is never bundled into the headset.
   `agent/` contains the scripted live agent, and `policy/` the provisionable policy bundle.

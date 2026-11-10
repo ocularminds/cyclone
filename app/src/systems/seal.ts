@@ -12,6 +12,7 @@ import type { Stage } from '../stage';
 import { Label, type Line } from '../ui/label';
 import { ControlStyle } from '../ui/control';
 import { ReadingLayer } from '../ui/reading-layer';
+import { PanelReach } from '../ui/reach';
 
 type SealView = { record: SignedRecord; entity: Entity; root: Group; home: Vector3; from: Vector3; t: number; verified: boolean | null; history: 'checking' | 'available' | 'unavailable' };
 type Page = 'action' | 'history' | 'proof' | 'menu';
@@ -34,6 +35,8 @@ export class SealSystem extends createSystem({ grabbed: { required: [SealTag, Gr
   private textPage = 0;
   private pageCount = 1;
   private inputAfter = 0;
+  private retrying = false;
+  private readonly reach = new PanelReach();
 
   init(): void {
     this.app = this.globals.cyclone as Cyclone; this.stage = this.globals.stage as Stage;
@@ -55,6 +58,7 @@ export class SealSystem extends createSystem({ grabbed: { required: [SealTag, Gr
     };
     this.cleanupFuncs.push(
       this.app.shift.events.on('sealed', onRecord), this.app.shift.events.on('escalated', onRecord), this.app.shift.events.on('auto', onRecord),
+      this.app.shift.events.on('record', r => this.add(r, null)),
       this.queries.grabbed.subscribe('qualify', e => this.pickUp(e)),
       this.queries.grabbed.subscribe('disqualify', e => {
         const s = this.seals.find(x => x.entity === e);
@@ -75,6 +79,12 @@ export class SealSystem extends createSystem({ grabbed: { required: [SealTag, Gr
   }
   private act(n: number): void {
     if (!this.detailFor || this.stage.settingsOpen || performance.now() < this.inputAfter) return;
+    if (this.page === 'proof') {
+      if (n === 0) void (this.detailFor.record.source === 'live' ? this.retryCheck() : this.exportProof());
+      else if (n === 1) this.textPage = (this.textPage + 1) % this.pageCount;
+      else { this.page = 'menu'; this.textPage = 0; }
+      return;
+    }
     if (this.pageCount > 1 && this.page !== 'history') {
       if (n < 2) this.textPage = Math.max(0, Math.min(this.pageCount - 1, this.textPage + (n === 0 ? -1 : 1)));
       else { this.page = 'menu'; this.textPage = 0; }
@@ -89,6 +99,28 @@ export class SealSystem extends createSystem({ grabbed: { required: [SealTag, Gr
     else this.page = n === 0 ? 'action' : 'history';
     this.app.cue('unfold', this.detailFor ? `Receipt ${this.page}` : 'Receipt closed');
   }
+  private async retryCheck(): Promise<void> {
+    if (this.retrying || !this.detailFor) return;
+    this.retrying = true;
+    const id = this.detailFor.record.intent_id;
+    this.app.cue('unfold', 'Checking the existing record. No new approval is sent.');
+    try {
+      const record = await this.app.shift.recoverRecord(id);
+      this.app.cue('unfold', record && Proof.official(record) ? 'Record verified for this action.' : 'Record could not be verified. The previous request is unchanged.');
+    } finally { this.retrying = false; }
+  }
+  private async exportProof(): Promise<void> {
+    if (!this.detailFor || this.retrying) return;
+    this.retrying = true;
+    try {
+      const record = this.detailFor.record, data = await this.app.signer.export(record);
+      const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
+      const a = document.createElement('a'); a.href = url; a.download = `cyclone-demo-${record.record_id}.json`; a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      this.app.cue('unfold', 'Demo proof exported with its public key. Local signature only.');
+    } catch { this.app.cue('unfold', 'No valid demo proof export is available for this receipt.'); }
+    finally { this.retrying = false; }
+  }
   static kindOf(r: SignedRecord): SealKind {
     switch (r.decision.decision) {
       case 'APPROVE': return 'approve'; case 'APPROVE_AMENDED': return 'amended';
@@ -97,6 +129,11 @@ export class SealSystem extends createSystem({ grabbed: { required: [SealTag, Gr
     }
   }
   private add(record: SignedRecord, from: Vector3 | null): void {
+    const existing = this.seals.find(s => s.record.record_id === record.record_id);
+    if (existing) {
+      if (Proof.revision(record) <= Proof.revision(existing.record)) return;
+      existing.record = record; this.check(existing); return;
+    }
     const glyph = Glyph.from(record.amended_hash ?? record.intent_hash);
     const view: SealView = {
       record, entity: null!, root: Tokens.seal(SealSystem.kindOf(record), glyph, false), home: new Vector3(), from: new Vector3(),
@@ -107,14 +144,21 @@ export class SealSystem extends createSystem({ grabbed: { required: [SealTag, Gr
     view.entity.addComponent(SealTag, { recordId: record.record_id });
     view.entity.addComponent(OneHandGrabbable, { rotate: true, translate: true });
     this.seals.push(view);
-    void Promise.all([isLive(record.verification) ? Promise.resolve(Proof.official(record)) : this.app.signer.verify(record), Receipt.check(record)])
-      .then(([signature, history]) => {
-        view.verified = signature;
-        view.history = history && (record.source === 'live' || signature) ? 'available' : 'unavailable';
-        Tokens.sealProof(view.root, glyph, signature);
-      }).catch(() => { view.verified = false; view.history = 'unavailable'; });
+    this.check(view);
     while (this.seals.length > SealSystem.SHOWN) this.seals.shift()!.entity.dispose();
     this.layout(); if (from) view.from.copy(from); else view.root.position.copy(view.home);
+  }
+  private check(view: SealView): void {
+    const record = view.record, glyph = Glyph.from(record.amended_hash ?? record.intent_hash);
+    view.verified = isLive(record.verification) && record.verification.proof_status !== 'pending' ? Proof.official(record) : null;
+    view.history = 'checking';
+    void Promise.all([isLive(record.verification) ? Promise.resolve(Proof.official(record)) : this.app.signer.verify(record), Receipt.check(record)])
+      .then(([signature, history]) => {
+        if (view.record !== record) return;
+        view.verified = isLive(record.verification) && record.verification.proof_status === 'pending' ? null : signature;
+        view.history = history && (record.source === 'live' || signature) ? 'available' : 'unavailable';
+        Tokens.sealProof(view.root, glyph, signature);
+      }).catch(() => { if (view.record === record) { view.verified = false; view.history = 'unavailable'; } });
   }
   private layout(): void {
     this.seals.forEach((s, i) => {
@@ -134,9 +178,13 @@ export class SealSystem extends createSystem({ grabbed: { required: [SealTag, Gr
     this.detailRoot.userData.recordId = s.record.record_id;
     this.inputAfter = performance.now() + 650;
     this.textPage = 0;
+    this.placeDetail();
+    this.replay(s);
+  }
+  private placeDetail(): void {
     this.detailRoot.position.copy(this.stage.head).addScaledVector(this.stage.gaze, 0.565);
     this.detailRoot.lookAt(this.v.copy(this.stage.head).applyMatrix4(this.stage.root.matrixWorld));
-    this.replay(s);
+    this.reach.placed(this.stage.head);
   }
   private replay(s: SealView, original = false): void {
     const result = s.history === 'available' ? Receipt.result(s.record, original) : null;
@@ -145,18 +193,19 @@ export class SealSystem extends createSystem({ grabbed: { required: [SealTag, Gr
     this.app.cue('unfold', 'Replaying the stored model evidence');
   }
   static tier(t: string): string {
-    return t === 'owned' ? 'Owned workspace' : t === 'provisional_anonymous' ? 'Provisional anonymous workspace' : 'Unknown issuer';
+    return /provisional|anonymous/i.test(t) ? 'Provisional anonymous workspace' : /owned/i.test(t) ? 'Owned workspace' : 'Unknown issuer';
   }
   private lines(s: SealView): Line[] {
     const r = s.record, ui = Palette.ui, evidence = r.local_rehearsal ?? r.rehearsal;
-    const snap = evidence.snapshot;
+    const snap = s.history === 'available' ? evidence.snapshot : undefined;
     const line = (text: string, size = 0.009, color = ui.text, weight: 400 | 600 | 700 = 400): Line => ({ text, size, color, weight });
     const header: Line[] = [{ text: 'Decision receipt', size: 0.015, weight: 700, display: true }, line(`${SealSystem.kindOf(r).toUpperCase()} / ${r.source === 'demo' ? 'Demo' : 'Live policy gate'}`, 0.01, ui.accent, 700)];
     if (this.page === 'menu') return [...header, line('Choose the retained rehearsal or the proof details. The action and its execution outcome are separate.'), line('Close to return to the desk.')];
     if (this.page === 'proof') {
       const v = r.verification;
       return [...header,
-        line(isLive(v) ? (s.verified ? 'Signature and action binding checked' : 'Unverified for this action') : s.verified === null ? 'Demo signature: checking...' : s.verified ? 'Demo signature: valid' : 'Demo signature: invalid', 0.012, s.verified ? ui.accent : ui.danger, 700),
+        line(isLive(v) ? (s.verified === null ? 'Checking decision record' : s.verified ? 'Signature and action binding checked' : 'Record could not be verified') : s.verified === null ? 'Demo signature: checking...' : s.verified ? 'Demo signature: valid' : 'Demo signature: invalid', 0.012, s.verified ? ui.accent : ui.warning, 700),
+        ...(r.source === 'live' ? [line(`Authorization: ${r.authorization?.status ?? 'unknown'}. Retry checks this record; it never sends a new approval.`)] : []),
         ...(isLive(v) ? [line(`Issuer: ${SealSystem.tier(v.issuer_tier)}`), line(v.assurance_scope_summary), line(`Coverage: ${v.required_artifact_coverage_verified ? 'checked' : 'not established'}. Binding: ${v.intent_binding_verified === true ? 'checked' : 'not established'}.`)]
           : [line('Signed with this installation\'s local demo key. This is not an official policy-gate attestation.')]),
         line(r.source === 'demo' ? 'Execution is simulated in this demo.' : 'An authorization does not confirm physical execution.'),
@@ -184,16 +233,18 @@ export class SealSystem extends createSystem({ grabbed: { required: [SealTag, Gr
       line(`Decided ${new Date(r.decided_at).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })}`),
       line(`Gesture: ${r.decision.gesture.replace(/_/g, ' ')}`),
       line(snap ? snap.reviewed.breach ? `Rehearsal: crossed ${snap.reviewed.breach.zone_label}.` : 'Rehearsal: within the retained envelope.' : 'Rehearsal outcome: unavailable.'),
-      line(r.decision.decision === 'ESCALATE' ? 'Action remains held for another reviewer.' : Proof.approval(r) ? r.source === 'demo' ? 'Execution: simulated.' : 'Physical execution: not confirmed.' : 'Execution: not authorized.'),
+      ...(r.source === 'live' ? [line(`Authorization: ${r.authorization?.status ?? 'unknown'}.`)] : []),
+      line(r.decision.decision === 'ESCALATE' ? 'Action remains held for another reviewer.' : Proof.approval(r) ? r.source === 'demo' ? 'Execution: simulated.' : 'Physical execution: not requested or confirmed.' : 'Execution: not authorized.'),
       line(s.verified === null ? 'Proof: checking...' : s.verified ? r.source === 'demo' ? 'Proof: demo signature valid.' : 'Proof: matching checks passed.' : 'Proof: unverified.', 0.009, s.verified ? ui.accent : ui.warning),
     ];
   }
   private refreshControls(): void {
-    const key = `${this.page}:${this.textPage}:${this.pageCount}:${Palette.theme}:${Palette.isHighContrast}:${Palette.textScale}`;
+    const live = this.detailFor?.record.source === 'live';
+    const key = `${this.page}:${this.textPage}:${this.pageCount}:${live}:${this.retrying}:${Palette.theme}:${Palette.isHighContrast}:${Palette.textScale}`;
     if (!this.controls || key === this.controlsKey) return;
     this.controlsKey = key; const ui = Palette.ui;
     const more = this.textPage < this.pageCount - 1 ? `More ${this.textPage + 1}/${this.pageCount}` : 'Back';
-    const names = this.pageCount > 1 && this.page !== 'history' ? ['Previous', `Next ${this.textPage + 1}/${this.pageCount}`, 'Details'] : this.page === 'action' || this.page === 'menu' ? ['Rehearsal', 'Proof', 'Close'] : this.page === 'history' ? ['Original', 'Reviewed', more] : ['Action', 'Rehearsal', 'Close'];
+    const names = this.page === 'proof' ? [this.retrying ? 'Working...' : live ? 'Retry check' : 'Export proof', `Next ${this.textPage + 1}/${this.pageCount}`, 'Details'] : this.pageCount > 1 && this.page !== 'history' ? ['Previous', `Next ${this.textPage + 1}/${this.pageCount}`, 'Details'] : this.page === 'action' || this.page === 'menu' ? ['Rehearsal', 'Proof', 'Close'] : ['Original', 'Reviewed', more];
     for (const [n, id] of ['a', 'b', 'c'].entries()) {
       this.controls.requireElementById(id).setProperties(ControlStyle.properties());
       this.controls.requireElementById(id + '-label').setProperties({ text: names[n], fontSize: Palette.textScale, color: ui.text });
@@ -210,6 +261,7 @@ export class SealSystem extends createSystem({ grabbed: { required: [SealTag, Gr
     }
     this.detailRoot.visible = !!this.detailFor && !this.stage.settingsOpen && !this.endcard;
     if (this.detailFor && this.detailRoot.visible) {
+      if (this.reach.outside(this.detailRoot, this.stage.head, this.stage.gaze, 0.28, 0.245)) this.placeDetail();
       const style = { background: Palette.ui.surface, border: Palette.ui.border, padding: 0.008, radius: 0.012 };
       const pages = this.detail.paginate(this.lines(this.detailFor), style, 2);
       this.pageCount = pages.length; this.textPage = Math.min(this.textPage, pages.length - 1);

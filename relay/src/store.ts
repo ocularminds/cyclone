@@ -5,7 +5,7 @@ import type { GrantStatus } from './upstream';
 
 /** What the relay did upstream for a record (relay-side note; never rendered). */
 export type UpstreamNote = {
-  path: 'grant' | 'escalation_cancelled' | 'cancel_failed' | 'lapse' | 'not_documented' | 'local' | 'expired';
+  path: 'grant' | 'escalation_cancelled' | 'cancel_failed' | 'lapse' | 'not_documented' | 'local' | 'expired' | 'uncertain';
   detail?: string;
   decision_id?: string;
   status?: string;
@@ -41,7 +41,7 @@ export type HookInfo = {
   received_at: string;
 };
 
-export type EntryState = 'pending' | 'held' | 'deciding' | 'resolved' | 'expired' | 'withdrawn';
+export type EntryState = 'pending' | 'held' | 'deciding' | 'resolved' | 'expired' | 'withdrawn' | 'uncertain';
 
 export type Entry = {
   intent_id: string;
@@ -85,16 +85,16 @@ export class Store {
     return [...this.entries.values()];
   }
 
-  /** Intents on the desk right now (held or mid-decision). */
+  /** Only undecided holds may be presented for a new gesture. */
   held(): Entry[] {
-    return this.all().filter((e) => (e.state === 'held' || e.state === 'deciding') && e.intent);
+    return this.all().filter((e) => e.state === 'held' && !e.final && e.intent);
   }
 
   save(): void {
     if (!this.dir) return;
     mkdirSync(this.dir, { recursive: true });
     const file = join(this.dir, 'state.json');
-    writeFileSync(`${file}.tmp`, JSON.stringify({ version: 1, entries: this.all() }));
+    writeFileSync(`${file}.tmp`, JSON.stringify({ version: 2, entries: this.all() }));
     renameSync(`${file}.tmp`, file);
   }
 
@@ -103,14 +103,21 @@ export class Store {
     const file = join(this.dir, 'state.json');
     if (!existsSync(file)) return;
     try {
-      const data = JSON.parse(readFileSync(file, 'utf8')) as { entries?: Entry[] };
-      for (const e of data.entries ?? []) {
-        // A decision cut off by a restart never completed: the intent is still held.
-        if (e.state === 'deciding') e.state = 'held';
+      const data = JSON.parse(readFileSync(file, 'utf8')) as { version: number; entries: Entry[] };
+      if (![1, 2].includes(data.version) || !Array.isArray(data.entries)) throw new Error('Unsupported state shape');
+      for (const e of data.entries) {
+        if (!e || typeof e.intent_id !== 'string' || !['pending', 'held', 'deciding', 'resolved', 'expired', 'withdrawn', 'uncertain'].includes(e.state) || this.entries.has(e.intent_id)) throw new Error('Invalid or duplicate entry');
+        // A lost response is not proof that authorization failed. Never resubmit it.
+        if (e.state === 'deciding') {
+          e.state = e.final?.authorization?.status === 'approved' ? 'resolved' : 'uncertain';
+          e.note = 'Interrupted authorization; recover the same record without approving again.';
+        }
         this.entries.set(e.intent_id, e);
       }
     } catch {
-      // Unreadable state: start empty. Held intents re-arrive via webhook/agent; nothing executes.
+      // Forgetting a dispatched approval could authorize it twice after restart.
+      // Preserve the file and require recovery; never start an empty authority store.
+      throw new Error('Relay state is unreadable. Restore or reconcile state.json before accepting decisions.');
     }
   }
 }

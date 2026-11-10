@@ -7,6 +7,7 @@ import { Label } from '../ui/label';
 import { Proposal, type ReviewPage } from '../ui/proposal';
 import { ControlStyle } from '../ui/control';
 import { ReadingLayer } from '../ui/reading-layer';
+import { PanelReach } from '../ui/reach';
 
 /** A non-interactive reading surface with separate, named hand/ray controls. */
 export class CardSystem extends createSystem({ grabbedTokens: { required: [TokenTag, Grabbed] } }) {
@@ -31,12 +32,14 @@ export class CardSystem extends createSystem({ grabbedTokens: { required: [Token
   private controlsKey = '';
   private textPage = 0;
   private pageCount = 1;
+  private retrying = false;
   private readonly tmp = new Vector3();
   private readonly at = new Vector3();
   private readonly target = new Vector3();
   private readonly fwd = new Vector3();
   private readonly right = new Vector3();
   private readonly up = new Vector3();
+  private readonly reach = new PanelReach();
 
   init(): void {
     this.app = this.globals.cyclone as Cyclone; this.stage = this.globals.stage as Stage;
@@ -70,6 +73,16 @@ export class CardSystem extends createSystem({ grabbedTokens: { required: [Token
   private act(index: number): void {
     const token = this.stage.focus ? this.app.shift.get(this.stage.focus) : undefined;
     if (!token || this.stage.settingsOpen || this.app.clock.isPaused || token.status === 'deciding' || token.amending) return;
+    if (token.status === 'unverified') {
+      if (index === 0 && !this.retrying) {
+        this.retrying = true;
+        this.app.cue('unfold', 'Checking the sent decision. No new approval is sent.');
+        void this.app.shift.recoverRecord(token.id).then(record => {
+          this.app.cue('unfold', record ? 'Decision record retrieved. Inspect its receipt for proof.' : 'Record unavailable. The sent decision remains unchanged.');
+        }).finally(() => { this.retrying = false; });
+      } else if (index === 1) this.textPage = (this.textPage + 1) % this.pageCount;
+      return;
+    }
     const hasActions = this.page === 'adjust' || this.page === 'compare';
     if (this.pageCount > 1 && !hasActions) {
       if (index < 2) this.textPage = Math.max(0, Math.min(this.pageCount - 1, this.textPage + (index === 0 ? -1 : 1)));
@@ -132,6 +145,7 @@ export class CardSystem extends createSystem({ grabbedTokens: { required: [Token
     this.target.copy(this.stage.head).addScaledVector(this.fwd, CardSystem.DISTANCE);
     this.root.position.copy(this.target);
     this.root.lookAt(this.at.copy(this.stage.head).applyMatrix4(this.stage.root.matrixWorld));
+    this.reach.placed(this.stage.head);
   }
   update(delta: number): void {
     this.protectPhysicalInput();
@@ -148,10 +162,7 @@ export class CardSystem extends createSystem({ grabbedTokens: { required: [Token
     if (!show || !view) return;
     // Turning the head never drags the card across the scene. Reposition only
     // if a seated translation would put one of its actual corners out of reach.
-    for (const x of [-1, 1]) for (const y of [-1, 1]) {
-      this.at.set(x * CardSystem.WIDTH / 2, y * CardSystem.HEIGHT / 2, 0).applyQuaternion(this.root.quaternion).add(this.root.position);
-      if (this.at.distanceTo(this.stage.head) > 0.61) this.placeCard();
-    }
+    if (this.reach.outside(this.root, this.stage.head, this.stage.gaze, CardSystem.WIDTH, CardSystem.HEIGHT)) this.placeCard();
     this.root.scale.setScalar(Math.max(0.001, this.open));
     const ui = Palette.ui;
     const style = { background: ui.surface, border: ui.border, padding: 0.008, radius: 0.012 };
@@ -195,11 +206,11 @@ export class CardSystem extends createSystem({ grabbedTokens: { required: [Token
     const panel = this.controls; if (!panel) return;
     const token = this.stage.focus ? this.app.shift.get(this.stage.focus) : undefined; if (!token) return;
     const ui = Palette.ui;
-    const key = `${this.page}:${this.textPage}:${this.pageCount}:${token.id}:${token.status}:${token.amending}:${Palette.theme}:${Palette.isHighContrast}:${Palette.textScale}:${this.stage.comparison}`;
+    const key = `${this.page}:${this.textPage}:${this.pageCount}:${token.id}:${token.status}:${token.amending}:${this.retrying}:${Palette.theme}:${Palette.isHighContrast}:${Palette.textScale}:${this.stage.comparison}`;
     if (key === this.controlsKey) return;
     this.controlsKey = key;
     const more = this.textPage < this.pageCount - 1 ? `More ${this.textPage + 1}/${this.pageCount}` : 'Back';
-    const labels = this.pageCount > 1 && this.page !== 'adjust' && this.page !== 'compare' ? ['Previous', `Next ${this.textPage + 1}/${this.pageCount}`, this.page === 'review' ? 'Review tools' : 'Back']
+    const labels = token.status === 'unverified' ? [this.retrying ? 'Checking...' : 'Check record', `Next ${this.textPage + 1}/${this.pageCount}`, 'Sent'] : this.pageCount > 1 && this.page !== 'adjust' && this.page !== 'compare' ? ['Previous', `Next ${this.textPage + 1}/${this.pageCount}`, this.page === 'review' ? 'Review tools' : 'Back']
       : this.page === 'review' || this.page === 'tools' ? ['Full rationale', token.intent.amend && token.intent.policy.requires !== 'forbidden' ? 'Amend' : 'Not editable', 'Compare']
       : this.page === 'adjust' ? [`- ${token.intent.amend?.step} ${token.intent.amend?.unit}`, `+ ${token.intent.amend?.step} ${token.intent.amend?.unit}`, more]
       : this.page === 'compare' ? ['Original', 'Proposed', more] : ['Review', token.intent.amend && token.intent.policy.requires !== 'forbidden' ? 'Amend' : 'Not editable', 'Compare'];

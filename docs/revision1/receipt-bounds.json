@@ -1,0 +1,892 @@
+[
+  {
+    "scale": 1,
+    "ui": {
+      "panel": {
+        "entityIndex": 38,
+        "name": "receipt-controls",
+        "assetId": "review-controls",
+        "computedSize": {
+          "width": 28,
+          "height": 3.5
+        },
+        "targetSize": {
+          "width": 0,
+          "height": 0
+        }
+      },
+      "elements": [
+        {
+          "id": "review-controls",
+          "classes": [
+            "root"
+          ],
+          "componentType": "_Container",
+          "uuid": "40ef8298-efb0-457b-8db2-5f419663b93d",
+          "text": "Previous Next 1/2 Details",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0,
+              0
+            ],
+            "size": [
+              28,
+              3.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": "normal",
+            "fontSize": 16
+          },
+          "missingProperties": [
+            "color",
+            "backgroundColor",
+            "backgroundOpacity"
+          ]
+        },
+        {
+          "id": "a",
+          "classes": [
+            "button"
+          ],
+          "componentType": "Button",
+          "uuid": "bda6b888-160a-4ecd-ad6f-218f5d68acb6",
+          "text": "Previous",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              -9.599999904632568,
+              0
+            ],
+            "size": [
+              8.800000190734863,
+              3.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": 500,
+            "fontSize": 14,
+            "color": [
+              0.02028856305209031,
+              0.02028856305209031,
+              0.02028856305209031,
+              1
+            ],
+            "backgroundColor": "#213D49",
+            "backgroundOpacity": 1
+          }
+        },
+        {
+          "id": "a-label",
+          "classes": [
+            "label"
+          ],
+          "componentType": "ButtonLabel",
+          "uuid": "3da2cb60-5ae6-4239-a468-b6fb535946ef",
+          "text": "Previous",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0.004999876022338867,
+              5.960464477539063e-8
+            ],
+            "size": [
+              4.049999713897705,
+              1.1999999284744263
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": "700",
+            "fontSize": 1,
+            "color": "#F5F1E8"
+          },
+          "missingProperties": [
+            "backgroundColor",
+            "backgroundOpacity"
+          ]
+        },
+        {
+          "id": "b",
+          "classes": [
+            "button"
+          ],
+          "componentType": "Button",
+          "uuid": "725ac0e2-00fa-4a7c-886c-6467cb116be9",
+          "text": "Next 1/2",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0,
+              0
+            ],
+            "size": [
+              8.799999237060547,
+              3.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": 500,
+            "fontSize": 14,
+            "color": [
+              0.02028856305209031,
+              0.02028856305209031,
+              0.02028856305209031,
+              1
+            ],
+            "backgroundColor": "#213D49",
+            "backgroundOpacity": 1
+          }
+        },
+        {
+          "id": "b-label",
+          "classes": [
+            "label"
+          ],
+          "componentType": "ButtonLabel",
+          "uuid": "4a348410-9926-4de7-8482-eb61574f9228",
+          "text": "Next 1/2",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              4.76837158203125e-7,
+              5.960464477539063e-8
+            ],
+            "size": [
+              4.220000267028809,
+              1.1999999284744263
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": "700",
+            "fontSize": 1,
+            "color": "#F5F1E8"
+          },
+          "missingProperties": [
+            "backgroundColor",
+            "backgroundOpacity"
+          ]
+        },
+        {
+          "id": "c",
+          "classes": [
+            "button"
+          ],
+          "componentType": "Button",
+          "uuid": "749f6ed0-a579-49ed-8398-985844151047",
+          "text": "Details",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              9.600000381469727,
+              0
+            ],
+            "size": [
+              8.799999237060547,
+              3.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": 500,
+            "fontSize": 14,
+            "color": [
+              0.02028856305209031,
+              0.02028856305209031,
+              0.02028856305209031,
+              1
+            ],
+            "backgroundColor": "#213D49",
+            "backgroundOpacity": 1
+          }
+        },
+        {
+          "id": "c-label",
+          "classes": [
+            "label"
+          ],
+          "componentType": "ButtonLabel",
+          "uuid": "03e0a820-c214-454f-98aa-812cd2d5d3fe",
+          "text": "Details",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0.005000114440917969,
+              5.960464477539063e-8
+            ],
+            "size": [
+              3.309999465942383,
+              1.1999999284744263
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": "700",
+            "fontSize": 1,
+            "color": "#F5F1E8"
+          },
+          "missingProperties": [
+            "backgroundColor",
+            "backgroundOpacity"
+          ]
+        }
+      ],
+      "total": 7,
+      "limited": false
+    },
+    "root": "receipt-detail",
+    "visible": true,
+    "head": [
+      0,
+      1.600000023841858,
+      0
+    ],
+    "gaze": [
+      -0.4397042114458082,
+      -0.6862833920250735,
+      -0.579374932377454
+    ],
+    "position": [
+      -0.24843287467956543,
+      0.03224984183907509,
+      -0.04734683409333229
+    ],
+    "page": "action",
+    "pagination": {
+      "page": 1,
+      "total": 2
+    },
+    "measured": [
+      {
+        "name": "receipt-caption",
+        "reach": 0.5873561497686057,
+        "horizontal": 13.916877933542477,
+        "vertical": 7.9099265851965574,
+        "visible": false,
+        "label": {
+          "rendered": [
+            {
+              "text": "Replaying the stored model evidence",
+              "font": "600 21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.009
+            }
+          ],
+          "overflow": false,
+          "textScale": 1,
+          "fonts": "ready",
+          "width": 0.28,
+          "height": 0.036
+        },
+        "rect": {
+          "x": 1.0132596559071593e-16,
+          "y": -0.06049999999999976,
+          "width": 0.28,
+          "height": 0.036
+        }
+      },
+      {
+        "name": "receipt-text",
+        "reach": 0.5948371603305767,
+        "horizontal": 13.916878175380873,
+        "vertical": 12.233194027427944,
+        "visible": true,
+        "label": {
+          "rendered": [
+            {
+              "text": "Decision receipt",
+              "font": "bold 36px Manrope, system-ui, sans-serif",
+              "emMetres": 0.015
+            },
+            {
+              "text": "AMENDED / Demo",
+              "font": "bold 24px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01
+            },
+            {
+              "text": "Robot arm, cell 3",
+              "font": "bold 28.8px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.012
+            },
+            {
+              "text": "250 → 180 °/s",
+              "font": "bold 43.2px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.018
+            },
+            {
+              "text": "Original → reviewed",
+              "font": "18px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.0075
+            },
+            {
+              "text": "Decided 10 Nov 2026, 06:48",
+              "font": "21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.009
+            },
+            {
+              "text": "Gesture: two hand hold",
+              "font": "21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.009
+            },
+            {
+              "text": "Rehearsal: within the retained envelope.",
+              "font": "21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.009
+            },
+            {
+              "text": "Execution: simulated.",
+              "font": "21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.009
+            }
+          ],
+          "overflow": false,
+          "textScale": 1,
+          "fonts": "ready",
+          "width": 0.28,
+          "height": 0.16
+        },
+        "rect": {
+          "x": 7.357038997508703e-17,
+          "y": 0.042499999999999975,
+          "width": 0.28,
+          "height": 0.16
+        }
+      },
+      {
+        "name": "a",
+        "reach": 0.5938874010701265,
+        "horizontal": 13.940591256134072,
+        "vertical": 12.254229472748465,
+        "width": 0.08800000190734864,
+        "height": 0.035,
+        "rect": {
+          "x": -0.09599999904632563,
+          "y": -0.10499999672174451,
+          "width": 0.08800000190734864,
+          "height": 0.035
+        }
+      },
+      {
+        "name": "b",
+        "reach": 0.5788248817207866,
+        "horizontal": 4.460848029595636,
+        "vertical": 12.25422951490217,
+        "width": 0.08799999237060546,
+        "height": 0.035,
+        "rect": {
+          "x": 7.357038997508703e-17,
+          "y": -0.10499999672174473,
+          "width": 0.08799999237060546,
+          "height": 0.035
+        }
+      },
+      {
+        "name": "c",
+        "reach": 0.5938873995405889,
+        "horizontal": 13.940591493501634,
+        "vertical": 12.254229557055876,
+        "width": 0.08799999237060546,
+        "height": 0.035,
+        "rect": {
+          "x": 0.09600000381469732,
+          "y": -0.10499999672174451,
+          "width": 0.08799999237060546,
+          "height": 0.035
+        }
+      }
+    ]
+  },
+  {
+    "scale": 1.25,
+    "ui": {
+      "panel": {
+        "entityIndex": 38,
+        "name": "receipt-controls",
+        "assetId": "review-controls",
+        "computedSize": {
+          "width": 28,
+          "height": 3.5
+        },
+        "targetSize": {
+          "width": 0,
+          "height": 0
+        }
+      },
+      "elements": [
+        {
+          "id": "review-controls",
+          "classes": [
+            "root"
+          ],
+          "componentType": "_Container",
+          "uuid": "40ef8298-efb0-457b-8db2-5f419663b93d",
+          "text": "Previous Next 1/2 Details",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0,
+              0
+            ],
+            "size": [
+              28,
+              3.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": "normal",
+            "fontSize": 16
+          },
+          "missingProperties": [
+            "color",
+            "backgroundColor",
+            "backgroundOpacity"
+          ]
+        },
+        {
+          "id": "a",
+          "classes": [
+            "button"
+          ],
+          "componentType": "Button",
+          "uuid": "bda6b888-160a-4ecd-ad6f-218f5d68acb6",
+          "text": "Previous",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              -9.599999904632568,
+              0
+            ],
+            "size": [
+              8.800000190734863,
+              3.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": 500,
+            "fontSize": 14,
+            "color": [
+              0.02028856305209031,
+              0.02028856305209031,
+              0.02028856305209031,
+              1
+            ],
+            "backgroundColor": "#213D49",
+            "backgroundOpacity": 1
+          }
+        },
+        {
+          "id": "a-label",
+          "classes": [
+            "label"
+          ],
+          "componentType": "ButtonLabel",
+          "uuid": "3da2cb60-5ae6-4239-a468-b6fb535946ef",
+          "text": "Previous",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0.004999995231628418,
+              0
+            ],
+            "size": [
+              5.070000171661377,
+              1.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": "700",
+            "fontSize": 1.25,
+            "color": "#F5F1E8"
+          },
+          "missingProperties": [
+            "backgroundColor",
+            "backgroundOpacity"
+          ]
+        },
+        {
+          "id": "b",
+          "classes": [
+            "button"
+          ],
+          "componentType": "Button",
+          "uuid": "725ac0e2-00fa-4a7c-886c-6467cb116be9",
+          "text": "Next 1/2",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0,
+              0
+            ],
+            "size": [
+              8.799999237060547,
+              3.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": 500,
+            "fontSize": 14,
+            "color": [
+              0.02028856305209031,
+              0.02028856305209031,
+              0.02028856305209031,
+              1
+            ],
+            "backgroundColor": "#213D49",
+            "backgroundOpacity": 1
+          }
+        },
+        {
+          "id": "b-label",
+          "classes": [
+            "label"
+          ],
+          "componentType": "ButtonLabel",
+          "uuid": "4a348410-9926-4de7-8482-eb61574f9228",
+          "text": "Next 1/2",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0.005000114440917969,
+              0
+            ],
+            "size": [
+              5.2699995040893555,
+              1.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": "700",
+            "fontSize": 1.25,
+            "color": "#F5F1E8"
+          },
+          "missingProperties": [
+            "backgroundColor",
+            "backgroundOpacity"
+          ]
+        },
+        {
+          "id": "c",
+          "classes": [
+            "button"
+          ],
+          "componentType": "Button",
+          "uuid": "749f6ed0-a579-49ed-8398-985844151047",
+          "text": "Details",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              9.600000381469727,
+              0
+            ],
+            "size": [
+              8.799999237060547,
+              3.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": 500,
+            "fontSize": 14,
+            "color": [
+              0.02028856305209031,
+              0.02028856305209031,
+              0.02028856305209031,
+              1
+            ],
+            "backgroundColor": "#213D49",
+            "backgroundOpacity": 1
+          }
+        },
+        {
+          "id": "c-label",
+          "classes": [
+            "label"
+          ],
+          "componentType": "ButtonLabel",
+          "uuid": "03e0a820-c214-454f-98aa-812cd2d5d3fe",
+          "text": "Details",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0,
+              0
+            ],
+            "size": [
+              4.1399993896484375,
+              1.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": "700",
+            "fontSize": 1.25,
+            "color": "#F5F1E8"
+          },
+          "missingProperties": [
+            "backgroundColor",
+            "backgroundOpacity"
+          ]
+        }
+      ],
+      "total": 7,
+      "limited": false
+    },
+    "root": "receipt-detail",
+    "visible": true,
+    "head": [
+      0,
+      1.600000023841858,
+      0
+    ],
+    "gaze": [
+      -0.4397042114458082,
+      -0.6862833920250735,
+      -0.579374932377454
+    ],
+    "position": [
+      -0.24843287467956543,
+      0.03224984183907509,
+      -0.04734683409333229
+    ],
+    "page": "action",
+    "pagination": {
+      "page": 1,
+      "total": 2
+    },
+    "measured": [
+      {
+        "name": "receipt-caption",
+        "reach": 0.5873561497686057,
+        "horizontal": 13.916877933542477,
+        "vertical": 7.9099265851965574,
+        "visible": false,
+        "label": {
+          "rendered": [
+            {
+              "text": "Replaying the stored model evidence",
+              "font": "600 21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.009
+            }
+          ],
+          "overflow": false,
+          "textScale": 1,
+          "fonts": "ready",
+          "width": 0.28,
+          "height": 0.036
+        },
+        "rect": {
+          "x": 1.0132596559071593e-16,
+          "y": -0.06049999999999976,
+          "width": 0.28,
+          "height": 0.036
+        }
+      },
+      {
+        "name": "receipt-text",
+        "reach": 0.5948371603305767,
+        "horizontal": 13.916878175380873,
+        "vertical": 12.233194027427944,
+        "visible": true,
+        "label": {
+          "rendered": [
+            {
+              "text": "Decision receipt",
+              "font": "bold 45px Manrope, system-ui, sans-serif",
+              "emMetres": 0.01875
+            },
+            {
+              "text": "AMENDED / Demo",
+              "font": "bold 30px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.0125
+            },
+            {
+              "text": "Robot arm, cell 3",
+              "font": "bold 36px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.015
+            },
+            {
+              "text": "250 → 180 °/s",
+              "font": "bold 54px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.0225
+            },
+            {
+              "text": "Original → reviewed",
+              "font": "22.5px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.009375
+            },
+            {
+              "text": "Decided 10 Nov 2026, 06:48",
+              "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01125
+            },
+            {
+              "text": "Gesture: two hand hold",
+              "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01125
+            }
+          ],
+          "overflow": false,
+          "textScale": 1.25,
+          "fonts": "ready",
+          "width": 0.28,
+          "height": 0.16
+        },
+        "rect": {
+          "x": 7.357038997508703e-17,
+          "y": 0.042499999999999975,
+          "width": 0.28,
+          "height": 0.16
+        }
+      },
+      {
+        "name": "a",
+        "reach": 0.5938874010701265,
+        "horizontal": 13.940591256134072,
+        "vertical": 12.254229472748465,
+        "width": 0.08800000190734864,
+        "height": 0.035,
+        "rect": {
+          "x": -0.09599999904632563,
+          "y": -0.10499999672174451,
+          "width": 0.08800000190734864,
+          "height": 0.035
+        }
+      },
+      {
+        "name": "b",
+        "reach": 0.5788248817207866,
+        "horizontal": 4.460848029595636,
+        "vertical": 12.25422951490217,
+        "width": 0.08799999237060546,
+        "height": 0.035,
+        "rect": {
+          "x": 7.357038997508703e-17,
+          "y": -0.10499999672174473,
+          "width": 0.08799999237060546,
+          "height": 0.035
+        }
+      },
+      {
+        "name": "c",
+        "reach": 0.5938873995405889,
+        "horizontal": 13.940591493501634,
+        "vertical": 12.254229557055876,
+        "width": 0.08799999237060546,
+        "height": 0.035,
+        "rect": {
+          "x": 0.09600000381469732,
+          "y": -0.10499999672174451,
+          "width": 0.08799999237060546,
+          "height": 0.035
+        }
+      }
+    ]
+  }
+]

@@ -98,6 +98,24 @@ export type LiveVerification = {
   checked_at: string;
   /** Only the relay may establish signed action association. Absent in legacy relay responses. */
   intent_binding_verified?: boolean;
+  /** Proof retrieval can be retried without submitting another authorization. */
+  proof_status?: 'pending' | 'verified' | 'unverified';
+  binding_reason?: string;
+};
+
+/** Authorization is an upstream fact, independent of whether its proof is available. */
+export type Authorization = {
+  status: 'unknown' | 'held' | 'approved' | 'rejected' | 'escalated' | 'expired';
+  source: 'demo' | 'policy_gate' | 'relay';
+  decision_id?: string;
+  dossier_id?: string;
+};
+
+/** This app has no actuator. A live permission must never imply an observed result. */
+export type Execution = {
+  eligible: boolean;
+  status: 'not_requested' | 'simulated' | 'confirmed';
+  reason: string;
 };
 
 export type DemoVerification = { demo_signature: string; key_id: string };
@@ -117,6 +135,12 @@ export type SignedRecord = {
   source: 'demo' | 'live';
   dossier?: unknown;
   verification: LiveVerification | DemoVerification;
+  authorization?: Authorization;
+  /** Held binding retained for independent server/build-time proof association. */
+  authority_binding?: IntentBinding;
+  execution?: Execution;
+  /** Monotonic relay revision prevents a late response from replacing a newer proof check. */
+  revision?: number;
   /** Policy refused the amended values; the intent stays held (C12). */
   denied?: { reason: string };
   // display helpers carried with the record so the ledger can replay offline

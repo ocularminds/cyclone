@@ -15,9 +15,10 @@ export class Hub {
   /** Every message, in order (tests and diagnostics). */
   readonly log: RelayMessage[] = [];
 
-  add(peer: Peer, snapshot: HeldIntent[]): void {
+  add(peer: Peer, snapshot: HeldIntent[], records: SignedRecord[] = []): void {
     this.peers.add(peer);
     for (const intent of snapshot) this.sendTo(peer, { type: 'intent.held', intent });
+    for (const record of records) this.sendTo(peer, { type: 'record.sealed', intent_id: record.intent_id, record });
   }
 
   remove(peer: Peer): void {

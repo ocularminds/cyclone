@@ -1,0 +1,44 @@
+vite v7.3.7 building client environment for production...
+transforming...
+
+./assets/fonts/atkinsonhyperlegiblenext-tabular.ttf referenced in ./assets/fonts/atkinsonhyperlegiblenext-tabular.ttf didn't resolve at build time, it will remain unchanged to be resolved at runtime
+
+./assets/fonts/manrope.ttf referenced in ./assets/fonts/manrope.ttf didn't resolve at build time, it will remain unchanged to be resolved at runtime
+../../../../../develop/products/Cyclone/app/node_modules/zod/v4/core/regexes.js (74:0): A comment
+
+"/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+ * esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+ * will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */"
+
+in "../../../../../develop/products/Cyclone/app/node_modules/zod/v4/core/regexes.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+../../../../../develop/products/Cyclone/app/node_modules/zod/v4/core/util.js (400:0): A comment
+
+"// Wrapped in a `@__PURE__` IIFE: esbuild never tree-shakes a top-level initializer that contains a member access on `Number`, so the bare object literal survived into every bundle."
+
+in "../../../../../develop/products/Cyclone/app/node_modules/zod/v4/core/util.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+✓ 2260 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                                    3.16 kB │ gzip:     1.43 kB
+dist/assets/physics-worker-C0UdwKyG.js                             7.15 kB
+dist/assets/worker-_Lh8Vt-i.js                                    41.91 kB
+dist/assets/_virtual_iwsdk-disabled-bundled-fonts-CyX98Mcx.js      0.78 kB │ gzip:     0.46 kB
+dist/assets/physics-runtime-Lbm7Uv6r.js                            6.34 kB │ gzip:     2.50 kB
+dist/assets/index-Brupejm_.js                                      6.82 kB │ gzip:     2.87 kB
+dist/assets/index-BpYzXtG0.js                                     21.26 kB │ gzip:     6.39 kB
+dist/assets/world-initializer-Cg_e-Ch4.js                         45.11 kB │ gzip:    15.21 kB
+dist/assets/worker-BkRtSCqm.js                                   198.82 kB │ gzip:    64.50 kB
+dist/assets/msdf-worker-BUaSHgMS.js                              455.99 kB │ gzip:   181.02 kB
+dist/assets/index-BMBlUpu0.js                                  7,960.83 kB │ gzip: 2,070.46 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 10.06s
+
+🥽 IWSDK Dev Summary (Build):
+  - Device: metaQuest3
+  - Runtime injected: 1156.8KB
+  - Activation mode: /^(localhost|127\.0\.0\.1|[a-z0-9-]+\.github\.io)$/
+  - SEM environment: living_room

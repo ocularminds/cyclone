@@ -1,0 +1,74 @@
+{
+  "source": "Actual IWSDK emulator; synthetic hands, demo execution, uncut capture",
+  "name": "details",
+  "events": [
+    {
+      "seconds": 6.976699999988079,
+      "name": "unfold",
+      "caption": "Replaying the stored model evidence"
+    },
+    {
+      "seconds": 12.57809999999404,
+      "mark": "receipt-open"
+    },
+    {
+      "seconds": 27.338800000011922,
+      "name": "unfold",
+      "caption": "Receipt proof"
+    },
+    {
+      "seconds": 30.48,
+      "mark": "demo-proof"
+    },
+    {
+      "seconds": 44.17019999998808,
+      "name": "unfold",
+      "caption": "Receipt closed"
+    },
+    {
+      "seconds": 52.45409999999404,
+      "name": "unfold",
+      "caption": "Settings open",
+      "at": [
+        -0.255,
+        0,
+        -0.022
+      ]
+    },
+    {
+      "seconds": 60.93190000000596,
+      "mark": "input-controls"
+    },
+    {
+      "seconds": 78.611,
+      "mark": "larger-text"
+    },
+    {
+      "seconds": 86.55269999998808,
+      "name": "unfold",
+      "caption": "Settings closed",
+      "at": [
+        -0.255,
+        0,
+        -0.022
+      ]
+    },
+    {
+      "seconds": 87.7795,
+      "mark": "settings-closed"
+    }
+  ],
+  "duration": 90.35769999998809,
+  "size": [
+    756,
+    469
+  ],
+  "type": "video/webm;codecs=vp9,opus",
+  "records": [
+    {
+      "id": "74c5fe3d-c127-4269-bf26-b99320430c9f",
+      "tool": "set_conveyor_speed",
+      "decision": "APPROVE"
+    }
+  ]
+}

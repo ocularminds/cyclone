@@ -79,6 +79,10 @@ export class MockGate {
   /** dossier_id → payload served by GET /v1/protocol/dossiers/{id}. */
   readonly dossiers = new Map<string, Record<string, unknown>>();
   jwks: unknown = json(CORPUS_JWKS);
+  sign?: (binding: IntentBinding) => Record<string, any>;
+  loseGrantResponse = false;
+  dossierStatus = 200;
+  dossierWait?: () => Promise<void>;
 
   constructor() {
     for (const name of ['allow', 'block', 'escalate']) {
@@ -99,19 +103,26 @@ export class MockGate {
     if (u.pathname === '/.well-known/decision-dossier-jwks.json') return reply(200, this.jwks);
     if (method === 'POST' && u.pathname === '/v1/authority/grants') {
       if (this.grantError) return reply(this.grantError.status, { error: this.grantError.error, message: 'refused', request_id: 'r1', status: this.grantError.status });
-      const id = this.grantStatus === 'ALLOW' ? 'synthetic-dossier-allow-001' : this.grantStatus === 'BLOCK' ? 'synthetic-dossier-block-001' : 'synthetic-dossier-escalate-001';
+      const { intent_hash: _hash, mode: _mode, evidence: _evidence, ...binding } = body;
+      const signed = this.grantStatus === 'ALLOW' ? this.sign?.(binding as IntentBinding) : undefined;
+      if (signed) this.dossiers.set(signed.dossier_id, signed);
+      if (this.loseGrantResponse) throw new TypeError('Mock response lost after authorization');
+      const id = signed?.dossier_id ?? (this.grantStatus === 'ALLOW' ? 'synthetic-dossier-allow-001' : this.grantStatus === 'BLOCK' ? 'synthetic-dossier-block-001' : 'synthetic-dossier-escalate-001');
       return reply(200, {
         decision_id: `dec-${body.intent_id}`,
         chain_id: 'chain-1',
         status: this.grantStatus,
         should_execute: this.grantStatus === 'ALLOW',
         execution_eligible: this.grantStatus === 'ALLOW',
+        action_hash: body.intent_hash,
         reason_codes: this.grantStatus === 'ALLOW' ? [] : ['HELD'],
         dossier_id: id,
       });
     }
     const m = /^\/v1\/protocol\/dossiers\/([^/]+)$/.exec(u.pathname);
     if (method === 'GET' && m) {
+      await this.dossierWait?.();
+      if (this.dossierStatus !== 200) return reply(this.dossierStatus, { error: 'MOCK_DOSSIER_UNAVAILABLE' });
       const p = this.dossiers.get(decodeURIComponent(m[1]));
       return p ? reply(200, { service: 'protocol', protocol_version: '1.1', dossier: p }) : reply(404, { error: 'NOT_FOUND' });
     }

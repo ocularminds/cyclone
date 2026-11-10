@@ -30,7 +30,7 @@ function go(want) {
   for(let i=0;i<12;i++){
     const p=page();if(p.page===want)return;
     if(p.page==='action'||p.page==='menu')d.click('receipt-controls',p.pagination.total>1?'c':want==='history'?'a':'b');
-    else if(p.page==='proof'&&p.pagination.total===1)d.click('receipt-controls',want==='history'?'b':'a');
+    else if(p.page==='proof')d.click('receipt-controls','c');
     else d.click('receipt-controls','c');
   }
   throw Error(`Could not reach receipt ${want}`);

@@ -114,7 +114,7 @@ export class Cyclone {
       completedTemplates: !capture && boot.scenario === 'onboarding' && !this.firstShift.completed ? this.firstShift.finished : [],
     });
     if (boot.live) {
-      this.gate = new LiveAdapter(boot.live.relay, boot.live.token);
+      this.gate = new LiveAdapter(boot.live.relay, boot.live.token, this.store);
     } else {
       this.gate = new DemoAdapter(this.engine, this.signer, this.clock, this.rng, boot.amend);
     }

@@ -1,0 +1,267 @@
+{
+  "source": "Actual IWSDK IWER canvas and WebAudio. Two hand-driven takes, plus a still end-card capture populated by the capture test.",
+  "claims": "Emulated input, demo signatures, simulated execution. No live authorization or physical-device claim.",
+  "output": "app/public/video/cyclone-revision1.mp4",
+  "sha256": "2e78ea59e510825e1b358b8fe470b0e35e6442cbcb06d73d8e1a06067f9a122c",
+  "timeline": [
+    {
+      "source": "workflow.webm",
+      "in": 0,
+      "out": 29,
+      "at": 0,
+      "caption": "Every held action lands beside its machine",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 29,
+      "out": 50,
+      "at": 29,
+      "caption": "Pull to rehearse. Twist 250 to 180 degrees/second.",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 70,
+      "out": 81,
+      "at": 50,
+      "caption": "Compare original and amended paths",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 99,
+      "out": 110,
+      "at": 61,
+      "caption": "Release cancels the commitment",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 119,
+      "out": 134,
+      "at": 72,
+      "caption": "Both hands, 1.5 seconds. Record the reviewed action.",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 136,
+      "out": 147,
+      "at": 87,
+      "caption": "Hard limits lock the execute slot",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 152,
+      "out": 162,
+      "at": 98,
+      "caption": "Push past the plinth edge to veto",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 165,
+      "out": 174.6,
+      "at": 108,
+      "caption": "Routine-looking requests still need review",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 174.6,
+      "out": 183,
+      "at": 117.6,
+      "caption": "Drill revealed after the decision",
+      "speed": 1
+    },
+    {
+      "source": "details.webm",
+      "in": 5,
+      "out": 15,
+      "at": 126.0,
+      "caption": "Pick up a seal to replay retained model evidence",
+      "speed": 1
+    },
+    {
+      "source": "details.webm",
+      "in": 26,
+      "out": 36,
+      "at": 136.0,
+      "caption": "Demo signature. Permission, proof and execution are separate.",
+      "speed": 1
+    },
+    {
+      "source": "details.webm",
+      "in": 58,
+      "out": 65,
+      "at": 146.0,
+      "caption": "Gaze + pinch and one-hand alternatives",
+      "speed": 1
+    },
+    {
+      "source": "details.webm",
+      "in": 74,
+      "out": 82,
+      "at": 153.0,
+      "caption": "Readable settings at 100% or 125%",
+      "speed": 1
+    },
+    {
+      "source": "endcard.webm",
+      "in": 0,
+      "out": 8,
+      "at": 161.0,
+      "caption": "Cyclone \u2014 the calm eye where humans decide what AI agents do.",
+      "speed": 1
+    }
+  ],
+  "sources": {
+    "endcard": "67fe328d37987561ea8e1ca95c6ef95c1bb86998f1acd30d8f6327c7d43dfe3f",
+    "workflow": "cbf7c515b5383e33739cbbe09e1dcdd0c0bd35192ba6c2bfdeb4513313aec640",
+    "details": "a3857856b163f064370811b32d82989d3cf33b54e3046edfe9d3f4ab51e5bb7d"
+  },
+  "probe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "High",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "mime_codec_string": "avc1.64001f",
+        "width": 1280,
+        "height": 720,
+        "coded_width": 1280,
+        "coded_height": 720,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "16:9",
+        "pix_fmt": "yuvj420p",
+        "level": 31,
+        "color_range": "pc",
+        "color_space": "bt709",
+        "color_transfer": "iec61966-2-1",
+        "color_primaries": "bt709",
+        "chroma_location": "left",
+        "field_order": "progressive",
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "9734400/324487",
+        "time_base": "1/15360",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 2595896,
+        "duration": "169.003646",
+        "bit_rate": "126069",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "5070",
+        "extradata_size": 49,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "VideoHandler",
+          "encoder": "Lavc63.1.102 libx264"
+        }
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "mime_codec_string": "mp4a.40.2",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 656,
+        "start_time": "0.013667",
+        "duration_ts": 8112176,
+        "duration": "169.003667",
+        "bit_rate": "128757",
+        "nb_frames": "7938",
+        "extradata_size": 5,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "eng",
+          "handler_name": "SoundHandler"
+        }
+      }
+    ],
+    "format": {
+      "filename": "/Users/bonus/.codex/worktrees/cyclone-revision1/Cyclone/app/public/video/cyclone-revision1.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "nb_stream_groups": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "169.017334",
+      "size": "5594820",
+      "bit_rate": "264816",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "isom",
+        "minor_version": "512",
+        "compatible_brands": "isomiso2avc1mp41",
+        "title": "Cyclone \u2014 hands-first demo",
+        "encoder": "Lavf63.1.102",
+        "comment": "Actual IWSDK emulator footage. Edited takes at normal speed. Demo signatures and simulated execution; no physical machine operation."
+      }
+    }
+  }
+}

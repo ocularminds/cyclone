@@ -1,0 +1,1979 @@
+{
+  "at": "2026-11-10T06:02:57.853Z",
+  "source": "Actual IWER hand input; live retry is a UI fixture with no service authorization",
+  "results": [
+    {
+      "name": "completed capture provides current proof exports",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "receipt proof reached",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "hand-selected Export proof contains public keys only",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "receipt translated 0.1,0,0: actual corners reachable and visible",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "receipt translated 0,0.08,0: actual corners reachable and visible",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "receipt translated 0,0,0.09: actual corners reachable and visible",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "receipt translated -0.1,0,0: actual corners reachable and visible",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "receipt closes",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "receipt proof reached",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "unverified live proof is explicitly separate from approval",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Retry check retrieves the same receipt without approving",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "proof retry never turns on an execution result",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "receipt closes",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "settings translated 0.1,0,0: whole panel fits",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "settings translated 0,0.08,0: whole panel fits",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "settings translated 0,0,0.09: whole panel fits",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "translated settings Close returns to task",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "bounds": [
+    {
+      "offset": [
+        0.1,
+        0,
+        0
+      ],
+      "ui": {
+        "panel": {
+          "entityIndex": 34,
+          "name": "receipt-controls",
+          "assetId": "review-controls",
+          "computedSize": {
+            "width": 28,
+            "height": 3.5
+          },
+          "targetSize": {
+            "width": 0,
+            "height": 0
+          }
+        },
+        "elements": [
+          {
+            "id": "review-controls",
+            "classes": [
+              "root"
+            ],
+            "componentType": "_Container",
+            "uuid": "25dc6696-79d6-4df1-8d32-33e6ec9ef5b2",
+            "text": "Export proof Next 1/2 Details",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0,
+                0
+              ],
+              "size": [
+                28,
+                3.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": "normal",
+              "fontSize": 16
+            },
+            "missingProperties": [
+              "color",
+              "backgroundColor",
+              "backgroundOpacity"
+            ]
+          },
+          {
+            "id": "a",
+            "classes": [
+              "button"
+            ],
+            "componentType": "Button",
+            "uuid": "5226c6a5-2694-42f9-bdb5-e117f8d03dcb",
+            "text": "Export proof",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": true,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                -9.599999904632568,
+                0
+              ],
+              "size": [
+                8.800000190734863,
+                3.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": 500,
+              "fontSize": 14,
+              "color": [
+                0.02028856305209031,
+                0.02028856305209031,
+                0.02028856305209031,
+                1
+              ],
+              "backgroundColor": "#213D49",
+              "backgroundOpacity": 1
+            }
+          },
+          {
+            "id": "a-label",
+            "classes": [
+              "label"
+            ],
+            "componentType": "ButtonLabel",
+            "uuid": "80df2934-24df-40b8-8663-67c33738d8f9",
+            "text": "Export proof",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0.004999876022338867,
+                0
+              ],
+              "size": [
+                7.329999923706055,
+                1.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": "700",
+              "fontSize": 1.25,
+              "color": "#F5F1E8"
+            },
+            "missingProperties": [
+              "backgroundColor",
+              "backgroundOpacity"
+            ]
+          },
+          {
+            "id": "b",
+            "classes": [
+              "button"
+            ],
+            "componentType": "Button",
+            "uuid": "a4e7066d-0c87-44da-8e33-1e1fef6358bf",
+            "text": "Next 1/2",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0,
+                0
+              ],
+              "size": [
+                8.799999237060547,
+                3.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": 500,
+              "fontSize": 14,
+              "color": [
+                0.02028856305209031,
+                0.02028856305209031,
+                0.02028856305209031,
+                1
+              ],
+              "backgroundColor": "#213D49",
+              "backgroundOpacity": 1
+            }
+          },
+          {
+            "id": "b-label",
+            "classes": [
+              "label"
+            ],
+            "componentType": "ButtonLabel",
+            "uuid": "781642b5-cf51-44a2-ae0f-2da927c76571",
+            "text": "Next 1/2",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0.005000114440917969,
+                0
+              ],
+              "size": [
+                5.2699995040893555,
+                1.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": "700",
+              "fontSize": 1.25,
+              "color": "#F5F1E8"
+            },
+            "missingProperties": [
+              "backgroundColor",
+              "backgroundOpacity"
+            ]
+          },
+          {
+            "id": "c",
+            "classes": [
+              "button"
+            ],
+            "componentType": "Button",
+            "uuid": "14196af8-665c-4de4-89b9-917ac869a063",
+            "text": "Details",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                9.600000381469727,
+                0
+              ],
+              "size": [
+                8.799999237060547,
+                3.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": 500,
+              "fontSize": 14,
+              "color": [
+                0.02028856305209031,
+                0.02028856305209031,
+                0.02028856305209031,
+                1
+              ],
+              "backgroundColor": "#213D49",
+              "backgroundOpacity": 1
+            }
+          },
+          {
+            "id": "c-label",
+            "classes": [
+              "label"
+            ],
+            "componentType": "ButtonLabel",
+            "uuid": "f4330bac-943e-41a8-a142-c6f665139100",
+            "text": "Details",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0,
+                0
+              ],
+              "size": [
+                4.1399993896484375,
+                1.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": "700",
+              "fontSize": 1.25,
+              "color": "#F5F1E8"
+            },
+            "missingProperties": [
+              "backgroundColor",
+              "backgroundOpacity"
+            ]
+          }
+        ],
+        "total": 7,
+        "limited": false
+      },
+      "root": "receipt-detail",
+      "visible": true,
+      "head": [
+        0.10000000149011612,
+        1.600000023841858,
+        0
+      ],
+      "gaze": [
+        -0.4397042114458082,
+        -0.6862833920250735,
+        -0.579374932377454
+      ],
+      "position": [
+        -0.1484328806400299,
+        0.03224984183907509,
+        -0.04734683409333229
+      ],
+      "page": "proof",
+      "pagination": {
+        "page": 1,
+        "total": 2
+      },
+      "measured": [
+        {
+          "name": "receipt-caption",
+          "reach": 0.5873561541259368,
+          "horizontal": 13.916877918630075,
+          "vertical": 7.909926323148699,
+          "visible": false,
+          "label": {
+            "rendered": [
+              {
+                "text": "Demo proof exported with its public key. Local signature only.",
+                "font": "600 21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.009
+              }
+            ],
+            "overflow": false,
+            "textScale": 1,
+            "fonts": "ready",
+            "width": 0.28,
+            "height": 0.036
+          },
+          "rect": {
+            "x": -1.3877787807814454e-17,
+            "y": -0.06049999999999976,
+            "width": 0.28,
+            "height": 0.036
+          }
+        },
+        {
+          "name": "receipt-text",
+          "reach": 0.5948371667234117,
+          "horizontal": 13.916877883793276,
+          "vertical": 12.233194449783394,
+          "visible": true,
+          "label": {
+            "rendered": [
+              {
+                "text": "Decision receipt",
+                "font": "bold 45px Manrope, system-ui, sans-serif",
+                "emMetres": 0.01875
+              },
+              {
+                "text": "AMENDED / Demo",
+                "font": "bold 30px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.0125
+              },
+              {
+                "text": "Demo signature: valid",
+                "font": "bold 36px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.015
+              },
+              {
+                "text": "Signed with this installation's local demo key. This is",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              },
+              {
+                "text": "not an official policy-gate attestation.",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              },
+              {
+                "text": "Execution is simulated in this demo.",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              },
+              {
+                "text": "The model snapshot has a separate local digest.",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              },
+              {
+                "text": "Glyph 8ef9·7025",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              }
+            ],
+            "overflow": false,
+            "textScale": 1.25,
+            "fonts": "ready",
+            "width": 0.28,
+            "height": 0.16
+          },
+          "rect": {
+            "x": -2.7755575615628907e-17,
+            "y": 0.0425000000000002,
+            "width": 0.28,
+            "height": 0.16
+          }
+        },
+        {
+          "name": "a",
+          "reach": 0.593887404899421,
+          "horizontal": 13.940591601344046,
+          "vertical": 12.254229227608834,
+          "width": 0.08800000190734864,
+          "height": 0.035,
+          "rect": {
+            "x": -0.09599999904632572,
+            "y": -0.10499999672174451,
+            "width": 0.08800000190734864,
+            "height": 0.035
+          }
+        },
+        {
+          "name": "b",
+          "reach": 0.5788248842272685,
+          "horizontal": 4.460848256485195,
+          "vertical": 12.254229149734812,
+          "width": 0.08799999237060546,
+          "height": 0.035,
+          "rect": {
+            "x": -5.5511151231257815e-17,
+            "y": -0.10499999672174429,
+            "width": 0.08799999237060546,
+            "height": 0.035
+          }
+        },
+        {
+          "name": "c",
+          "reach": 0.5938873993822529,
+          "horizontal": 13.940591019345565,
+          "vertical": 12.254229071860806,
+          "width": 0.08799999237060546,
+          "height": 0.035,
+          "rect": {
+            "x": 0.09600000381469723,
+            "y": -0.10499999672174451,
+            "width": 0.08799999237060546,
+            "height": 0.035
+          }
+        }
+      ]
+    },
+    {
+      "offset": [
+        0,
+        0.08,
+        0
+      ],
+      "ui": {
+        "panel": {
+          "entityIndex": 34,
+          "name": "receipt-controls",
+          "assetId": "review-controls",
+          "computedSize": {
+            "width": 28,
+            "height": 3.5
+          },
+          "targetSize": {
+            "width": 0,
+            "height": 0
+          }
+        },
+        "elements": [
+          {
+            "id": "review-controls",
+            "classes": [
+              "root"
+            ],
+            "componentType": "_Container",
+            "uuid": "25dc6696-79d6-4df1-8d32-33e6ec9ef5b2",
+            "text": "Export proof Next 1/2 Details",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0,
+                0
+              ],
+              "size": [
+                28,
+                3.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": "normal",
+              "fontSize": 16
+            },
+            "missingProperties": [
+              "color",
+              "backgroundColor",
+              "backgroundOpacity"
+            ]
+          },
+          {
+            "id": "a",
+            "classes": [
+              "button"
+            ],
+            "componentType": "Button",
+            "uuid": "5226c6a5-2694-42f9-bdb5-e117f8d03dcb",
+            "text": "Export proof",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                -9.599999904632568,
+                0
+              ],
+              "size": [
+                8.800000190734863,
+                3.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": 500,
+              "fontSize": 14,
+              "color": [
+                0.02028856305209031,
+                0.02028856305209031,
+                0.02028856305209031,
+                1
+              ],
+              "backgroundColor": "#213D49",
+              "backgroundOpacity": 1
+            }
+          },
+          {
+            "id": "a-label",
+            "classes": [
+              "label"
+            ],
+            "componentType": "ButtonLabel",
+            "uuid": "80df2934-24df-40b8-8663-67c33738d8f9",
+            "text": "Export proof",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0.004999876022338867,
+                0
+              ],
+              "size": [
+                7.329999923706055,
+                1.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": "700",
+              "fontSize": 1.25,
+              "color": "#F5F1E8"
+            },
+            "missingProperties": [
+              "backgroundColor",
+              "backgroundOpacity"
+            ]
+          },
+          {
+            "id": "b",
+            "classes": [
+              "button"
+            ],
+            "componentType": "Button",
+            "uuid": "a4e7066d-0c87-44da-8e33-1e1fef6358bf",
+            "text": "Next 1/2",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": true,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0,
+                0
+              ],
+              "size": [
+                8.799999237060547,
+                3.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": 500,
+              "fontSize": 14,
+              "color": [
+                0.02028856305209031,
+                0.02028856305209031,
+                0.02028856305209031,
+                1
+              ],
+              "backgroundColor": "#213D49",
+              "backgroundOpacity": 1
+            }
+          },
+          {
+            "id": "b-label",
+            "classes": [
+              "label"
+            ],
+            "componentType": "ButtonLabel",
+            "uuid": "781642b5-cf51-44a2-ae0f-2da927c76571",
+            "text": "Next 1/2",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0.005000114440917969,
+                0
+              ],
+              "size": [
+                5.2699995040893555,
+                1.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": "700",
+              "fontSize": 1.25,
+              "color": "#F5F1E8"
+            },
+            "missingProperties": [
+              "backgroundColor",
+              "backgroundOpacity"
+            ]
+          },
+          {
+            "id": "c",
+            "classes": [
+              "button"
+            ],
+            "componentType": "Button",
+            "uuid": "14196af8-665c-4de4-89b9-917ac869a063",
+            "text": "Details",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                9.600000381469727,
+                0
+              ],
+              "size": [
+                8.799999237060547,
+                3.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": 500,
+              "fontSize": 14,
+              "color": [
+                0.02028856305209031,
+                0.02028856305209031,
+                0.02028856305209031,
+                1
+              ],
+              "backgroundColor": "#213D49",
+              "backgroundOpacity": 1
+            }
+          },
+          {
+            "id": "c-label",
+            "classes": [
+              "label"
+            ],
+            "componentType": "ButtonLabel",
+            "uuid": "f4330bac-943e-41a8-a142-c6f665139100",
+            "text": "Details",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0,
+                0
+              ],
+              "size": [
+                4.1399993896484375,
+                1.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": "700",
+              "fontSize": 1.25,
+              "color": "#F5F1E8"
+            },
+            "missingProperties": [
+              "backgroundColor",
+              "backgroundOpacity"
+            ]
+          }
+        ],
+        "total": 7,
+        "limited": false
+      },
+      "root": "receipt-detail",
+      "visible": true,
+      "head": [
+        0,
+        1.6799999475479126,
+        0
+      ],
+      "gaze": [
+        -0.4397042114458082,
+        -0.6862833920250735,
+        -0.579374932377454
+      ],
+      "position": [
+        -0.24843287467956543,
+        0.11224976181983948,
+        -0.04734683409333229
+      ],
+      "page": "proof",
+      "pagination": {
+        "page": 1,
+        "total": 2
+      },
+      "measured": [
+        {
+          "name": "receipt-caption",
+          "reach": 0.5873561525900284,
+          "horizontal": 13.916877873016912,
+          "vertical": 7.909926819423212,
+          "visible": false,
+          "label": {
+            "rendered": [
+              {
+                "text": "Demo proof exported with its public key. Local signature only.",
+                "font": "600 21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.009
+              }
+            ],
+            "overflow": false,
+            "textScale": 1,
+            "fonts": "ready",
+            "width": 0.28,
+            "height": 0.036
+          },
+          "rect": {
+            "x": 1.2904204498645666e-16,
+            "y": -0.06050000000000043,
+            "width": 0.28,
+            "height": 0.036
+          }
+        },
+        {
+          "name": "receipt-text",
+          "reach": 0.5948371622009443,
+          "horizontal": 13.916878114855308,
+          "vertical": 12.233193711307342,
+          "visible": true,
+          "label": {
+            "rendered": [
+              {
+                "text": "Decision receipt",
+                "font": "bold 45px Manrope, system-ui, sans-serif",
+                "emMetres": 0.01875
+              },
+              {
+                "text": "AMENDED / Demo",
+                "font": "bold 30px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.0125
+              },
+              {
+                "text": "Demo signature: valid",
+                "font": "bold 36px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.015
+              },
+              {
+                "text": "Signed with this installation's local demo key. This is",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              },
+              {
+                "text": "not an official policy-gate attestation.",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              },
+              {
+                "text": "Execution is simulated in this demo.",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              },
+              {
+                "text": "The model snapshot has a separate local digest.",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              },
+              {
+                "text": "Glyph 8ef9·7025",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              }
+            ],
+            "overflow": false,
+            "textScale": 1.25,
+            "fonts": "ready",
+            "width": 0.28,
+            "height": 0.16
+          },
+          "rect": {
+            "x": 1.0128646937082775e-16,
+            "y": 0.04249999999999953,
+            "width": 0.28,
+            "height": 0.16
+          }
+        },
+        {
+          "name": "a",
+          "reach": 0.5938874040569598,
+          "horizontal": 13.940591195406158,
+          "vertical": 12.254229681735001,
+          "width": 0.08800000190734864,
+          "height": 0.035,
+          "rect": {
+            "x": -0.09599999904632563,
+            "y": -0.10499999672174495,
+            "width": 0.08800000190734864,
+            "height": 0.035
+          }
+        },
+        {
+          "name": "b",
+          "reach": 0.5788248847853451,
+          "horizontal": 4.460848009456283,
+          "vertical": 12.254229723888706,
+          "width": 0.08799999237060546,
+          "height": 0.035,
+          "rect": {
+            "x": 7.353089375519885e-17,
+            "y": -0.10499999672174495,
+            "width": 0.08799999237060546,
+            "height": 0.035
+          }
+        },
+        {
+          "name": "c",
+          "reach": 0.5938874025274223,
+          "horizontal": 13.940591432773719,
+          "vertical": 12.25422976604241,
+          "width": 0.08799999237060546,
+          "height": 0.035,
+          "rect": {
+            "x": 0.09600000381469734,
+            "y": -0.10499999672174495,
+            "width": 0.08799999237060546,
+            "height": 0.035
+          }
+        }
+      ]
+    },
+    {
+      "offset": [
+        0,
+        0,
+        0.09
+      ],
+      "ui": {
+        "panel": {
+          "entityIndex": 34,
+          "name": "receipt-controls",
+          "assetId": "review-controls",
+          "computedSize": {
+            "width": 28,
+            "height": 3.5
+          },
+          "targetSize": {
+            "width": 0,
+            "height": 0
+          }
+        },
+        "elements": [
+          {
+            "id": "review-controls",
+            "classes": [
+              "root"
+            ],
+            "componentType": "_Container",
+            "uuid": "25dc6696-79d6-4df1-8d32-33e6ec9ef5b2",
+            "text": "Export proof Next 1/2 Details",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0,
+                0
+              ],
+              "size": [
+                28,
+                3.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": "normal",
+              "fontSize": 16
+            },
+            "missingProperties": [
+              "color",
+              "backgroundColor",
+              "backgroundOpacity"
+            ]
+          },
+          {
+            "id": "a",
+            "classes": [
+              "button"
+            ],
+            "componentType": "Button",
+            "uuid": "5226c6a5-2694-42f9-bdb5-e117f8d03dcb",
+            "text": "Export proof",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                -9.599999904632568,
+                0
+              ],
+              "size": [
+                8.800000190734863,
+                3.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": 500,
+              "fontSize": 14,
+              "color": [
+                0.02028856305209031,
+                0.02028856305209031,
+                0.02028856305209031,
+                1
+              ],
+              "backgroundColor": "#213D49",
+              "backgroundOpacity": 1
+            }
+          },
+          {
+            "id": "a-label",
+            "classes": [
+              "label"
+            ],
+            "componentType": "ButtonLabel",
+            "uuid": "80df2934-24df-40b8-8663-67c33738d8f9",
+            "text": "Export proof",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0.004999876022338867,
+                0
+              ],
+              "size": [
+                7.329999923706055,
+                1.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": "700",
+              "fontSize": 1.25,
+              "color": "#F5F1E8"
+            },
+            "missingProperties": [
+              "backgroundColor",
+              "backgroundOpacity"
+            ]
+          },
+          {
+            "id": "b",
+            "classes": [
+              "button"
+            ],
+            "componentType": "Button",
+            "uuid": "a4e7066d-0c87-44da-8e33-1e1fef6358bf",
+            "text": "Next 1/2",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": true,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0,
+                0
+              ],
+              "size": [
+                8.799999237060547,
+                3.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": 500,
+              "fontSize": 14,
+              "color": [
+                0.02028856305209031,
+                0.02028856305209031,
+                0.02028856305209031,
+                1
+              ],
+              "backgroundColor": "#213D49",
+              "backgroundOpacity": 1
+            }
+          },
+          {
+            "id": "b-label",
+            "classes": [
+              "label"
+            ],
+            "componentType": "ButtonLabel",
+            "uuid": "781642b5-cf51-44a2-ae0f-2da927c76571",
+            "text": "Next 1/2",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0.005000114440917969,
+                0
+              ],
+              "size": [
+                5.2699995040893555,
+                1.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": "700",
+              "fontSize": 1.25,
+              "color": "#F5F1E8"
+            },
+            "missingProperties": [
+              "backgroundColor",
+              "backgroundOpacity"
+            ]
+          },
+          {
+            "id": "c",
+            "classes": [
+              "button"
+            ],
+            "componentType": "Button",
+            "uuid": "14196af8-665c-4de4-89b9-917ac869a063",
+            "text": "Details",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                9.600000381469727,
+                0
+              ],
+              "size": [
+                8.799999237060547,
+                3.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": 500,
+              "fontSize": 14,
+              "color": [
+                0.02028856305209031,
+                0.02028856305209031,
+                0.02028856305209031,
+                1
+              ],
+              "backgroundColor": "#213D49",
+              "backgroundOpacity": 1
+            }
+          },
+          {
+            "id": "c-label",
+            "classes": [
+              "label"
+            ],
+            "componentType": "ButtonLabel",
+            "uuid": "f4330bac-943e-41a8-a142-c6f665139100",
+            "text": "Details",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0,
+                0
+              ],
+              "size": [
+                4.1399993896484375,
+                1.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": "700",
+              "fontSize": 1.25,
+              "color": "#F5F1E8"
+            },
+            "missingProperties": [
+              "backgroundColor",
+              "backgroundOpacity"
+            ]
+          }
+        ],
+        "total": 7,
+        "limited": false
+      },
+      "root": "receipt-detail",
+      "visible": true,
+      "head": [
+        0,
+        1.600000023841858,
+        0.09000000357627869
+      ],
+      "gaze": [
+        -0.4397042114458082,
+        -0.6862833920250735,
+        -0.579374932377454
+      ],
+      "position": [
+        -0.24843287467956543,
+        0.03224984183907509,
+        0.042653169482946396
+      ],
+      "page": "proof",
+      "pagination": {
+        "page": 1,
+        "total": 2
+      },
+      "measured": [
+        {
+          "name": "receipt-caption",
+          "reach": 0.5873561497686057,
+          "horizontal": 13.916877933542477,
+          "vertical": 7.909926585196561,
+          "visible": false,
+          "label": {
+            "rendered": [
+              {
+                "text": "Demo proof exported with its public key. Local signature only.",
+                "font": "600 21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.009
+              }
+            ],
+            "overflow": false,
+            "textScale": 1,
+            "fonts": "ready",
+            "width": 0.28,
+            "height": 0.036
+          },
+          "rect": {
+            "x": 8.326672684688672e-17,
+            "y": -0.060499999999999984,
+            "width": 0.28,
+            "height": 0.036
+          }
+        },
+        {
+          "name": "receipt-text",
+          "reach": 0.5948371603305767,
+          "horizontal": 13.916878175380873,
+          "vertical": 12.233194027427944,
+          "visible": true,
+          "label": {
+            "rendered": [
+              {
+                "text": "Decision receipt",
+                "font": "bold 45px Manrope, system-ui, sans-serif",
+                "emMetres": 0.01875
+              },
+              {
+                "text": "AMENDED / Demo",
+                "font": "bold 30px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.0125
+              },
+              {
+                "text": "Demo signature: valid",
+                "font": "bold 36px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.015
+              },
+              {
+                "text": "Signed with this installation's local demo key. This is",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              },
+              {
+                "text": "not an official policy-gate attestation.",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              },
+              {
+                "text": "Execution is simulated in this demo.",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              },
+              {
+                "text": "The model snapshot has a separate local digest.",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              },
+              {
+                "text": "Glyph 8ef9·7025",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              }
+            ],
+            "overflow": false,
+            "textScale": 1.25,
+            "fonts": "ready",
+            "width": 0.28,
+            "height": 0.16
+          },
+          "rect": {
+            "x": 8.326672684688672e-17,
+            "y": 0.04249999999999975,
+            "width": 0.28,
+            "height": 0.16
+          }
+        },
+        {
+          "name": "a",
+          "reach": 0.5938874010701265,
+          "horizontal": 13.940591256134072,
+          "vertical": 12.254229472748465,
+          "width": 0.08800000190734864,
+          "height": 0.035,
+          "rect": {
+            "x": -0.09599999904632561,
+            "y": -0.10499999672174473,
+            "width": 0.08800000190734864,
+            "height": 0.035
+          }
+        },
+        {
+          "name": "b",
+          "reach": 0.5788248817207866,
+          "horizontal": 4.460848029595636,
+          "vertical": 12.25422951490217,
+          "width": 0.08799999237060546,
+          "height": 0.035,
+          "rect": {
+            "x": 9.714451465470117e-17,
+            "y": -0.10499999672174473,
+            "width": 0.08799999237060546,
+            "height": 0.035
+          }
+        },
+        {
+          "name": "c",
+          "reach": 0.5938873995405889,
+          "horizontal": 13.940591493501634,
+          "vertical": 12.254229557055876,
+          "width": 0.08799999237060546,
+          "height": 0.035,
+          "rect": {
+            "x": 0.09600000381469734,
+            "y": -0.10499999672174473,
+            "width": 0.08799999237060546,
+            "height": 0.035
+          }
+        }
+      ]
+    },
+    {
+      "offset": [
+        -0.1,
+        0,
+        0
+      ],
+      "ui": {
+        "panel": {
+          "entityIndex": 34,
+          "name": "receipt-controls",
+          "assetId": "review-controls",
+          "computedSize": {
+            "width": 28,
+            "height": 3.5
+          },
+          "targetSize": {
+            "width": 0,
+            "height": 0
+          }
+        },
+        "elements": [
+          {
+            "id": "review-controls",
+            "classes": [
+              "root"
+            ],
+            "componentType": "_Container",
+            "uuid": "25dc6696-79d6-4df1-8d32-33e6ec9ef5b2",
+            "text": "Export proof Next 1/2 Details",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0,
+                0
+              ],
+              "size": [
+                28,
+                3.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": "normal",
+              "fontSize": 16
+            },
+            "missingProperties": [
+              "color",
+              "backgroundColor",
+              "backgroundOpacity"
+            ]
+          },
+          {
+            "id": "a",
+            "classes": [
+              "button"
+            ],
+            "componentType": "Button",
+            "uuid": "5226c6a5-2694-42f9-bdb5-e117f8d03dcb",
+            "text": "Export proof",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                -9.599999904632568,
+                0
+              ],
+              "size": [
+                8.800000190734863,
+                3.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": 500,
+              "fontSize": 14,
+              "color": [
+                0.02028856305209031,
+                0.02028856305209031,
+                0.02028856305209031,
+                1
+              ],
+              "backgroundColor": "#213D49",
+              "backgroundOpacity": 1
+            }
+          },
+          {
+            "id": "a-label",
+            "classes": [
+              "label"
+            ],
+            "componentType": "ButtonLabel",
+            "uuid": "80df2934-24df-40b8-8663-67c33738d8f9",
+            "text": "Export proof",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0.004999876022338867,
+                0
+              ],
+              "size": [
+                7.329999923706055,
+                1.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": "700",
+              "fontSize": 1.25,
+              "color": "#F5F1E8"
+            },
+            "missingProperties": [
+              "backgroundColor",
+              "backgroundOpacity"
+            ]
+          },
+          {
+            "id": "b",
+            "classes": [
+              "button"
+            ],
+            "componentType": "Button",
+            "uuid": "a4e7066d-0c87-44da-8e33-1e1fef6358bf",
+            "text": "Next 1/2",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0,
+                0
+              ],
+              "size": [
+                8.799999237060547,
+                3.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": 500,
+              "fontSize": 14,
+              "color": [
+                0.02028856305209031,
+                0.02028856305209031,
+                0.02028856305209031,
+                1
+              ],
+              "backgroundColor": "#213D49",
+              "backgroundOpacity": 1
+            }
+          },
+          {
+            "id": "b-label",
+            "classes": [
+              "label"
+            ],
+            "componentType": "ButtonLabel",
+            "uuid": "781642b5-cf51-44a2-ae0f-2da927c76571",
+            "text": "Next 1/2",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0.005000114440917969,
+                0
+              ],
+              "size": [
+                5.2699995040893555,
+                1.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": "700",
+              "fontSize": 1.25,
+              "color": "#F5F1E8"
+            },
+            "missingProperties": [
+              "backgroundColor",
+              "backgroundOpacity"
+            ]
+          },
+          {
+            "id": "c",
+            "classes": [
+              "button"
+            ],
+            "componentType": "Button",
+            "uuid": "14196af8-665c-4de4-89b9-917ac869a063",
+            "text": "Details",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                9.600000381469727,
+                0
+              ],
+              "size": [
+                8.799999237060547,
+                3.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": 500,
+              "fontSize": 14,
+              "color": [
+                0.02028856305209031,
+                0.02028856305209031,
+                0.02028856305209031,
+                1
+              ],
+              "backgroundColor": "#213D49",
+              "backgroundOpacity": 1
+            }
+          },
+          {
+            "id": "c-label",
+            "classes": [
+              "label"
+            ],
+            "componentType": "ButtonLabel",
+            "uuid": "f4330bac-943e-41a8-a142-c6f665139100",
+            "text": "Details",
+            "state": {
+              "active": false,
+              "clipped": false,
+              "disabled": false,
+              "displayed": true,
+              "hovered": false,
+              "visible": true
+            },
+            "layout": {
+              "relativeCenter": [
+                0,
+                0
+              ],
+              "size": [
+                4.1399993896484375,
+                1.5
+              ]
+            },
+            "properties": {
+              "fontFamily": "atkinson",
+              "fontWeight": "700",
+              "fontSize": 1.25,
+              "color": "#F5F1E8"
+            },
+            "missingProperties": [
+              "backgroundColor",
+              "backgroundOpacity"
+            ]
+          }
+        ],
+        "total": 7,
+        "limited": false
+      },
+      "root": "receipt-detail",
+      "visible": true,
+      "head": [
+        -0.10000000149011612,
+        1.600000023841858,
+        0
+      ],
+      "gaze": [
+        -0.4397042114458082,
+        -0.6862833920250735,
+        -0.579374932377454
+      ],
+      "position": [
+        -0.34843286871910095,
+        0.03224984183907509,
+        -0.04734683409333229
+      ],
+      "page": "proof",
+      "pagination": {
+        "page": 1,
+        "total": 2
+      },
+      "measured": [
+        {
+          "name": "receipt-caption",
+          "reach": 0.5873561464397578,
+          "horizontal": 13.916878578137391,
+          "vertical": 7.909926938012627,
+          "visible": false,
+          "label": {
+            "rendered": [
+              {
+                "text": "Demo proof exported with its public key. Local signature only.",
+                "font": "600 21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.009
+              }
+            ],
+            "overflow": false,
+            "textScale": 1,
+            "fonts": "ready",
+            "width": 0.28,
+            "height": 0.036
+          },
+          "rect": {
+            "x": 4.163336342344336e-17,
+            "y": -0.060500000000000206,
+            "width": 0.28,
+            "height": 0.036
+          }
+        },
+        {
+          "name": "receipt-text",
+          "reach": 0.59483715748595,
+          "horizontal": 13.916878819975787,
+          "vertical": 12.233193796829033,
+          "visible": true,
+          "label": {
+            "rendered": [
+              {
+                "text": "Decision receipt",
+                "font": "bold 45px Manrope, system-ui, sans-serif",
+                "emMetres": 0.01875
+              },
+              {
+                "text": "AMENDED / Demo",
+                "font": "bold 30px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.0125
+              },
+              {
+                "text": "Demo signature: valid",
+                "font": "bold 36px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.015
+              },
+              {
+                "text": "Signed with this installation's local demo key. This is",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              },
+              {
+                "text": "not an official policy-gate attestation.",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              },
+              {
+                "text": "Execution is simulated in this demo.",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              },
+              {
+                "text": "The model snapshot has a separate local digest.",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              },
+              {
+                "text": "Glyph 8ef9·7025",
+                "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+                "emMetres": 0.01125
+              }
+            ],
+            "overflow": false,
+            "textScale": 1.25,
+            "fonts": "ready",
+            "width": 0.28,
+            "height": 0.16
+          },
+          "rect": {
+            "x": 4.163336342344336e-17,
+            "y": 0.04249999999999953,
+            "width": 0.28,
+            "height": 0.16
+          }
+        },
+        {
+          "name": "a",
+          "reach": 0.5938873971974771,
+          "horizontal": 13.940590766025442,
+          "vertical": 12.254229841655349,
+          "width": 0.08800000190734864,
+          "height": 0.035,
+          "rect": {
+            "x": -0.09599999904632565,
+            "y": -0.10499999672174495,
+            "width": 0.08800000190734864,
+            "height": 0.035
+          }
+        },
+        {
+          "name": "b",
+          "reach": 0.5788248796292611,
+          "horizontal": 4.460848654674526,
+          "vertical": 12.25422988380906,
+          "width": 0.08799999237060546,
+          "height": 0.035,
+          "rect": {
+            "x": 4.163336342344336e-17,
+            "y": -0.10499999672174495,
+            "width": 0.08799999237060546,
+            "height": 0.035
+          }
+        },
+        {
+          "name": "c",
+          "reach": 0.5938873984660812,
+          "horizontal": 13.940592139244627,
+          "vertical": 12.25422992596276,
+          "width": 0.08799999237060546,
+          "height": 0.035,
+          "rect": {
+            "x": 0.09600000381469727,
+            "y": -0.10499999672174495,
+            "width": 0.08799999237060546,
+            "height": 0.035
+          }
+        }
+      ]
+    },
+    {
+      "settings": true,
+      "offset": [
+        0.1,
+        0,
+        0
+      ],
+      "corners": [
+        {
+          "reach": 0.572800138997369,
+          "h": 14.53445503626362,
+          "v": 13.535856328552853
+        },
+        {
+          "reach": 0.5728001421125204,
+          "h": 14.5344551468646,
+          "v": 13.535856308709704
+        },
+        {
+          "reach": 0.5728001370507861,
+          "h": 14.53445515339019,
+          "v": 13.53585627092239
+        },
+        {
+          "reach": 0.572800139754667,
+          "h": 14.534454902426251,
+          "v": 13.535856462125588
+        }
+      ]
+    },
+    {
+      "settings": true,
+      "offset": [
+        0,
+        0.08,
+        0
+      ],
+      "corners": [
+        {
+          "reach": 0.5728001354494042,
+          "h": 14.534454866138853,
+          "v": 13.535856347639779
+        },
+        {
+          "reach": 0.5728001340689726,
+          "h": 14.53445439537284,
+          "v": 13.535856478296541
+        },
+        {
+          "reach": 0.572800138863471,
+          "h": 14.534455383880095,
+          "v": 13.535857002162244
+        },
+        {
+          "reach": 0.5728001368293277,
+          "h": 14.534455879858772,
+          "v": 13.535855793724336
+        }
+      ]
+    },
+    {
+      "settings": true,
+      "offset": [
+        0,
+        0,
+        0.09
+      ],
+      "corners": [
+        {
+          "reach": 0.5728001354982253,
+          "h": 14.534454848062332,
+          "v": 13.535856331703569
+        },
+        {
+          "reach": 0.5728001341765975,
+          "h": 14.534454377296314,
+          "v": 13.535856488345566
+        },
+        {
+          "reach": 0.5728001389857189,
+          "h": 14.534455395671575,
+          "v": 13.535856986226031
+        },
+        {
+          "reach": 0.5728001370103795,
+          "h": 14.534455891650255,
+          "v": 13.535855803773364
+        }
+      ]
+    }
+  ]
+}

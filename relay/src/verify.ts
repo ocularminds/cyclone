@@ -13,6 +13,7 @@ import type { LiveVerification } from '../../app/src/contracts/intent';
 import { Config, type RelayConfig } from './config';
 import { Brand, Json } from './errors';
 import type { Upstream } from './upstream';
+import { Association, type ExpectedDecision } from './association';
 
 export type Checked = {
   verification: LiveVerification;
@@ -55,9 +56,9 @@ export class Verifier {
   }
 
   /** Fetched once and cached; refreshed after the TTL (key rotation overlaps, per §5). */
-  async jwks(): Promise<JwksSnapshot> {
+  async jwks(refresh = false): Promise<JwksSnapshot> {
     const now = this.now();
-    if (this.cache && now - this.cachedAt < this.ttlMs) return this.cache;
+    if (!refresh && this.cache && now - this.cachedAt < this.ttlMs) return this.cache;
     const jwks = await this.loader(this.source);
     this.cache = { source: this.source, jwks, fetched_at: new Date(now).toISOString() };
     this.cachedAt = now;
@@ -65,22 +66,22 @@ export class Verifier {
   }
 
   /** Verify a dossier body (any common envelope); optionally pin its dossier_id. */
-  async check(body: unknown, expectedId?: string): Promise<Checked> {
+  async check(body: unknown, expected?: ExpectedDecision | string, refresh = false): Promise<Checked> {
     const at = new Date(this.now()).toISOString();
     let snapshot: JwksSnapshot;
     try {
-      snapshot = await this.jwks();
+      snapshot = await this.jwks(refresh);
     } catch {
       return Verifier.unavailable('The signing keys could not be loaded; sealed as unverified.', at);
     }
-    return Verifier.assess(body, snapshot.jwks, snapshot.source, at, expectedId);
+    return Verifier.assess(body, snapshot.jwks, snapshot.source, at, expected);
   }
 
   /** Pure: the same computation the relay runs live and record.ts runs at build time. */
-  static assess(body: unknown, jwks: unknown, source: string, checkedAt: string, expectedId?: string): Checked {
+  static assess(body: unknown, jwks: unknown, source: string, checkedAt: string, expected?: ExpectedDecision | string): Checked {
     let payload: Record<string, unknown>;
     try {
-      payload = extractDossierPayload(body);
+      payload = extractDossierPayload(structuredClone(body));
     } catch {
       return Verifier.unavailable('The signed record could not be read; sealed as unverified.', checkedAt);
     }
@@ -94,8 +95,11 @@ export class Verifier {
     const authentic = result.verified && anchor.trusted;
     const scope = assessDossierAssuranceScope(result, payload, authentic);
     const coverage = result.required_artifact_coverage_verified === true;
+    const expectedId = typeof expected === 'string' ? expected : expected?.dossier_id;
     const idMatches = expectedId === undefined || payload.dossier_id === expectedId;
-    const verified = result.verified === true && coverage && anchor.status === 'DECIONIS_OFFICIAL' && idMatches;
+    const association = Association.check(payload, paths, typeof expected === 'object' ? expected : undefined);
+    const binding = association.verified && result.verified === true && idMatches;
+    const verified = result.verified === true && coverage && anchor.status === 'DECIONIS_OFFICIAL' && binding;
     const head = [
       result.verified ? 'Signatures valid' : 'Signatures invalid',
       coverage ? 'coverage complete' : 'coverage incomplete',
@@ -105,10 +109,13 @@ export class Verifier {
     return {
       verification: {
         verified,
+        intent_binding_verified: binding,
+        proof_status: verified ? 'verified' : 'unverified',
+        binding_reason: association.reason,
         required_artifact_coverage_verified: coverage,
         trust_anchor: anchor.status,
         issuer_tier: Verifier.tier(issuer, authentic),
-        assurance_scope_summary: `${head}. ${Verifier.summary(scope)}`,
+        assurance_scope_summary: `${head}. ${association.reason} ${Verifier.summary(scope)}`,
         checked_at: checkedAt,
       },
       signatures: result.verified === true,
@@ -122,6 +129,9 @@ export class Verifier {
     return {
       verification: {
         verified: false,
+        intent_binding_verified: false,
+        proof_status: 'unverified',
+        binding_reason: Brand.scrub(reason),
         required_artifact_coverage_verified: false,
         trust_anchor: 'UNAVAILABLE',
         issuer_tier: 'unknown',

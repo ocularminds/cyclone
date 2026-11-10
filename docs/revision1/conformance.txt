@@ -1,0 +1,28 @@
+
+Agent-Safe Intent conformance (agent-safe.intent/1)
+
+  ✓ src/fixtures/vectors/agent-safe-intent-v1.json — binding, base, 1 distinct hash — REPRODUCED
+  ✓ src/fixtures/vectors/array-index-keys.json — canonical, base, 1 distinct hash — REPRODUCED
+  ✓ src/fixtures/vectors/composed-vs-decomposed.json — canonical, base, 1 distinct hash — REPRODUCED
+  ✓ src/fixtures/vectors/compromised-principal.json — binding, base + 8 mutations, 9 distinct hashes — REPRODUCED
+  ✓ src/fixtures/vectors/fractional-exponent.json — canonical, base, 1 distinct hash — REPRODUCED
+  ✓ src/fixtures/vectors/negative-zero.json — canonical, base, 1 distinct hash — REPRODUCED
+  ✓ src/fixtures/vectors/nested-arrays.json — canonical, base, 1 distinct hash — REPRODUCED
+  ✓ src/fixtures/vectors/policy-projection-absent.json — binding, base, 1 distinct hash — REPRODUCED
+  ✗ src/fixtures/vectors/policy-projection.json — binding, base + 5 mutations, 6 distinct hashes — FAILED
+      BINDING_INVALID at policy_projection
+      MUTATION_INVALID at policy_projection.decision_type (policy_projection)
+      MUTATION_INVALID at policy_projection.transaction_type (policy_projection)
+      MUTATION_INVALID at policy_projection.workflow_key (policy_projection)
+      MUTATION_INVALID at policy_projection.channel (policy_projection)
+  ✓ src/fixtures/vectors/target-precondition.json — binding, base + 4 mutations, 5 distinct hashes — REPRODUCED
+  ✓ src/fixtures/vectors/unicode-astral.json — canonical, base, 1 distinct hash — REPRODUCED
+  ✓ src/fixtures/vectors/utf16-sort-order.json — canonical, base, 1 distinct hash — REPRODUCED
+  ✓ src/fixtures/vectors/frameworks/langchain.json — binding, base, 1 distinct hash — REPRODUCED
+  ✓ src/fixtures/vectors/frameworks/mcp.json — binding, base, 1 distinct hash — REPRODUCED
+  ✓ src/fixtures/vectors/frameworks/openai.json — binding, base, 1 distinct hash — REPRODUCED
+  ✓ src/fixtures/vectors/frameworks/vercel.json — binding, base, 1 distinct hash — REPRODUCED
+
+  15 reproduced, 0 computed, 1 failed
+  DOES NOT CONFORM: 1 of 16 did not reproduce
+  https://github.com/decionis/agent-safe-pipeline/blob/master/spec/intent/v1/README.md

@@ -113,7 +113,10 @@ export class Fixtures {
 
   static assess(record: SignedRecord, snap: JwksSnapshot): ReturnType<typeof Verifier.assess> | null {
     if (!record.dossier) return null;
-    return Verifier.assess(record.dossier, snap.jwks, snap.source, new Date().toISOString());
+    const auth = record.authorization;
+    const expected = record.authority_binding && auth?.dossier_id && auth.decision_id
+      ? { binding: record.authority_binding, decision: record.decision, dossier_id: auth.dossier_id, decision_id: auth.decision_id } : undefined;
+    return Verifier.assess(record.dossier, snap.jwks, snap.source, new Date().toISOString(), expected);
   }
 
   /** Re-verify every recorded dossier; write the verified records as the demo fixtures. */

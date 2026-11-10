@@ -30,7 +30,8 @@
       "unit": "%",
       "risk": 0,
       "requires": "single",
-      "lifetime_s": 28800
+      "lifetime_s": 28800,
+      "fixed_args": { "line": 1 }
     }
   ]
 }

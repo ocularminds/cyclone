@@ -1,0 +1,897 @@
+[
+  {
+    "scale": 1,
+    "ui": {
+      "panel": {
+        "entityIndex": 33,
+        "name": "card-controls",
+        "assetId": "review-controls",
+        "computedSize": {
+          "width": 28,
+          "height": 3.5
+        },
+        "targetSize": {
+          "width": 0,
+          "height": 0
+        }
+      },
+      "elements": [
+        {
+          "id": "review-controls",
+          "classes": [
+            "root"
+          ],
+          "componentType": "_Container",
+          "uuid": "1da7dc2d-80ab-4081-885f-40c223847900",
+          "text": "Full rationale Amend Compare",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0,
+              0
+            ],
+            "size": [
+              28,
+              3.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": "normal",
+            "fontSize": 16
+          },
+          "missingProperties": [
+            "color",
+            "backgroundColor",
+            "backgroundOpacity"
+          ]
+        },
+        {
+          "id": "a",
+          "classes": [
+            "button"
+          ],
+          "componentType": "Button",
+          "uuid": "3e11ba92-c964-4c9f-bf3a-42ae9f3c9c29",
+          "text": "Full rationale",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              -9.599999904632568,
+              0
+            ],
+            "size": [
+              8.800000190734863,
+              3.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": 500,
+            "fontSize": 14,
+            "color": [
+              0.02028856305209031,
+              0.02028856305209031,
+              0.02028856305209031,
+              1
+            ],
+            "backgroundColor": "#213D49",
+            "backgroundOpacity": 1
+          }
+        },
+        {
+          "id": "a-label",
+          "classes": [
+            "label"
+          ],
+          "componentType": "ButtonLabel",
+          "uuid": "cf0ba5cf-3076-45f9-94cb-d54138fd371f",
+          "text": "Full rationale",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0.004999876022338867,
+              5.960464477539063e-8
+            ],
+            "size": [
+              6.269999980926514,
+              1.1999999284744263
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": "700",
+            "fontSize": 1,
+            "color": "#F5F1E8"
+          },
+          "missingProperties": [
+            "backgroundColor",
+            "backgroundOpacity"
+          ]
+        },
+        {
+          "id": "b",
+          "classes": [
+            "button"
+          ],
+          "componentType": "Button",
+          "uuid": "d455b719-b2ee-420f-839d-602bc1864e8b",
+          "text": "Amend",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0,
+              0
+            ],
+            "size": [
+              8.799999237060547,
+              3.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": 500,
+            "fontSize": 14,
+            "color": [
+              0.02028856305209031,
+              0.02028856305209031,
+              0.02028856305209031,
+              1
+            ],
+            "backgroundColor": "#213D49",
+            "backgroundOpacity": 1
+          }
+        },
+        {
+          "id": "b-label",
+          "classes": [
+            "label"
+          ],
+          "componentType": "ButtonLabel",
+          "uuid": "9fe63f2b-38c8-4a52-bc65-0e97b8a62f58",
+          "text": "Amend",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0,
+              5.960464477539063e-8
+            ],
+            "size": [
+              3.299999237060547,
+              1.1999999284744263
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": "700",
+            "fontSize": 1,
+            "color": "#F5F1E8"
+          },
+          "missingProperties": [
+            "backgroundColor",
+            "backgroundOpacity"
+          ]
+        },
+        {
+          "id": "c",
+          "classes": [
+            "button"
+          ],
+          "componentType": "Button",
+          "uuid": "8d37f3ae-ac35-4250-b430-387ab38d1d42",
+          "text": "Compare",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              9.600000381469727,
+              0
+            ],
+            "size": [
+              8.799999237060547,
+              3.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": 500,
+            "fontSize": 14,
+            "color": [
+              0.02028856305209031,
+              0.02028856305209031,
+              0.02028856305209031,
+              1
+            ],
+            "backgroundColor": "#213D49",
+            "backgroundOpacity": 1
+          }
+        },
+        {
+          "id": "c-label",
+          "classes": [
+            "label"
+          ],
+          "componentType": "ButtonLabel",
+          "uuid": "ada3471c-a972-461f-a060-a0ec2abb63a2",
+          "text": "Compare",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0.004999876022338867,
+              5.960464477539063e-8
+            ],
+            "size": [
+              4.209999084472656,
+              1.1999999284744263
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": "700",
+            "fontSize": 1,
+            "color": "#F5F1E8"
+          },
+          "missingProperties": [
+            "backgroundColor",
+            "backgroundOpacity"
+          ]
+        }
+      ],
+      "total": 7,
+      "limited": false
+    },
+    "root": "inspection",
+    "visible": true,
+    "head": [
+      0,
+      1.600000023841858,
+      0
+    ],
+    "gaze": [
+      -0.33451936433844065,
+      -0.6824195287043424,
+      -0.6499233660406039
+    ],
+    "position": [
+      -0.18507951498031616,
+      0.025448812171816826,
+      -0.0795830488204956
+    ],
+    "page": "review",
+    "pagination": {
+      "page": 1,
+      "total": 1
+    },
+    "measured": [
+      {
+        "name": "card-caption",
+        "reach": 0.5873561552425813,
+        "horizontal": 13.961093634750341,
+        "vertical": 9.169343117252335,
+        "visible": false,
+        "label": {
+          "rendered": [
+            {
+              "text": "Amended to 180°/s — breach clear",
+              "font": "600 21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.009
+            }
+          ],
+          "overflow": false,
+          "textScale": 1,
+          "fonts": "ready",
+          "width": 0.28,
+          "height": 0.036
+        },
+        "rect": {
+          "x": 2.397418148388869e-17,
+          "y": -0.0605,
+          "width": 0.28,
+          "height": 0.036
+        }
+      },
+      {
+        "name": "decision-card",
+        "reach": 0.5948371671767588,
+        "horizontal": 13.939658979712371,
+        "vertical": 10.973777061536122,
+        "visible": true,
+        "label": {
+          "rendered": [
+            {
+              "text": "Robot arm, cell 3",
+              "font": "bold 36px Manrope, system-ui, sans-serif",
+              "emMetres": 0.015
+            },
+            {
+              "text": "Cell Agent / High attention",
+              "font": "21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.009
+            },
+            {
+              "text": "250 → 180 °/s",
+              "font": "bold 43.2px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.018
+            },
+            {
+              "text": "Original → proposed",
+              "font": "18px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.0075
+            },
+            {
+              "text": "Cell 3 is running 9% behind its cycle-time target....",
+              "font": "21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.009
+            },
+            {
+              "text": "Within rehearsal envelope",
+              "font": "bold 24px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01
+            },
+            {
+              "text": "Both palms for 1.5 s; release cancels",
+              "font": "bold 24px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01
+            },
+            {
+              "text": "Rule: arm.velocity.walkway_adjacent",
+              "font": "18px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.0075
+            },
+            {
+              "text": "Affected: Robot arm, cell 3",
+              "font": "18px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.0075
+            },
+            {
+              "text": "Demo / simulated / 869 s. Edge = veto.",
+              "font": "21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.009
+            }
+          ],
+          "overflow": false,
+          "textScale": 1,
+          "fonts": "ready",
+          "width": 0.28,
+          "height": 0.16
+        },
+        "rect": {
+          "x": 2.397418148388869e-17,
+          "y": 0.042500000000000204,
+          "width": 0.28,
+          "height": 0.16
+        }
+      },
+      {
+        "name": "a",
+        "reach": 0.5938874032849912,
+        "horizontal": 14.008102038938087,
+        "vertical": 13.513646021042968,
+        "width": 0.08800000190734864,
+        "height": 0.035,
+        "rect": {
+          "x": -0.09599999904632567,
+          "y": -0.10499999672174432,
+          "width": 0.08800000190734864,
+          "height": 0.035
+        }
+      },
+      {
+        "name": "b",
+        "reach": 0.5788248868762921,
+        "horizontal": 4.483243157617409,
+        "vertical": 13.513645880551579,
+        "width": 0.08799999237060546,
+        "height": 0.035,
+        "rect": {
+          "x": 2.397418148388869e-17,
+          "y": -0.10499999672174432,
+          "width": 0.08799999237060546,
+          "height": 0.035
+        }
+      },
+      {
+        "name": "c",
+        "reach": 0.5938874062267586,
+        "horizontal": 14.008100124678055,
+        "vertical": 13.513645740060182,
+        "width": 0.08799999237060546,
+        "height": 0.035,
+        "rect": {
+          "x": 0.09600000381469727,
+          "y": -0.10499999672174432,
+          "width": 0.08799999237060546,
+          "height": 0.035
+        }
+      }
+    ]
+  },
+  {
+    "scale": 1.25,
+    "ui": {
+      "panel": {
+        "entityIndex": 33,
+        "name": "card-controls",
+        "assetId": "review-controls",
+        "computedSize": {
+          "width": 28,
+          "height": 3.5
+        },
+        "targetSize": {
+          "width": 0,
+          "height": 0
+        }
+      },
+      "elements": [
+        {
+          "id": "review-controls",
+          "classes": [
+            "root"
+          ],
+          "componentType": "_Container",
+          "uuid": "1da7dc2d-80ab-4081-885f-40c223847900",
+          "text": "Previous Next 1/2 Review tools",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0,
+              0
+            ],
+            "size": [
+              28,
+              3.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": "normal",
+            "fontSize": 16
+          },
+          "missingProperties": [
+            "color",
+            "backgroundColor",
+            "backgroundOpacity"
+          ]
+        },
+        {
+          "id": "a",
+          "classes": [
+            "button"
+          ],
+          "componentType": "Button",
+          "uuid": "3e11ba92-c964-4c9f-bf3a-42ae9f3c9c29",
+          "text": "Previous",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              -9.599999904632568,
+              0
+            ],
+            "size": [
+              8.800000190734863,
+              3.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": 500,
+            "fontSize": 14,
+            "color": [
+              0.02028856305209031,
+              0.02028856305209031,
+              0.02028856305209031,
+              1
+            ],
+            "backgroundColor": "#213D49",
+            "backgroundOpacity": 1
+          }
+        },
+        {
+          "id": "a-label",
+          "classes": [
+            "label"
+          ],
+          "componentType": "ButtonLabel",
+          "uuid": "cf0ba5cf-3076-45f9-94cb-d54138fd371f",
+          "text": "Previous",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0.004999995231628418,
+              0
+            ],
+            "size": [
+              5.070000171661377,
+              1.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": "700",
+            "fontSize": 1.25,
+            "color": "#F5F1E8"
+          },
+          "missingProperties": [
+            "backgroundColor",
+            "backgroundOpacity"
+          ]
+        },
+        {
+          "id": "b",
+          "classes": [
+            "button"
+          ],
+          "componentType": "Button",
+          "uuid": "d455b719-b2ee-420f-839d-602bc1864e8b",
+          "text": "Next 1/2",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0,
+              0
+            ],
+            "size": [
+              8.799999237060547,
+              3.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": 500,
+            "fontSize": 14,
+            "color": [
+              0.02028856305209031,
+              0.02028856305209031,
+              0.02028856305209031,
+              1
+            ],
+            "backgroundColor": "#213D49",
+            "backgroundOpacity": 1
+          }
+        },
+        {
+          "id": "b-label",
+          "classes": [
+            "label"
+          ],
+          "componentType": "ButtonLabel",
+          "uuid": "9fe63f2b-38c8-4a52-bc65-0e97b8a62f58",
+          "text": "Next 1/2",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              0.005000114440917969,
+              0
+            ],
+            "size": [
+              5.2699995040893555,
+              1.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": "700",
+            "fontSize": 1.25,
+            "color": "#F5F1E8"
+          },
+          "missingProperties": [
+            "backgroundColor",
+            "backgroundOpacity"
+          ]
+        },
+        {
+          "id": "c",
+          "classes": [
+            "button"
+          ],
+          "componentType": "Button",
+          "uuid": "8d37f3ae-ac35-4250-b430-387ab38d1d42",
+          "text": "Review tools",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              9.600000381469727,
+              0
+            ],
+            "size": [
+              8.799999237060547,
+              3.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": 500,
+            "fontSize": 14,
+            "color": [
+              0.02028856305209031,
+              0.02028856305209031,
+              0.02028856305209031,
+              1
+            ],
+            "backgroundColor": "#213D49",
+            "backgroundOpacity": 1
+          }
+        },
+        {
+          "id": "c-label",
+          "classes": [
+            "label"
+          ],
+          "componentType": "ButtonLabel",
+          "uuid": "ada3471c-a972-461f-a060-a0ec2abb63a2",
+          "text": "Review tools",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              5.960464477539062e-7,
+              0
+            ],
+            "size": [
+              7.520000457763672,
+              1.5
+            ]
+          },
+          "properties": {
+            "fontFamily": "atkinson",
+            "fontWeight": "700",
+            "fontSize": 1.25,
+            "color": "#F5F1E8"
+          },
+          "missingProperties": [
+            "backgroundColor",
+            "backgroundOpacity"
+          ]
+        }
+      ],
+      "total": 7,
+      "limited": false
+    },
+    "root": "inspection",
+    "visible": true,
+    "head": [
+      0,
+      1.600000023841858,
+      0
+    ],
+    "gaze": [
+      -0.33451936433844065,
+      -0.6824195287043424,
+      -0.6499233660406039
+    ],
+    "position": [
+      -0.18507951498031616,
+      0.025448812171816826,
+      -0.0795830488204956
+    ],
+    "page": "review",
+    "pagination": {
+      "page": 1,
+      "total": 2
+    },
+    "measured": [
+      {
+        "name": "card-caption",
+        "reach": 0.5873561552425813,
+        "horizontal": 13.961093634750341,
+        "vertical": 9.169343117252335,
+        "visible": false,
+        "label": {
+          "rendered": [
+            {
+              "text": "Amended to 180°/s — breach clear",
+              "font": "600 21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.009
+            }
+          ],
+          "overflow": false,
+          "textScale": 1,
+          "fonts": "ready",
+          "width": 0.28,
+          "height": 0.036
+        },
+        "rect": {
+          "x": 2.397418148388869e-17,
+          "y": -0.0605,
+          "width": 0.28,
+          "height": 0.036
+        }
+      },
+      {
+        "name": "decision-card",
+        "reach": 0.5948371671767588,
+        "horizontal": 13.939658979712371,
+        "vertical": 10.973777061536122,
+        "visible": true,
+        "label": {
+          "rendered": [
+            {
+              "text": "Robot arm, cell 3",
+              "font": "bold 45px Manrope, system-ui, sans-serif",
+              "emMetres": 0.01875
+            },
+            {
+              "text": "Cell Agent / High attention",
+              "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01125
+            },
+            {
+              "text": "250 → 180 °/s",
+              "font": "bold 54px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.0225
+            },
+            {
+              "text": "Original → proposed",
+              "font": "22.5px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.009375
+            },
+            {
+              "text": "Cell 3 is running 9% behind its cycle-time target....",
+              "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01125
+            },
+            {
+              "text": "Within rehearsal envelope",
+              "font": "bold 30px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.0125
+            },
+            {
+              "text": "Both palms for 1.5 s; release cancels",
+              "font": "bold 30px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.0125
+            }
+          ],
+          "overflow": false,
+          "textScale": 1.25,
+          "fonts": "ready",
+          "width": 0.28,
+          "height": 0.16
+        },
+        "rect": {
+          "x": 2.397418148388869e-17,
+          "y": 0.042500000000000204,
+          "width": 0.28,
+          "height": 0.16
+        }
+      },
+      {
+        "name": "a",
+        "reach": 0.5938874032849912,
+        "horizontal": 14.008102038938087,
+        "vertical": 13.513646021042968,
+        "width": 0.08800000190734864,
+        "height": 0.035,
+        "rect": {
+          "x": -0.09599999904632567,
+          "y": -0.10499999672174432,
+          "width": 0.08800000190734864,
+          "height": 0.035
+        }
+      },
+      {
+        "name": "b",
+        "reach": 0.5788248868762921,
+        "horizontal": 4.483243157617409,
+        "vertical": 13.513645880551579,
+        "width": 0.08799999237060546,
+        "height": 0.035,
+        "rect": {
+          "x": 2.397418148388869e-17,
+          "y": -0.10499999672174432,
+          "width": 0.08799999237060546,
+          "height": 0.035
+        }
+      },
+      {
+        "name": "c",
+        "reach": 0.5938874062267586,
+        "horizontal": 14.008100124678055,
+        "vertical": 13.513645740060182,
+        "width": 0.08799999237060546,
+        "height": 0.035,
+        "rect": {
+          "x": 0.09600000381469727,
+          "y": -0.10499999672174432,
+          "width": 0.08799999237060546,
+          "height": 0.035
+        }
+      }
+    ]
+  }
+]

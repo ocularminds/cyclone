@@ -1,0 +1,171 @@
+{
+  "source": "Final revision1 working-tree production build including the MP4; runtime entry hash equals the build used by production checks. Release commits are in release.json.",
+  "taskBaseCommit": "3448f36b1e6a79495844720ab2b555e37061c67d",
+  "syncedUpstreamCommit": "5a4594d367bc6b1bb2b82b057207b744677ab240",
+  "node": "v25.9.0",
+  "command": "NODE_ENV=production node tests/build-audit.mjs",
+  "main": {
+    "path": "assets/index-BMBlUpu0.js",
+    "bytes": 7960830,
+    "gzip": 2063862,
+    "sha256": "9ecc48d812f071bbf8aeb8d1bab9999a7de1f472a69ef1bdb6c5e5047ac7c613"
+  },
+  "files": [
+    {
+      "path": "assets/_virtual_iwsdk-disabled-bundled-fonts-CyX98Mcx.js",
+      "bytes": 776,
+      "gzip": 462,
+      "sha256": "5d525a015d5a30fca4b01b73eb48547b3eb5dd359ae742b0ba7eb10aff090a1f"
+    },
+    {
+      "path": "assets/fonts/atkinson400.ttf",
+      "bytes": 48124,
+      "gzip": 22768,
+      "sha256": "5d86376845441e04fd965e6b81652772b63ba85373ebf955d5ca8f0f667516a6"
+    },
+    {
+      "path": "assets/fonts/atkinson700.ttf",
+      "bytes": 48044,
+      "gzip": 23607,
+      "sha256": "02476b0b1cd270c7765d33355b95040d738e2414ff6de4024c0da825b9f2e6ea"
+    },
+    {
+      "path": "assets/fonts/atkinsonhyperlegiblenext-OFL.txt",
+      "bytes": 4430,
+      "gzip": 1979,
+      "sha256": "09636801ed3e868736cc359bb1c819c5ef76529cbb41473cb1f602ef166dad0a"
+    },
+    {
+      "path": "assets/fonts/atkinsonhyperlegiblenext-tabular.ttf",
+      "bytes": 114460,
+      "gzip": 58157,
+      "sha256": "4462ca644c729ab4bd56b14fcd5f22d3fab979581a98acdeebc18f150a04b487"
+    },
+    {
+      "path": "assets/fonts/manrope-OFL.txt",
+      "bytes": 4386,
+      "gzip": 1959,
+      "sha256": "d6a309fcfb963d329a93baf9df66fa5f3c23a4be2b5f67edf24d6cafecde12ac"
+    },
+    {
+      "path": "assets/fonts/manrope.ttf",
+      "bytes": 164700,
+      "gzip": 67825,
+      "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6"
+    },
+    {
+      "path": "assets/fonts/manrope700.ttf",
+      "bytes": 97520,
+      "gzip": 42732,
+      "sha256": "2c4bca4b03891f25ae774b1e7617fa9c9ce4cd00c3c544cd3a9c3fb2c89e0b68"
+    },
+    {
+      "path": "assets/identity/app-mark-128.png",
+      "bytes": 2377,
+      "gzip": 2400,
+      "sha256": "c2285470388fa0b82f83c7f074f7ea5b507583bbb59bb5379c8fcc6fa7680229"
+    },
+    {
+      "path": "assets/identity/logo-lockup-ink.svg",
+      "bytes": 2826,
+      "gzip": 1344,
+      "sha256": "820ce54afff838a12e96c65cee6ea3f09a6bcba6499f75885d19839ca2423cde"
+    },
+    {
+      "path": "assets/index-BMBlUpu0.js",
+      "bytes": 7960830,
+      "gzip": 2063862,
+      "sha256": "9ecc48d812f071bbf8aeb8d1bab9999a7de1f472a69ef1bdb6c5e5047ac7c613"
+    },
+    {
+      "path": "assets/index-BpYzXtG0.js",
+      "bytes": 21263,
+      "gzip": 6374,
+      "sha256": "1d54366df59ac20e899758b2d28ddafe34e25a7ab06115d1a8caf5cc3130a1e5"
+    },
+    {
+      "path": "assets/index-Brupejm_.js",
+      "bytes": 6817,
+      "gzip": 2867,
+      "sha256": "a74930e9564ba1e7e7964041a17f437ef5fd9ceae7a84772ee12017b75fb3ff2"
+    },
+    {
+      "path": "assets/msdf-worker-BUaSHgMS.js",
+      "bytes": 455987,
+      "gzip": 180800,
+      "sha256": "320d3d5619bcc7ab27ee700e3448f5c8d3807a7e55796bbc0567074fd90604a0"
+    },
+    {
+      "path": "assets/physics-runtime-Lbm7Uv6r.js",
+      "bytes": 6340,
+      "gzip": 2498,
+      "sha256": "318f07c0e084b49418a93d199181a7fbac9a26f697ece609871e189d10f379b5"
+    },
+    {
+      "path": "assets/physics-worker-C0UdwKyG.js",
+      "bytes": 7150,
+      "gzip": 2796,
+      "sha256": "a6b2f06867a7755507638b019158e21edf25cf51f37ac6a1754ace0f75c8e13b"
+    },
+    {
+      "path": "assets/worker-BkRtSCqm.js",
+      "bytes": 198824,
+      "gzip": 64363,
+      "sha256": "74b3fbbc47142ea53249ee92af5a7b03da129eb0fd46dcc053383b738bd78af4"
+    },
+    {
+      "path": "assets/worker-_Lh8Vt-i.js",
+      "bytes": 41907,
+      "gzip": 12215,
+      "sha256": "430e4c9e12f79a4c6c5fb3c410bcd85d4661151d098080713b5df3ac8b275001"
+    },
+    {
+      "path": "assets/world-initializer-Cg_e-Ch4.js",
+      "bytes": 45112,
+      "gzip": 15191,
+      "sha256": "c3afff4a1ac93f08eb2659de201313688dd958a55dcd3cbaf3dc5732dfad14dc"
+    },
+    {
+      "path": "index.html",
+      "bytes": 3158,
+      "gzip": 1432,
+      "sha256": "aa417a3feefe16cbf59c6dc864747ad1979dff1df93472a69ea32903594252d2"
+    },
+    {
+      "path": "scenes/AGENTS.md",
+      "bytes": 3360,
+      "gzip": 1710,
+      "sha256": "a9e2135ca99c543cbdf8d63c68e6f92350911d30b97115d8ec0e900a123cd4d1"
+    },
+    {
+      "path": "scenes/main.iwsdk.scene.json",
+      "bytes": 295,
+      "gzip": 192,
+      "sha256": "da6122178ce21da321011db36b60807fe3897d3c2a6c0dabb9c2d338fb7f2f0f"
+    },
+    {
+      "path": "ui/AGENTS.md",
+      "bytes": 2536,
+      "gzip": 1444,
+      "sha256": "3765ef052a9dae8b1dd5631fa789965fc797a581d18a0c2343c744bb8c44a4be"
+    },
+    {
+      "path": "ui/review.uikitml",
+      "bytes": 854,
+      "gzip": 379,
+      "sha256": "e2e58f20a105c3cb7ba7729bdf99bfc0faa7380bc4b84f869cc92b4a1fbdb239"
+    },
+    {
+      "path": "ui/settings.uikitml",
+      "bytes": 2172,
+      "gzip": 686,
+      "sha256": "63a7e5da4e33c913002e1d092f09cd4be85dce7b67f38cece69b91a689717641"
+    },
+    {
+      "path": "video/cyclone-revision1.mp4",
+      "bytes": 5594820,
+      "gzip": 5334772,
+      "sha256": "2e78ea59e510825e1b358b8fe470b0e35e6442cbcb06d73d8e1a06067f9a122c"
+    }
+  ]
+}

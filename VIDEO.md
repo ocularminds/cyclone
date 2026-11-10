@@ -1,33 +1,56 @@
-# Video — shot list and capture mode (C47)
+# Video — finished workflow and capture mode (C47)
 
-Under 2:55, real headset capture (H4), captions on, no third-party logos or wordmarks on screen.
+[Watch/download the 2:49 revision video](https://ocularminds.github.io/cyclone/video/cyclone-revision1.mp4).
+The versioned file is `app/public/video/cyclone-revision1.mp4`: 169.017 seconds, 1280×720 H.264/AAC.
+[Edit provenance](docs/revision1/video/edit.json) records source hashes, normal-speed cut points and ffprobe output.
 
-## Capture mode
+This is actual IWSDK Immersive Web Emulator canvas and WebAudio, recorded from two hand-driven takes and the
+application's end-card scene. The persistent banner says **Emulator footage · simulated execution**. There is
+no generated footage, substituted UI, live authorization claim or physical machine operation. The emulator's
+room compositor is outside the captured app canvas, so the recorded background is black.
 
-| URL | What it does |
+The [current competition rules](https://start-developer-competition-26.devpost.com/rules) allow emulator
+footage and require a public YouTube or Vimeo video under three minutes. The Pages MP4 is a public review copy,
+not the required hosted entry link. YouTube currently requires account reauthentication; no upload has been
+performed. [Ready title and description](docs/revision1/video/UPLOAD.md) accompany the finished file.
+The repository's stricter H4 request for real-headset footage is still a separate unfulfilled requirement (D55).
+
+## Finished edit
+
+| Time | Actual recorded beat |
 |---|---|
-| `?capture=1` | Deterministic first shift for recording: fixed seed and clock epoch (same intents, hashes and glyphs every take), timestamps quantised to whole seconds, no random drills, captions on, its own storage namespace cleared at start. |
-| `?capture=endcard` | Calm-eye end card: reads the seals recorded by the last `?capture=1` session and lines them up on the ledger shelf; no scenario runs, the tray stays empty, machines idle, HUD and captions hidden, ambient hum only. Overlay the tagline in editing. |
+| 0:00–0:29 | Factory bloom, first conveyor token, inspect and place approval; demo receipt lands. |
+| 0:29–0:50 | Arm rehearsal: pull the timeline, twist 250→180°/s, breach clears. |
+| 0:50–1:01 | Compare retained original and amended paths under the same model. |
+| 1:01–1:12 | Early release cancels the two-hand commitment. |
+| 1:12–1:27 | Fresh placement, full 1.5-second two-hand hold and amended demo receipt. |
+| 1:27–1:38 | Forbidden oven: the execute slot locks. |
+| 1:38–1:48 | Push past the plinth edge to veto. This does not claim a detected real desk. |
+| 1:48–2:06 | Routine-looking pallet lift, decision, then drill reveal and missed-breach rehearsal. |
+| 2:06–2:16 | Physical seal pickup and retained model evidence. |
+| 2:16–2:26 | Receipt proof detail explicitly says Demo signature; permission, proof and execution stay distinct. |
+| 2:26–2:33 | Actual Input settings: Gaze + pinch and preferred-hand alternatives. |
+| 2:33–2:41 | Actual Display settings and 125% text. |
+| 2:41–2:49 | Application end card: idle machines, empty tray, evenly spaced seals, ambient sound and tagline. |
 
-Verified in the emulator by `app/tests/e2e/capture.mjs` (same first intent hash across two takes; end card shows the
-session's 4 seals with 0 tokens). Record in passthrough at a real desk; do one take with passthrough off (settings
-puck) for the plinth/VR contrast.
+This preserves BRIEF §14's core sequence: arrival, spatial review, amendment/hold, forbidden veto, drill,
+record detail, access controls and calm tabletop close. The optional editorial JSON-prompt insert and a live
+split screen are absent. A real-desk opening, passthrough contrast and physical narrow-FoV shots await H3/H4.
+A local signature is not an official live attestation; an authorization is not an execution receipt.
 
-## Shot list (BRIEF §14)
+## Capture modes and reproduction
 
-| Time | Shot | Beat in capture mode |
-|---|---|---|
-| 0:00–0:08 | Passthrough: a real desk. The micro-factory blooms on it. A token drops with a tone. Caption: "Your AI agent wants to speed up a conveyor." | Enter → bloom (t=0), first token at 6 s |
-| 0:08–0:20 | Flash a 2D JSON approval prompt. Caption: "Would you approve this?" Cut back to the desk. | Edit insert (no logos) |
-| 0:20–1:10 | Hero loop: look → card unfolds; scrub → breach flares at the walkway; twist 250 → 180 → breach clears; Compare shows dashed original and solid proposed; two-hand hold; seal stamps with the matching glyph. | Token 2 (arm) after token 1 is placed |
-| 1:10–1:30 | Oven 450 °C: execute slot locks; push the token off the real desk edge. | Token 3 |
-| 1:30–1:55 | Drill: approve a routine-looking pallet lift → "Drill — you missed it" → stored clip replay → calibration score. A drill does not earn trust. | Token 4 |
-| 1:55–2:20 | Under the hood: held action → decision receipt → retained model and proof scope. Show **Demo signature** for local records. Use the live agent/relay split screen only after matching live proof checks pass. | Demo receipt available; live shot requires H1 and technical R1 binding verification |
-| 2:20–2:36 | Access controls: Gaze + pinch, preferred hand, larger text. Use an actual Quest narrow-FoV crop only after H3 validation; label emulator footage as such. | Settings puck → Input / Display |
-| 2:36–2:44 | The last token settles: seal lands on the shelf, machines slow to idle, the hum fades. Caption: "Approve the outcome, not the payload." | Shift summary |
-| 2:44–2:55 | Calm-eye end card: still tabletop, empty tray, seals lined up on the shelf. Tagline: "Cyclone — the calm eye where humans decide what AI agents do." Then title + link. | `?capture=endcard` |
+| URL | Behaviour |
+|---|---|
+| `?capture=1` | Isolated deterministic first shift: fixed seed/epoch, same bindings and glyphs, quantised timestamps, captions on, no random drills. |
+| `?capture=endcard` | Loads the preceding capture session's seals in one row; no scenario, no held tokens, idle machines, no HUD/captions/ghost, ambient hum only. |
 
-The opening copy names the actual first scenario; the arm is the second token and the hero shot. A local demo
-signature is not an official live attestation, and an authorization is not a physical execution receipt. The
-comparison and ledger shots use the application's actual model evidence. H3/H4 remain open until hardware
-validation and real headset recording are available.
+`app/tests/e2e/capture.mjs` passes 6/6 checks, including identical first-intent hashes and an end card with four
+seals and no tokens. `video-start.mjs` / `video-stop.mjs` capture the actual canvas/audio; `drive.mjs` supplies
+the first-shift hand input, and `shoot-details.mjs` records receipt/settings interaction. The captured first-shift
+run passes 27/27 checks. Automation waits were cut; retained footage plays at normal speed.
+
+The three original `.webm` files and input results are in `docs/revision1/video/`. Rebuild the edit with
+`python3 docs/revision1/video/edit.py` using Pillow and ffmpeg. Fonts come from the app's licensed local assets.
+The video has no narration or music; app cues and editorial captions explain the workflow. Human listening and
+an unfamiliar-user first shift remain explicit [owner/device checks](docs/revision1/human-checks.md).

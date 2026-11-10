@@ -12,7 +12,11 @@ export class Calibration {
     const saved = store.read<CalState | null>('calibration', null);
     this.legacy = !!saved && saved.version !== 2;
     if (this.legacy) store.write('calibrationLegacy', saved);
-    this.state = saved?.version === 2 ? { ...empty(), ...saved } : empty();
+    const valid = saved?.version === 2 && Object.keys(empty()).filter(k => k !== 'version').every(k =>
+      Number.isSafeInteger(saved[k as keyof CalState]) && saved[k as keyof CalState] >= 0) &&
+      saved.caught <= saved.drills && saved.corrected <= saved.caught && saved.timeouts <= saved.drills - saved.caught;
+    if (saved?.version === 2 && !valid) store.write('calibrationCorrupt', saved);
+    this.state = valid ? { ...saved } : empty();
   }
   record(outcome: DrillOutcome | boolean): void {
     const result = typeof outcome === 'boolean' ? outcome ? 'caught' : 'missed' : outcome;

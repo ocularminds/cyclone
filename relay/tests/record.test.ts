@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
 import { Config } from '../src/config';
 import { Fixtures } from '../src/record';
+import { SyntheticProof } from './proof';
 import { FakeClock, MockGate, decide, handoff, hold, live, relay, webhook } from './rig';
 
 describe('C49 recorded fixtures', () => {
@@ -13,13 +14,14 @@ describe('C49 recorded fixtures', () => {
     expect(res.lines.join('\n')).toMatch(/No recorded fixtures yet/);
   });
 
-  it('records a live run, exports only verified records to the fixtures shape, and fails the check on a tampered dossier', async () => {
+  it('records a mocked run, exports only matching proof, and fails the check on a tampered dossier', async () => {
     const dir = mkdtempSync(join(tmpdir(), 'cyclone-rec-'));
     const out = join(dir, 'fixtures.json');
     writeFileSync(out, JSON.stringify({ note: 'x', records: [] }));
     const clock = new FakeClock();
     const gate = new MockGate();
-    // Keys served from the pinned URL (mocked fetch) so the run's seals verify as official.
+    const proof = new SyntheticProof(); gate.jwks = proof.jwks; gate.sign = b => proof.create(b);
+    // Mocked key transport tests the production trust branch; this is not a live run.
     const r = await relay(live(clock, { recordDir: dir, jwks: { url: Config.PINNED_JWKS, file: null } }), gate);
     const h = await handoff('conveyor', clock);
     const intent = await hold(r, h);

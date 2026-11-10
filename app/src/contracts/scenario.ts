@@ -44,6 +44,8 @@ export type RuleTemplate = {
   risk: 0;
   requires: 'single';
   lifetime_s: number;
+  /** Every argument other than the adjustable parameter is fixed by this scope. */
+  fixed_args: Record<string, unknown>;
   label: string;
 };
 

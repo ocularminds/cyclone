@@ -1,4 +1,6 @@
 import type { Decision, HeldIntent, SignedRecord, Rehearsed } from '../contracts/intent';
+import { Proof } from '../core/proof';
+import type { Store } from '../state/store';
 import {
   GateError,
   type GateCapabilities,
@@ -25,11 +27,17 @@ export class LiveAdapter implements PolicyGateAdapter {
   private readonly listeners = new Set<(e: IntentEvent) => void>();
   private retry = 0;
   private closed = false;
+  private readonly latest = new Map<string, SignedRecord>();
+  private readonly reviews: Record<string, { decision: Decision; reviewed?: Rehearsed }>;
 
   constructor(
     private readonly relay: string,
     private readonly session: string,
-  ) {}
+    private readonly store?: Store,
+  ) {
+    const saved = store?.read<unknown>('liveReviews', {});
+    this.reviews = saved && typeof saved === 'object' && !Array.isArray(saved) ? saved as typeof this.reviews : {};
+  }
 
   private http(path: string): string {
     return this.relay.replace(/^ws/, 'http').replace(/\/$/, '') + path;
@@ -74,9 +82,15 @@ export class LiveAdapter implements PolicyGateAdapter {
     } catch {
       return;
     }
-    if (msg.type === 'intent.held') this.emit({ type: 'held', intent: msg.intent });
+    if (!msg || typeof msg !== 'object') return;
+    if (msg.type === 'intent.held' && msg.intent) this.emit({ type: 'held', intent: msg.intent });
     else if (msg.type === 'intent.expired') this.emit({ type: 'expired', intent_id: msg.intent_id });
-    else this.emit({ type: 'resolved', intent_id: msg.intent_id, record: msg.record });
+    else if ((msg.type === 'intent.resolved' || msg.type === 'record.sealed') && Proof.readable(msg.record)) {
+      const record = this.attach(msg.record), prior = this.latest.get(record.record_id);
+      if (prior && Proof.revision(prior) >= Proof.revision(record)) return;
+      this.latest.set(record.record_id, record);
+      this.emit({ type: 'resolved', intent_id: record.intent_id, record });
+    }
   }
 
   private emit(e: IntentEvent): void {
@@ -91,6 +105,9 @@ export class LiveAdapter implements PolicyGateAdapter {
   tick(): void {}
 
   async resolve(decision: Decision, reviewed?: Rehearsed): Promise<SignedRecord> {
+    // Save the reviewed evidence before dispatch, including if the response is lost.
+    this.reviews[decision.intent_id] = { decision, reviewed };
+    this.store?.write('liveReviews', this.reviews);
     let res: Response;
     try {
       res = await fetch(this.http(`/intents/${encodeURIComponent(decision.intent_id)}/decision`), {
@@ -99,13 +116,21 @@ export class LiveAdapter implements PolicyGateAdapter {
         body: JSON.stringify(decision),
       });
     } catch {
-      throw new GateError('UNAVAILABLE');
+      try { return await this.read(decision.intent_id); }
+      catch { throw new GateError('PENDING', 'Decision sent; its result is unknown. Check the record without approving again.'); }
     }
     if (res.ok) {
-      const record = (await res.json()) as SignedRecord;
-      return reviewed ? { ...record, local_rehearsal: reviewed } : record;
+      try {
+        const record = this.attach((await res.json()) as SignedRecord);
+        const latest = this.latest.get(record.record_id);
+        return latest && Proof.revision(latest) > Proof.revision(record) ? latest : record;
+      } catch { throw new GateError('PENDING', 'Decision sent; the response could not be read. Check the same record.'); }
     }
     const body = (await res.json().catch(() => ({}))) as { code?: GateErrorCode; detail?: string };
+    if (res.status >= 500 && body.code !== 'AMEND_UNSUPPORTED') {
+      try { return await this.read(decision.intent_id); }
+      catch { throw new GateError('PENDING', 'Decision result unavailable. Check the record without approving again.'); }
+    }
     const byStatus: Record<number, GateErrorCode> = {
       401: 'UNAUTHORIZED',
       403: 'UNAUTHORIZED',
@@ -115,6 +140,26 @@ export class LiveAdapter implements PolicyGateAdapter {
       422: 'AMEND_DENIED',
     };
     throw new GateError(body.code ?? byStatus[res.status] ?? 'UNAVAILABLE', body.detail ?? '');
+  }
+
+  private attach(record: SignedRecord): SignedRecord {
+    if (!Proof.readable(record)) throw new GateError('PENDING', 'The returned record could not be read. Check the same decision record.');
+    const local = this.reviews[record.intent_id];
+    return local?.reviewed && Proof.matches(record, local.decision) ? { ...record, local_rehearsal: local.reviewed } : record;
+  }
+
+  private async read(id: string): Promise<SignedRecord> {
+    const res = await fetch(this.http('/intents/' + encodeURIComponent(id) + '/record'), { headers: { authorization: 'Bearer ' + this.session } });
+    if (!res.ok) throw new GateError('PENDING', 'No record yet; do not repeat approval.');
+    return this.attach(await res.json() as SignedRecord);
+  }
+
+  async recover(id: string): Promise<SignedRecord> {
+    const res = await fetch(this.http('/intents/' + encodeURIComponent(id) + '/verification'), {
+      method: 'POST', headers: { authorization: 'Bearer ' + this.session },
+    });
+    if (!res.ok) throw new GateError('PENDING', 'Record could not be checked. The previous request is unchanged.');
+    return this.attach(await res.json() as SignedRecord);
   }
 
   disconnect(): void {

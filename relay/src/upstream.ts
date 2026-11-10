@@ -17,6 +17,7 @@ export type AuthorityDecision = {
   status: GrantStatus;
   should_execute: boolean;
   execution_eligible: boolean;
+  action_hash: string;
   reason_codes: string[];
   dossier_id: string;
   dossier_url?: string;

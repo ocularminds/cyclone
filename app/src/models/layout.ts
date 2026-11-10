@@ -17,14 +17,14 @@ export class Layout {
   static readonly TRAY_PITCH = 0.05;
   static readonly SLOT: XYZ = [0.05, 0, -0.06];
   static readonly PAD: XYZ = [0.135, 0, -0.06];
-  static readonly RACK: XYZ = [0.215, 0, -0.095];
-  static readonly CHUTE: XYZ = [0.266, 0, -0.012];
-  static readonly LEDGER: XYZ = [-0.255, 0, -0.048];
+  static readonly RACK: XYZ = [0.215, 0, -0.064];
+  static readonly CHUTE: XYZ = [0.26, 0, -0.015];
+  static readonly LEDGER: XYZ = [-0.255, 0, -0.056];
   static readonly SEAL_COLUMNS = 3;
   static readonly SEAL_TIERS = 5;
   static readonly SEAL_PITCH = 0.04;
   static readonly SEAL_RISE = 0.04;
-  static readonly PUCK: XYZ = [-0.255, 0, -0.008];
+  static readonly PUCK: XYZ = [-0.255, 0, -0.022];
   static readonly AGENT_Y = 0.11;
   static readonly AGENT_Z = -0.135;
   static readonly AGENT_X = [-0.11, 0, 0.11] as const;
@@ -83,5 +83,14 @@ export class Layout {
 
   static distanceToHead(at: XYZ, head: XYZ = Layout.HEAD): number {
     return Math.hypot(at[0] - head[0], at[1] - head[1], at[2] - head[2]);
+  }
+
+  /** Conservative interaction volumes; rendering is also measured in immersive tests. */
+  static volumes(): Array<{ name: string; at: XYZ; half: XYZ }> {
+    return Layout.interactables().map(p => ({ ...p, at: p.name.startsWith('seal') ? [p.at[0], p.at[1] + 0.0125, p.at[2]] : /^(tray|rack)/.test(p.name) ? [p.at[0], p.at[1] + 0.009, p.at[2]] : p.at, half:
+      p.name === 'chute' ? [0.05, 0.001, 0.015] : p.name === 'slot' ? [0.035, 0.016, 0.035] :
+      p.name === 'pad' ? [0.025, 0.007, 0.025] : p.name === 'puck' ? [0.02, 0.013, 0.02] :
+      p.name.startsWith('agent') ? [0.03, 0.014, 0.03] : p.name === 'rule' ? [0.032, 0.006, 0.022] :
+      p.name.startsWith('seal') ? [0.01, 0.0125, 0.01] : [0.028, 0.018, 0.028] }));
   }
 }

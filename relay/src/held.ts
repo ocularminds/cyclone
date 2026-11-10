@@ -135,6 +135,8 @@ export class Intake {
       this.withdraw(e, 'Webhook hash differs from the held payload.');
       return { status: 'conflict', intent_id: e.intent_id };
     }
+    // A delayed duplicate hold cannot erase a newer authorization notification.
+    if (e.hook?.outcome) return { status: e.state, intent_id: e.intent_id };
     e.hook = {
       intent_hash: ev.intent_hash,
       expires_at: ev.expires_at,
@@ -160,6 +162,8 @@ export class Intake {
     const known = e.intent_hash ?? e.hook?.intent_hash;
     if (known && known !== ev.intent_hash) return { status: 'ignored', intent_id: ev.intent_id };
     const outcome = ev.outcome ?? 'UNKNOWN';
+    e.hook = { ...e.hook, intent_hash: ev.intent_hash, outcome, decision_id: ev.decision_id,
+      dossier_id: ev.dossier_id, received_at: new Date(this.cfg.now()).toISOString() };
     e.note = `Upstream outcome ${outcome}.`;
     // Our own decision is in flight, or already sealed: just note what upstream said.
     if (e.final || e.state === 'deciding' || !FINAL_OUTCOMES.has(outcome)) {

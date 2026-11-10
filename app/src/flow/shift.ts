@@ -88,6 +88,7 @@ export type ShiftEvents = {
   offer: { rule: RuleTemplate };
   accepted: { rule: RuleTemplate };
   superseded: { token: Token; by: string };
+  record: SignedRecord;
 };
 
 /**
@@ -98,6 +99,8 @@ export class Shift {
   readonly events = new Bus<ShiftEvents>();
   private readonly tokens = new Map<string, Token>();
   private readonly cleanups: Array<() => void> = [];
+  private readonly pending = new Map<string, Decision>();
+  private readonly counted = new Set<string>();
 
   constructor(
     private readonly gate: PolicyGateAdapter,
@@ -114,9 +117,10 @@ export class Shift {
     this.cleanups.push(
       gate.onIntent((e) => {
         if (e.type === 'held') void this.receive(e.intent);
+        if (e.type === 'resolved' && this.gate.capabilities.source === 'live') this.acceptRecord(e.record);
         if (e.type === 'expired') {
           const t = this.tokens.get(e.intent_id);
-          if (t && t.status !== 'sealed') this.markExpired(t);
+          if (t && (t.status === 'held' || t.status === 'escalated')) this.markExpired(t);
         }
       }),
     );
@@ -140,6 +144,11 @@ export class Shift {
     if (existing) return existing;
     const r = this.rehearsal.run(intent.tool, intent.target.asset_id, intent.args);
     const token = new Token(intent, r, this.clock.ms, this.deadlineOf(intent));
+    const prior = this.gate.capabilities.source === 'live' ? [...this.ledger.all()].reverse().find(x => x.source === 'live' && x.intent_id === intent.intent_id && x.decision.decision !== 'ESCALATE') : undefined;
+    if (prior) {
+      token.record = prior; token.status = Proof.known(prior) ? 'sealed' : 'unverified';
+      this.tokens.set(token.id, token); return token;
+    }
     // Fail closed if the payload no longer matches the hash it was held under.
     token.tampered = !(await IntentHasher.matches(intent));
     this.tokens.set(intent.intent_id, token);
@@ -250,14 +259,18 @@ export class Shift {
 
   private async submit(token: Token, decision: Decision): Promise<SignedRecord | null> {
     token.status = 'deciding';
+    this.pending.set(token.id, decision);
     this.events.emit('deciding', { token, kind: decision.decision });
     let record: SignedRecord;
     try {
       const reviewed = await Receipt.capture(this.rehearsal, token.intent, token.args);
+      if (this.clock.isPaused && decision.gesture !== 'timeout') throw new Error('Review paused before the decision was sent. Place the token again to begin a new commitment.');
+      if (this.isExpired(token) && decision.gesture !== 'timeout') throw new Error('Intent expired before the decision was sent.');
       record = await this.gate.resolve(decision, reviewed);
     } catch (err) {
-      token.status = 'held';
       const e = err as GateError;
+      token.status = e.code === 'PENDING' ? 'unverified' : 'held';
+      this.pending.delete(token.id);
       const reason = e.detail || e.message;
       if (e.code === 'AMEND_DENIED') {
         token.denial = reason;
@@ -269,32 +282,59 @@ export class Shift {
       }
       return null;
     }
-    if (!Proof.matches(record, decision)) {
+    const accepted = this.acceptRecord(record, decision);
+    this.pending.delete(token.id);
+    if (!accepted) {
       token.status = 'unverified';
       token.denial = 'Record does not match this decision. Request already sent; approval is disabled.';
       this.events.emit('refused', { token, reason: token.denial });
-      return null;
     }
+    return accepted ? this.ledger.find(record.record_id) ?? record : null;
+  }
+
+  /** HTTP responses and socket updates share one monotonic, idempotent record path. */
+  private acceptRecord(record: SignedRecord, submitted?: Decision): boolean {
+    if (!Proof.readable(record)) return false;
+    const token = this.tokens.get(record.intent_id);
+    const prior = this.ledger.find(record.record_id);
+    const decision = submitted ?? this.pending.get(record.intent_id) ?? record.decision;
+    if (prior && Proof.revision(prior) >= Proof.revision(record)) return Proof.matches(record, decision) && Proof.matches(prior, decision);
+    if (!Proof.matches(record, decision) || token && (record.intent_hash !== token.intent.intent_hash ||
+      record.tool !== token.intent.tool || record.asset_id !== token.intent.target.asset_id)) {
+      // A previous escalation can update while a later veto is being sent.
+      if (prior && Proof.matches(record, prior.decision)) {
+        if (this.ledger.add(record)) this.events.emit('record', this.ledger.find(record.record_id)!);
+        return true;
+      }
+      if (!token) return false;
+      token.status = 'unverified';
+      token.denial = 'Record does not match this decision. Request already sent; approval is disabled.';
+      this.events.emit('refused', { token, reason: token.denial });
+      return false;
+    }
+    if (!this.ledger.add(record)) return true;
+    record = this.ledger.find(record.record_id)!;
+    if (!token) { this.events.emit('record', record); return true; }
     token.record = record;
-    this.ledger.add(record);
     const kind = decision.decision;
-    const counter = decision.reason?.code === 'counter_offer';
-    this.log.log({
-      t: this.clock.ms,
-      type: 'decision',
-      intent_id: token.id,
-      decision: kind,
-      amended: kind === 'APPROVE_AMENDED' || counter,
-    });
-    if (kind === 'ESCALATE') {
-      token.status = 'escalated';
-      this.events.emit('escalated', { token, record });
-    } else {
-      token.status = 'sealed';
-      this.events.emit('sealed', { token, record });
+    token.status = !Proof.known(record) ? 'unverified' : kind === 'ESCALATE' ? 'escalated' : 'sealed';
+    if (prior) this.events.emit('record', record);
+    else this.events.emit(kind === 'ESCALATE' ? 'escalated' : 'sealed', { token, record });
+    if (Proof.known(record) && !this.counted.has(record.record_id)) {
+      this.counted.add(record.record_id);
+      this.log.log({ t: this.clock.ms, type: 'decision', intent_id: token.id, decision: kind,
+        amended: kind === 'APPROVE_AMENDED' || decision.reason?.code === 'counter_offer' });
+      this.afterDecision(token, decision);
     }
-    this.afterDecision(token, decision);
-    return record;
+    return true;
+  }
+
+  async recoverRecord(id: string): Promise<SignedRecord | null> {
+    if (!this.gate.recover) return null;
+    try {
+      const record = await this.gate.recover(id);
+      return this.acceptRecord(record) ? this.ledger.find(record.record_id) ?? record : null;
+    } catch { return null; }
   }
 
   private afterDecision(token: Token, decision: Decision): void {
@@ -410,6 +450,8 @@ export class Shift {
         return 'This policy does not accept amended approvals.';
       case 'UNAVAILABLE':
         return 'Policy gate unreachable. The intent stays held.';
+      case 'PENDING':
+        return 'Decision sent. Result unknown; check the record without approving again.';
       default:
         return `Refused: ${e.message}`;
     }

@@ -6,6 +6,7 @@ import { IntentHasher } from '../../app/src/core/hash';
 import { Attestor } from '../src/attest';
 import { Config } from '../src/config';
 import type { Relay } from '../src/server';
+import { SyntheticProof } from './proof';
 import { AGENT, FakeClock, MockGate, SESSION, TENANT, attestKey, config, decide, handoff, hold, live, relay } from './rig';
 
 const open: Relay[] = [];
@@ -27,12 +28,12 @@ async function socket(r: Relay, session = SESSION) {
 }
 
 describe('relay: capabilities and auth (C35)', () => {
-  it('advertises amended approval only when configured (default false, D20a)', async () => {
+  it('advertises amended approval as unavailable even when the obsolete config flag is enabled', async () => {
     const clock = new FakeClock();
     const off = await make(config(clock));
     expect((await off.app.inject({ method: 'GET', url: '/capabilities' })).json()).toEqual({ supportsAmendedApproval: false, source: 'live' });
     const on = await make(config(clock, { amendedApproval: true }));
-    expect((await on.app.inject({ method: 'GET', url: '/capabilities' })).json()).toEqual({ supportsAmendedApproval: true, source: 'live' });
+    expect((await on.app.inject({ method: 'GET', url: '/capabilities' })).json()).toEqual({ supportsAmendedApproval: false, source: 'live' });
   });
 
   it('decisions need an operator session; handoffs need the agent token', async () => {
@@ -127,7 +128,7 @@ describe('relay: client decisions (C05–C09, C12, C13, C29)', () => {
     expect(rec).toMatchObject({ intent_id: intent.intent_id, intent_hash: intent.intent_hash, source: 'live', tool: 'set_conveyor_speed', asset_id: 'conv-1' });
     expect(rec.verification).toMatchObject({ verified: false, trust_anchor: 'UNAVAILABLE' });
     expect(rec.relay.path).toBe('lapse');
-    expect(rec.rehearsal.path_samples_ref).toMatch(/^rehearsal:[0-9a-f]{16}$/);
+    expect(rec.rehearsal.path_samples_ref).toBe('rehearsal:unavailable');
     const again = await decide(r, intent, body);
     expect(again.json().record_id).toBe(rec.record_id);
     expect((await decide(r, intent, { decision: 'ESCALATE', gesture: 'escalate_place' })).statusCode).toBe(409);
@@ -189,18 +190,20 @@ describe('relay: client decisions (C05–C09, C12, C13, C29)', () => {
     expect(rec.dossier.dossier_id).toBe('synthetic-dossier-allow-001');
     // corpus key from a local file: signatures fine, anchor not official → unverified seal
     expect(rec.verification).toMatchObject({ verified: false, required_artifact_coverage_verified: true, trust_anchor: 'UNESTABLISHED' });
-    await vi.waitFor(() => expect(msgs.map((m) => m.type)).toEqual(['intent.held', 'record.sealed', 'intent.resolved']));
+    await vi.waitFor(() => expect(msgs.map((m) => m.type)).toEqual(['intent.held', 'record.sealed', 'intent.resolved', 'record.sealed']));
     expect((await decide(r, arm, { decision: 'APPROVE', gesture: 'two_hand_hold' })).json().record_id).toBe(rec.record_id);
     expect(gate.grants()).toHaveLength(1);
   });
 
-  it('a dossier signed by the key served at the pinned JWKS URL seals as verified', async () => {
+  it('a matching dossier signed by the test key at the mocked pinned source verifies without executing', async () => {
     const clock = new FakeClock();
     const gate = new MockGate();
+    const proof = new SyntheticProof(); gate.jwks = proof.jwks; gate.sign = b => proof.create(b);
     const r = await make(live(clock, { jwks: { url: Config.PINNED_JWKS, file: null } }), gate);
     const conveyor = await hold(r, await handoff('conveyor', clock));
     const rec = (await decide(r, conveyor, { decision: 'APPROVE', gesture: 'place' })).json();
     expect(rec.verification).toMatchObject({ verified: true, required_artifact_coverage_verified: true, trust_anchor: 'DECIONIS_OFFICIAL' });
+    expect(rec.execution).toMatchObject({ eligible: false, status: 'not_requested' });
   });
 
   it('a policy gate that does not ALLOW, or refuses the attestation, leaves the intent held', async () => {
@@ -309,8 +312,9 @@ describe('relay: client decisions (C05–C09, C12, C13, C29)', () => {
     open.splice(open.indexOf(a), 1);
     const b = await make(config(clock, { dataDir }));
     const { msgs } = await socket(b);
-    await vi.waitFor(() => expect(msgs).toHaveLength(1));
+    await vi.waitFor(() => expect(msgs).toHaveLength(2));
     expect(msgs[0]).toMatchObject({ type: 'intent.held', intent: { intent_id: kept.intent_id } });
+    expect(msgs[1]).toMatchObject({ type: 'record.sealed', record: { record_id: rec.record_id } });
     const again = await decide(b, gone, { decision: 'REJECT', gesture: 'veto_push', reason: { code: 'user_veto' } });
     expect(again.json().record_id).toBe(rec.record_id);
   });

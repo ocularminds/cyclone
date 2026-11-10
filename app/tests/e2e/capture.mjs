@@ -48,6 +48,12 @@ d.cli(['xr', 'animate-to'], { device: 'hand-left', position: { x: -0.6, y: 0.4, 
 d.look([s.deskRoot[0],s.deskRoot[1]+.04,s.deskRoot[2]-.15]);
 d.sleep(800);
 execFileSync('npx', ['@iwsdk/cli', 'browser', 'screenshot', '--output-file', `${process.env.CYCLONE_EVIDENCE ?? '../docs/screens'}/endcard.png`]);
+if(process.env.CYCLONE_VIDEO==='1') {
+  d.page(`window.cycloneCaptureName='endcard'`);
+  d.cli(['browser','run','tests/e2e/video-start.mjs']);
+  d.sleep(8000);
+  d.cli(['browser','run','tests/e2e/video-stop.mjs']);
+}
 d.page(`location.search = ''`);
 writeFileSync(`${process.env.CYCLONE_EVIDENCE ?? '../docs'}/e2e-capture.json`,JSON.stringify({at:new Date().toISOString(),source:'IWSDK IWER; capture data setup is programmatic',results},null,2));
 process.exitCode=results.some(x=>!x.ok)?1:0;

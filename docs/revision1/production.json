@@ -1,0 +1,196 @@
+{
+  "source": "Production build, clean isolated Chromium context; only observed SDK static room/input assets allowed remotely, service traffic blocked; programmatic decision flow",
+  "allowedStatic": [
+    "https://www.unpkg.com/@iwer/sem@2.5.0/captures/living_room.json",
+    "https://unpkg.com/@iwer/sem@2.5.0/captures/living_room.json",
+    "https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0/dist/profiles/meta-quest-touch-plus/left.glb",
+    "https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0/dist/profiles/meta-quest-touch-plus/right.glb"
+  ],
+  "browserVersion": "156.0.8078.4",
+  "url": "https://127.0.0.1:4177/cyclone/",
+  "checks": [
+    {
+      "name": "production entry is ready for XR",
+      "ok": true
+    },
+    {
+      "name": "default demo arrives within 15 seconds",
+      "ok": true,
+      "detail": {
+        "time": 6.0004000000059605,
+        "mode": "demo"
+      }
+    },
+    {
+      "name": "set_conveyor_speed: decision and demo signature",
+      "ok": true,
+      "detail": {
+        "decision": "APPROVE",
+        "verified": true,
+        "snapshot": "cyclone.rehearsal/1",
+        "proofBundle": "2.0"
+      }
+    },
+    {
+      "name": "set_arm_velocity: decision and demo signature",
+      "ok": true,
+      "detail": {
+        "decision": "APPROVE_AMENDED",
+        "verified": true,
+        "snapshot": "cyclone.rehearsal/1",
+        "proofBundle": "2.0"
+      }
+    },
+    {
+      "name": "set_oven_setpoint: decision and demo signature",
+      "ok": true,
+      "detail": {
+        "decision": "REJECT",
+        "verified": true,
+        "snapshot": "cyclone.rehearsal/1",
+        "proofBundle": "2.0"
+      }
+    },
+    {
+      "name": "lift_pallet: decision and demo signature",
+      "ok": true,
+      "detail": {
+        "decision": "REJECT",
+        "verified": true,
+        "snapshot": "cyclone.rehearsal/1",
+        "proofBundle": "2.0"
+      }
+    },
+    {
+      "name": "local fonts load under the production subpath",
+      "ok": true,
+      "detail": [
+        {
+          "url": "https://127.0.0.1:4177/cyclone/assets/fonts/manrope.ttf",
+          "status": 200
+        },
+        {
+          "url": "https://127.0.0.1:4177/cyclone/assets/fonts/atkinsonhyperlegiblenext-tabular.ttf",
+          "status": 200
+        },
+        {
+          "url": "https://127.0.0.1:4177/cyclone/assets/fonts/manrope700.ttf",
+          "status": 200
+        },
+        {
+          "url": "https://127.0.0.1:4177/cyclone/assets/fonts/atkinson400.ttf",
+          "status": 200
+        },
+        {
+          "url": "https://127.0.0.1:4177/cyclone/assets/fonts/atkinson700.ttf",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "name": "rendered labels use loaded fonts and tabular digits",
+      "ok": true,
+      "detail": [
+        12.639999389648438,
+        12.639999389648438,
+        12.639999389648438,
+        12.639999389648438,
+        12.639999389648438,
+        12.639999389648438,
+        12.639999389648438,
+        12.639999389648438,
+        12.639999389648438,
+        12.639999389648438
+      ]
+    },
+    {
+      "name": "Stillpoint logo and icon load",
+      "ok": true
+    },
+    {
+      "name": "no failed requests",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "no page errors",
+      "ok": true,
+      "detail": []
+    }
+  ],
+  "entryReadyMs": 1171,
+  "coldFirstTokenMs": 7311,
+  "fonts": {
+    "faces": [
+      {
+        "family": "Atkinson",
+        "weight": "400 700",
+        "status": "loaded"
+      },
+      {
+        "family": "Manrope",
+        "weight": "600 700",
+        "status": "loaded"
+      },
+      {
+        "family": "\"Atkinson Hyperlegible Next\"",
+        "weight": "400 700",
+        "status": "loaded"
+      },
+      {
+        "family": "Manrope",
+        "weight": "600 700",
+        "status": "loaded"
+      }
+    ],
+    "labels": [
+      "ready",
+      "ready",
+      "ready",
+      "ready",
+      "ready",
+      "ready"
+    ],
+    "digits": [
+      12.639999389648438,
+      12.639999389648438,
+      12.639999389648438,
+      12.639999389648438,
+      12.639999389648438,
+      12.639999389648438,
+      12.639999389648438,
+      12.639999389648438,
+      12.639999389648438,
+      12.639999389648438
+    ]
+  },
+  "at": "2026-11-10T06:13:05.502Z",
+  "blocked": [],
+  "requests": [
+    "https://127.0.0.1:4177/cyclone/",
+    "https://127.0.0.1:4177/cyclone/assets/index-BMBlUpu0.js",
+    "https://127.0.0.1:4177/cyclone/assets/identity/logo-lockup-ink.svg",
+    "https://127.0.0.1:4177/cyclone/assets/fonts/atkinsonhyperlegiblenext-tabular.ttf",
+    "https://www.unpkg.com/@iwer/sem@2.5.0/captures/living_room.json",
+    "https://127.0.0.1:4177/cyclone/assets/fonts/manrope.ttf",
+    "https://127.0.0.1:4177/cyclone/assets/world-initializer-Cg_e-Ch4.js",
+    "https://127.0.0.1:4177/cyclone/assets/identity/app-mark-128.png",
+    "https://127.0.0.1:4177/cyclone/ui/review.uikitml",
+    "https://127.0.0.1:4177/cyclone/ui/settings.uikitml",
+    "https://127.0.0.1:4177/cyclone/scenes/main.iwsdk.scene.json",
+    "https://127.0.0.1:4177/cyclone/assets/fonts/atkinson700.ttf",
+    "https://127.0.0.1:4177/cyclone/assets/index-Brupejm_.js",
+    "https://127.0.0.1:4177/cyclone/assets/msdf-worker-BUaSHgMS.js",
+    "https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0/dist/profiles/meta-quest-touch-plus/left.glb",
+    "https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0/dist/profiles/meta-quest-touch-plus/right.glb",
+    "https://127.0.0.1:4177/cyclone/assets/identity/app-mark-128.png",
+    "https://127.0.0.1:4177/cyclone/assets/fonts/manrope.ttf",
+    "https://127.0.0.1:4177/cyclone/assets/fonts/atkinsonhyperlegiblenext-tabular.ttf",
+    "https://127.0.0.1:4177/cyclone/assets/fonts/manrope700.ttf",
+    "https://127.0.0.1:4177/cyclone/assets/fonts/atkinson400.ttf",
+    "https://127.0.0.1:4177/cyclone/assets/fonts/atkinson700.ttf",
+    "https://127.0.0.1:4177/cyclone/assets/identity/app-mark-128.png"
+  ],
+  "failed": [],
+  "errors": []
+}

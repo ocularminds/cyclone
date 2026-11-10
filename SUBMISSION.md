@@ -34,8 +34,8 @@ expiring demo rule that the user physically accepts and can later revoke.
 **How we built it.** Cyclone uses Meta's Immersive Web SDK 1.0, TypeScript, Three.js and ECS systems. Procedural
 machines, deterministic kinematics, local fonts and synthesised sound keep the demo self-contained. Intent hashes
 match the Agent-Safe Intent v1 reference implementation; amended actions have distinct hashes. A separate relay
-integrates Decionis AgentSafe. Live signed-action binding and provisioned service acceptance remain open; the
-interface conservatively labels incomplete proof as unverified. Judges can use the full demo without that service,
+integrates Decionis AgentSafe and checks signed action bindings. Provisioned service acceptance remains open;
+incomplete proof stays unverified, with recovery that never repeats approval. Judges can use the full demo without that service,
 a login or a backend. Demo execution is simulated, and rehearsals are never predictions or guarantees.
 
 **Hand interactions.** Inspect, pull, twist, place, hold and push form the core loop. Paged settings and named
@@ -49,4 +49,6 @@ integration with execution receipts.
 ## Submission readiness
 
 This copy describes the implemented demo and its current limitations. Confirm H1 live acceptance, H3 hardware
-checks, H4 headset video, H6 launch date and the final capability register before the human submission (H2).
+checks, H6 launch date and the final capability register before the human submission (H2). The revision video
+is a finished 2:49 edit of explicitly labelled emulator footage, permitted by the current rules. The Pages MP4
+is a review copy; a public YouTube/Vimeo entry link still requires account access. A headset recording remains a separate H4 item.

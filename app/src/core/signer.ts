@@ -17,9 +17,11 @@ export class DemoSigner {
 
   async keys(): Promise<KeyPair> {
     if (this.pair) return this.pair;
-    const saved = this.store.read<string | null>('demoKey', null);
-    const secret = saved ? Canon.fromHex(saved) : ed.utils.randomPrivateKey();
-    if (!saved) this.store.write('demoKey', Canon.hex(secret));
+    const saved = this.store.read<unknown>('demoKey', null);
+    const valid = typeof saved === 'string' && /^[0-9a-f]{64}$/i.test(saved);
+    if (saved !== null && !valid) this.store.write('demoKeyCorrupt', saved);
+    const secret = valid ? Canon.fromHex(saved) : ed.utils.randomPrivateKey();
+    if (!valid) this.store.write('demoKey', Canon.hex(secret));
     const publicKey = await ed.getPublicKeyAsync(secret);
     const keyId = `demo-${(await Canon.sha256(Canon.hex(publicKey))).slice(0, 16)}`;
     this.pair = { secret, publicKey, keyId };
@@ -33,10 +35,34 @@ export class DemoSigner {
   }
 
   async sign(record: Omit<SignedRecord, 'verification'>): Promise<SignedRecord> {
+    // Re-signing a migrated local record replaces its export envelope, without nesting it.
+    const { dossier: _oldExport, ...content } = structuredClone(record);
     const { secret, keyId } = await this.keys();
-    const sig = await ed.signAsync(Canon.utf8(DemoSigner.payload(record)), secret);
+    const portable = DemoSigner.payload(content);
+    const artifactSignature = await ed.signAsync(Canon.utf8(portable), secret);
+    // Published proof-bundle 2.0: one signed portable document. No Protocol 1.1
+    // authority or execution-binding claims are made by a local demo issuer.
+    const dossier = {
+      schema_version: 'decionis.decision_dossier/2.0', dossier_id: content.record_id,
+      portable_artifact: content,
+      integrity: { proof_bundle: {
+        bundle_type: 'decionis.decision_dossier.proof_bundle', version: '2.0',
+        issued_at: content.decided_at, algorithm: 'Ed25519', key_id: keyId,
+        rotation_policy: { strategy: 'JWKS_OVERLAP', active_key_id: keyId, previous_key_ids: [], verification_grace_period_days: 30, rotated_at: null, public_jwks_path: '/.well-known/decision-dossier-jwks.json' },
+        artifacts: [{ artifact_kind: 'portable_artifact', media_type: 'application/json', document_path: '/portable_artifact',
+          canonical_document_sha256: await Canon.sha256(portable), signature: DemoSigner.b64url(artifactSignature) }],
+      } },
+    };
+    const full = { ...content, dossier };
+    const sig = await ed.signAsync(Canon.utf8(DemoSigner.payload(full)), secret);
     const verification: DemoVerification = { demo_signature: Canon.hex(sig), key_id: keyId };
-    return { ...record, verification };
+    return { ...full, verification };
+  }
+
+  /** A single download works as both --file and --jwks; it contains no private key. */
+  async export(record: SignedRecord): Promise<{ dossier_payload: unknown; keys: unknown[]; source: string }> {
+    if (record.source !== 'demo' || !record.dossier || !(await this.verify(record))) throw new Error('No valid demo proof export for this record.');
+    return { dossier_payload: structuredClone(record.dossier), keys: [await this.publicJwk()], source: 'Cyclone demo signature; no external authority or execution claim' };
   }
 
   async verify(record: SignedRecord): Promise<boolean> {

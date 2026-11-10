@@ -13,7 +13,7 @@ export default async function run({frame,workspaceRoot}){
     };
     if(!session)throw Error('Enter XR before profiling');session.requestAnimationFrame(tick);
   }));
-  writeFileSync(resolve(workspaceRoot,'../docs/design1/performance.json'),JSON.stringify(result,null,2));
+  writeFileSync(resolve(workspaceRoot,process.env.CYCLONE_EVIDENCE ?? '../docs/revision1','performance.json'),JSON.stringify(result,null,2));
   if(result.maxTriangles>60000||result.activeGhosts>1)throw Error('Rendering budget exceeded');
   return result;
 }
