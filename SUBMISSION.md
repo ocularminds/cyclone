@@ -54,3 +54,9 @@ This copy describes the implemented demo and its current limitations. Confirm H1
 checks, H6 launch date and the final capability register before the human submission (H2). The finished 2:49
 emulator video is public on YouTube, with playback verified. The current rules permit emulator footage;
 the repository's stricter headset-recording requirement remains a separate H4 item. No entry has been submitted.
+
+The existing [Devpost project](https://devpost.com/software/cyclone-the-calm-eye-for-ai-agents-decisions) now has
+the corrected pitch/story, public video, six captioned images and technical answers. The Devpost story adds
+a short challenges/lessons paragraph and remains below 500 words (467). See [artifacts](docs/devpost/README.md)
+and the [browser-verified status](docs/devpost/status.json). Eligibility declarations and final legal acceptance
+remain pending; the user has authorized proceeding with submission.

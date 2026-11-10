@@ -15,6 +15,10 @@ on the miniature; no real machine is driven. A signature, an authorization and p
 [Watch the 2:49 emulator demo on YouTube](https://youtu.be/NaKl8JTSMP4).
 The video labels simulated execution throughout. The [original MP4](https://ocularminds.github.io/cyclone/video/cyclone-revision1.mp4) is also available.
 
+[Devpost project](https://devpost.com/software/cyclone-the-calm-eye-for-ai-agents-decisions) ·
+[Artwork and proof artifact pack](https://ocularminds.github.io/cyclone/submission/cyclone-artifacts.zip).
+The [submission record](docs/devpost/README.md) documents gallery provenance and current entry status.
+
 - On a headset, open the URL and select **Enter**. A suitable table anchors the miniature; after three seconds
   without one, a seated plinth appears. Physical Quest performance, room placement and narrow FoV checks remain H3.
 - On desktop, the Immersive Web Emulator provides emulated hands.

@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "project": "Cyclone",
+  "created": "2026-11-10",
+  "destination": "Devpost project 1292406 / Meta VR Start Developer Competition 2026",
+  "spec": {
+    "ratio": "3:2",
+    "max_bytes_per_image": 5000000,
+    "format": "PNG"
+  },
+  "exports": [
+    {
+      "file": "cover.png",
+      "kind": "concept artwork",
+      "source": "design/brand1/assets/cover-1920x1080.png",
+      "transforms": "Proportional resize; background padding and exact tagline. No crop.",
+      "width": 1800,
+      "height": 1200,
+      "bytes": 356795,
+      "sha256": "d9d0d2b7de11beb2982ec0dc0db705affc91983afcf9588983219d4c066b1c89"
+    },
+    {
+      "file": "inspect.png",
+      "kind": "real emulator capture with editorial caption",
+      "source": "docs/revision1/video/workflow.webm",
+      "source_sha256": "cbf7c515b5383e33739cbbe09e1dcdd0c0bd35192ba6c2bfdeb4513313aec640",
+      "source_time_seconds": 15,
+      "frame": "frames/inspect.png",
+      "crop_px": [
+        210,
+        80,
+        756,
+        469
+      ],
+      "transforms": "Crop surrounding black space; proportional resize; separate caption and frame added. UI unchanged.",
+      "caption": "Look to inspect the agent, value, rationale and rule.",
+      "width": 1800,
+      "height": 1200,
+      "bytes": 409031,
+      "sha256": "4e7ec7b6cb92bdf6563e5ff3bb123154c8bb0a8bc94f6054f434b90dc5589801"
+    },
+    {
+      "file": "amend.png",
+      "kind": "real emulator capture with editorial caption",
+      "source": "docs/revision1/video/workflow.webm",
+      "source_sha256": "cbf7c515b5383e33739cbbe09e1dcdd0c0bd35192ba6c2bfdeb4513313aec640",
+      "source_time_seconds": 75,
+      "frame": "frames/amend.png",
+      "crop_px": [
+        210,
+        80,
+        756,
+        469
+      ],
+      "transforms": "Crop surrounding black space; proportional resize; separate caption and frame added. UI unchanged.",
+      "caption": "Compare original and proposed paths in a kinematic rehearsal.",
+      "width": 1800,
+      "height": 1200,
+      "bytes": 446307,
+      "sha256": "add00b5d3477bbcbfd188d0303d15e9b8071ac8bb7eb5eeb3749963c08c4554b"
+    },
+    {
+      "file": "locked.png",
+      "kind": "real emulator capture with editorial caption",
+      "source": "docs/revision1/video/workflow.webm",
+      "source_sha256": "cbf7c515b5383e33739cbbe09e1dcdd0c0bd35192ba6c2bfdeb4513313aec640",
+      "source_time_seconds": 140,
+      "frame": "frames/locked.png",
+      "crop_px": [
+        210,
+        80,
+        756,
+        469
+      ],
+      "transforms": "Crop surrounding black space; proportional resize; separate caption and frame added. UI unchanged.",
+      "caption": "450\u00b0C in Zone B. Veto or escalate; unresolved actions remain held.",
+      "width": 1800,
+      "height": 1200,
+      "bytes": 395330,
+      "sha256": "cdf5234289851d405c1779649edd8eaa44e2dfe6557079604b152c199568aa6b"
+    },
+    {
+      "file": "receipt.png",
+      "kind": "real emulator capture with editorial caption",
+      "source": "docs/revision1/video/details.webm",
+      "source_sha256": "a3857856b163f064370811b32d82989d3cf33b54e3046edfe9d3f4ab51e5bb7d",
+      "source_time_seconds": 30,
+      "frame": "frames/receipt.png",
+      "crop_px": [
+        210,
+        80,
+        756,
+        469
+      ],
+      "transforms": "Crop surrounding black space; proportional resize; separate caption and frame added. UI unchanged.",
+      "caption": "Demo signature. Retained rehearsal. Permission, proof and execution stay separate.",
+      "width": 1800,
+      "height": 1200,
+      "bytes": 472315,
+      "sha256": "881307cf08c8fec7efef63525fcadca4c9ececda3cef1c8dc90bac2d78d21447"
+    },
+    {
+      "file": "access.png",
+      "kind": "real emulator capture with editorial caption",
+      "source": "docs/revision1/video/details.webm",
+      "source_sha256": "a3857856b163f064370811b32d82989d3cf33b54e3046edfe9d3f4ab51e5bb7d",
+      "source_time_seconds": 78,
+      "frame": "frames/access.png",
+      "crop_px": [
+        210,
+        80,
+        756,
+        469
+      ],
+      "transforms": "Crop surrounding black space; proportional resize; separate caption and frame added. UI unchanged.",
+      "caption": "Text at 125%, with theme and caption controls on the desk.",
+      "width": 1800,
+      "height": 1200,
+      "bytes": 458739,
+      "sha256": "cb0f7dba441586747691e4a2d1e399fdc0720562216c700c35fb6f0fd6fa849f"
+    }
+  ],
+  "ai_generated": false,
+  "art_source": "Original local Three.js scene in design/brand1/source; concept art is not app evidence.",
+  "evidence_scope": "Emulated hands, demo signatures, simulated execution. No physical device, live service or actuator claim.",
+  "reproduction": "python3 docs/devpost/export.py",
+  "review_status": "Reviewed at full size and on contact sheet; no overlaid or invented app UI. Crops retain decision panels. Not a device legibility check."
+}

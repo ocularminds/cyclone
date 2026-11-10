@@ -1,0 +1,163 @@
+{
+  "verified": true,
+  "available": true,
+  "key_id": "demo-c0961d79ccfbc060",
+  "artifacts_checked": 1,
+  "proof_bundle_version": "2.0",
+  "verified_artifact_paths": [
+    "/portable_artifact"
+  ],
+  "required_artifact_coverage_verified": true,
+  "checks": [
+    {
+      "key": "public_key",
+      "label": "Public Key",
+      "verified": true,
+      "severity": "pass",
+      "detail": "Loaded Ed25519 public key demo-c0961d79ccfbc060."
+    },
+    {
+      "key": "proof_bundle:required_artifacts",
+      "label": "Required Proof Artifacts",
+      "verified": true,
+      "severity": "pass",
+      "detail": "Proof-bundle version and artifact coverage match the presented authority documents."
+    },
+    {
+      "key": "portable_artifact:sha256",
+      "label": "portable_artifact SHA-256",
+      "verified": true,
+      "severity": "pass",
+      "detail": "Canonical digest ab8a00c51f018c8f27a44dcd79ab2d602dc94440ed4bb1961ac7bcab1eaec248."
+    },
+    {
+      "key": "portable_artifact:signature",
+      "label": "portable_artifact Signature",
+      "verified": true,
+      "severity": "pass",
+      "detail": "Ed25519 signature verified against the public JWKS."
+    }
+  ],
+  "jwks_url": "proof/demo-jwks.json",
+  "trust_anchor": {
+    "status": "UNESTABLISHED",
+    "trusted": false,
+    "source": "proof/demo-jwks.json",
+    "detail": "The key source is caller- or artifact-selected. Signature validity against this key does not establish Decionis issuer authenticity."
+  },
+  "decionis_issuer_authenticity_verified": false,
+  "issuer_identity_verified": false,
+  "reproducibility": {
+    "posture": "signature_only",
+    "detail": "No reproduction metadata present. The signature can still be verified, but the verdict cannot be independently recomputed \u2014 this is a signed record, not a reproducible one.",
+    "inputs": [
+      {
+        "key": "recorded_outcome",
+        "label": "Recorded outcome",
+        "present": false,
+        "value": null
+      },
+      {
+        "key": "policy_version",
+        "label": "Policy version",
+        "present": false,
+        "value": null
+      },
+      {
+        "key": "rules_sha256",
+        "label": "Recorded rules hash",
+        "present": false,
+        "value": null
+      },
+      {
+        "key": "parameters_sha256",
+        "label": "Recorded parameters hash",
+        "present": false,
+        "value": null
+      },
+      {
+        "key": "evaluated_at",
+        "label": "Evaluation timestamp",
+        "present": false,
+        "value": null
+      },
+      {
+        "key": "inputs_snapshot",
+        "label": "Inputs snapshot",
+        "present": false,
+        "value": null
+      },
+      {
+        "key": "portable_artifact_signature",
+        "label": "Signed portable artifact",
+        "present": true,
+        "value": "/portable_artifact"
+      },
+      {
+        "key": "inputs_snapshot_signature",
+        "label": "Signed inputs snapshot",
+        "present": false,
+        "value": null
+      },
+      {
+        "key": "signed_projection_consistency",
+        "label": "Signed decision projection consistency",
+        "present": false,
+        "value": null
+      },
+      {
+        "key": "input_snapshot_commitment",
+        "label": "Input snapshot commitment",
+        "present": false,
+        "value": null
+      }
+    ]
+  },
+  "issuer": {
+    "tier": null,
+    "unknown_tier": null,
+    "signature_covered": false,
+    "provisional": false,
+    "label": "Issuer not stated",
+    "detail": "This dossier carries no issuer context, so the workspace that minted it cannot be established from the record alone."
+  },
+  "assurance_scope": {
+    "version": "decionis.assurance-scope/1",
+    "established": [
+      {
+        "key": "evaluation",
+        "detail": "The signed portable artifact states verdict unstated under policy unstated, evaluated by unstated, under the selected key only; Decionis issuer authenticity is unestablished."
+      }
+    ],
+    "not_established": [
+      {
+        "key": "binding",
+        "detail": "This dossier carries no execution binding: it records a decision, not an authorization to execute."
+      },
+      {
+        "key": "single_use",
+        "detail": "No verified binding states single-use terms (a nonce, an idempotency key and an expiry)."
+      },
+      {
+        "key": "observation",
+        "detail": "A dossier is minted at the decision and observes no effect. The observation method and grade are recorded at finalization, and an Agent Action Capsule carries them."
+      },
+      {
+        "key": "downstream_consequences",
+        "detail": "An authorization governs one operation's direct effect; what follows from that effect downstream is outside this record."
+      },
+      {
+        "key": "alternative_route_closure",
+        "detail": "No route evidence is attached, so nothing here shows that another credential, API, console or delegated workflow could not cause the same effect."
+      },
+      {
+        "key": "executor_host_integrity",
+        "detail": "Nothing here attests to the host that ran the executor; its integrity rests on how it was deployed, not on this record."
+      }
+    ],
+    "observation": {
+      "method": null,
+      "grade": null
+    }
+  }
+}
