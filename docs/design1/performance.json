@@ -1,0 +1,29 @@
+{
+  "source": "IWSDK IWER on desktop Chromium; no hardware FPS claim",
+  "at": "2026-11-10T04:37:36.534Z",
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64; Quest 3) AppleWebKit/537.36 (KHTML, like Gecko) OculusBrowser/33.0.0.x.x.x Chrome/126.0.6478.122 VR Safari/537.36",
+  "xr": true,
+  "frames": 480,
+  "durationMs": 8007.199999988079,
+  "fps": 60.00600060014943,
+  "medianMs": 16.599999994039536,
+  "p95Ms": 18.5,
+  "maxTriangles": 30312,
+  "maxDrawCalls": 278,
+  "activeGhosts": 1,
+  "settings": {
+    "eyesOnly": false,
+    "oneHanded": false,
+    "preferredHand": "right",
+    "theme": "ink",
+    "textScale": 1.25,
+    "reducedMotion": false,
+    "highContrast": false,
+    "captions": true,
+    "mode": "demo",
+    "amendedApproval": true,
+    "passthrough": true
+  },
+  "tokens": 3,
+  "records": 3
+}

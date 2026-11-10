@@ -1,6 +1,7 @@
 import { Group, Matrix4, Quaternion, Vector3, type Entity, type Mesh, type Object3D } from '@iwsdk/core';
 import type { Token } from './flow/shift';
 import { Layout } from './models/layout';
+import { Commitment } from './flow/commitment';
 import type { Rig } from './models/machines';
 import type { TokenParts } from './models/token';
 
@@ -17,6 +18,7 @@ export class TokenView {
   lift = 0;
   thread: Object3D | null = null;
   holdTime = 0;
+  readonly commitment = new Commitment();
   /** Tray slot index; -1 when not in the tray. */
   spot = -1;
   /** Session ms of the last open-hand push (a pushed token drifts home after a pause). */
@@ -72,6 +74,8 @@ export class Stage {
    * card can never steal the pinch meant for a near grab (DECISIONS.md).
    */
   readonly rayTargets: Entity[] = [];
+  readonly alwaysRayTargets = new Set<Entity>();
+  readonly suppressedRayTargets = new Set<Entity>();
 
   focus: string | null = null;
   detail = false;
@@ -81,6 +85,11 @@ export class Stage {
   /** Label of the replay the ghost is playing (drill reveal, ledger seal), if any. */
   replay: string | null = null;
   settingsOpen = false;
+  comparison: 'reviewed' | 'original' = 'reviewed';
+  holdFeedback = '';
+  replayOpen = false;
+  /** Latest caption; contextual panels reserve a row so it cannot cover controls. */
+  caption = '';
 
   /** Head and gaze in desk frame, refreshed each frame by TwinSystem. */
   readonly head = new Vector3(...Layout.HEAD);

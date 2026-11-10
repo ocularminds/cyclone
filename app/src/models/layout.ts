@@ -18,8 +18,12 @@ export class Layout {
   static readonly SLOT: XYZ = [0.05, 0, -0.06];
   static readonly PAD: XYZ = [0.135, 0, -0.06];
   static readonly RACK: XYZ = [0.215, 0, -0.095];
-  static readonly CHUTE: XYZ = [0.27, 0, -0.012];
-  static readonly LEDGER: XYZ = [-0.25, 0, -0.06];
+  static readonly CHUTE: XYZ = [0.266, 0, -0.012];
+  static readonly LEDGER: XYZ = [-0.255, 0, -0.048];
+  static readonly SEAL_COLUMNS = 3;
+  static readonly SEAL_TIERS = 5;
+  static readonly SEAL_PITCH = 0.04;
+  static readonly SEAL_RISE = 0.04;
   static readonly PUCK: XYZ = [-0.255, 0, -0.008];
   static readonly AGENT_Y = 0.11;
   static readonly AGENT_Z = -0.135;
@@ -52,12 +56,12 @@ export class Layout {
     return [Layout.RACK[0], 0.012 + (i % 4) * 0.016, Layout.RACK[2] + Math.floor(i / 4) * 0.035];
   }
 
-  /** Ledger shelf grid: 3 tiers of 5 seals, newest at the front. */
+  /** Individually graspable crystals: 40 mm centres, 5 tiers of 3. */
   static sealSpot(i: number): XYZ {
-    const perRow = 5;
-    const tier = Math.floor(i / perRow) % 3;
+    const perRow = Layout.SEAL_COLUMNS;
+    const tier = Math.floor(i / perRow) % Layout.SEAL_TIERS;
     const col = i % perRow;
-    return [Layout.LEDGER[0] - 0.036 + col * 0.018, 0.022 + tier * 0.034, Layout.LEDGER[2] - tier * 0.012];
+    return [Layout.LEDGER[0] + (col - 1) * Layout.SEAL_PITCH, 0.022 + tier * Layout.SEAL_RISE, Layout.LEDGER[2] - tier * 0.012];
   }
 
   static agentSpot(i: number): XYZ {

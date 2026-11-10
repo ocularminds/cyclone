@@ -1,0 +1,31 @@
+{
+  "at": "2026-11-10T04:12:53.417Z",
+  "source": "IWSDK IWER, fixture tokens for visual audit",
+  "ok": true,
+  "encodings": [
+    {
+      "level": 1,
+      "vertices": 24,
+      "hatching": true,
+      "lock": false
+    },
+    {
+      "level": 2,
+      "vertices": 36,
+      "hatching": true,
+      "lock": false
+    },
+    {
+      "level": 3,
+      "vertices": 36,
+      "hatching": true,
+      "lock": true
+    },
+    {
+      "level": 0,
+      "vertices": 372,
+      "hatching": true,
+      "lock": false
+    }
+  ]
+}

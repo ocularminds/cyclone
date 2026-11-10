@@ -14,21 +14,25 @@ export class DrillSystem extends createSystem({}) {
   init(): void {
     this.app = this.globals.cyclone as Cyclone;
     this.cleanupFuncs.push(
-      this.app.shift.events.on('drill', ({ token, caught }) => {
+      this.app.shift.events.on('drill', ({ token, caught, outcome }) => {
+        if (outcome === 'escalated') {
+          this.app.cue('drill', 'Drill: escalated, awaiting assessment.', [...Layout.HUD]); return;
+        }
         const score = this.app.calibration.label;
         if (caught) {
           this.app.cue('drill', `Drill — you caught it. Calibration: ${score}`, [...Layout.HUD]);
           this.app.bus.emit('toast', { text: `Drill — you caught it. Calibration ${score}.`, tone: 'good' });
           return;
         }
-        this.app.cue('drill', `Drill — you missed it. Watch the replay. Calibration: ${score}`, [...Layout.HUD], 3);
-        this.app.bus.emit('toast', { text: `Drill — you missed it. Calibration ${score}.`, tone: 'warn' });
+        this.app.cue('drill', `Drill ${outcome === 'timeout' ? 'timed out' : '- you missed it'}. Watch the replay. Calibration: ${score}`, [...Layout.HUD], 3);
+        this.app.bus.emit('toast', { text: `Drill ${outcome === 'timeout' ? 'timed out' : '- you missed it'}. Calibration ${score}.`, tone: 'warn' });
         const i = token.intent;
         const r = token.rehearsal;
         this.app.bus.emit('replay', {
           tool: i.tool,
           asset_id: i.target.asset_id,
           args: token.args,
+          result: r,
           label: r.breach ? `Drill replay: clips ${r.breach.zone_label}` : 'Drill replay',
         });
       }),

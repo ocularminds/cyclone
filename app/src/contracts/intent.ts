@@ -1,3 +1,4 @@
+import type { RehearsalSnapshot } from '../core/receipt';
 /**
  * Data contracts shared by the client, the scenario engine and the relay.
  * HeldIntent mirrors AGENTS.md §5.1 (fields fixed; optional additions only).
@@ -95,11 +96,13 @@ export type LiveVerification = {
   issuer_tier: string;
   assurance_scope_summary: string;
   checked_at: string;
+  /** Only the relay may establish signed action association. Absent in legacy relay responses. */
+  intent_binding_verified?: boolean;
 };
 
 export type DemoVerification = { demo_signature: string; key_id: string };
 
-export type Rehearsed = { args: Record<string, unknown>; path_samples_ref: string };
+export type Rehearsed = { args: Record<string, unknown>; path_samples_ref: string; snapshot?: RehearsalSnapshot };
 
 export type SignedRecord = {
   record_id: string;
@@ -109,6 +112,8 @@ export type SignedRecord = {
   amended_hash?: string;
   decided_at: string;
   rehearsal: Rehearsed;
+  /** Client digest only; never presented as a claim signed by the live policy service. */
+  local_rehearsal?: Rehearsed;
   source: 'demo' | 'live';
   dossier?: unknown;
   verification: LiveVerification | DemoVerification;

@@ -8,6 +8,7 @@ import {
   SRGBColorSpace,
 } from '@iwsdk/core';
 import type { RiskLevel } from '../contracts/intent';
+import tokens from '../ui/tokens.json';
 
 /**
  * "Precision miniature" art direction (C30): matte, warm, toy-like machines
@@ -16,23 +17,29 @@ import type { RiskLevel } from '../contracts/intent';
  * hatching (C23).
  */
 export class Palette {
-  static readonly RISK = ['#4a8fe0', '#e6b54a', '#e07a1f', '#d23aa6'] as const;
-  static readonly RISK_HC = ['#3aa0ff', '#ffd400', '#ff8a00', '#ff3cd2'] as const;
-  static readonly RISK_NAMES = ['low', 'moderate', 'high', 'critical'] as const;
+  static readonly RISK = [tokens.color.rehearsal, tokens.color.attention, tokens.color['high-attention'], tokens.color.limit] as const;
+  static readonly RISK_HC = [tokens.color['hc-cyan'], tokens.color['hc-amber'], tokens.color['hc-amber'], tokens.color['hc-magenta']] as const;
+  static readonly RISK_NAMES = ['Routine', 'Review', 'High attention', 'Blocked'] as const;
+  static theme: 'ink' | 'porcelain' = 'ink';
+  static textScale: 1 | 1.25 = 1;
+  static readonly tokens = tokens;
+  static get ui(): typeof tokens.theme.dark {
+    return Palette.highContrast ? tokens.theme['high-contrast'] : Palette.theme === 'porcelain' ? tokens.theme.light : tokens.theme.dark;
+  }
 
   static readonly warm = {
-    cream: '#efe4cf',
-    sand: '#d9c7a4',
+    cream: tokens.color.porcelain,
+    sand: tokens.color.stone,
     terracotta: '#c86f4c',
     mustard: '#d6a63b',
     sage: '#93a88c',
-    slate: '#5d6b78',
+    slate: tokens.color['text-muted-light'],
     walnut: '#6e4f37',
-    ink: '#2b2622',
+    ink: tokens.color.ink,
     steel: '#9aa3a8',
   } as const;
 
-  static readonly ghost = '#8fdcff';
+  static readonly ghost = tokens.color.rehearsal;
 
   private static readonly cache = new Map<string, MeshLambertMaterial>();
   private static highContrast = false;
@@ -57,7 +64,7 @@ export class Palette {
   });
 
   static readonly flareMaterial = new MeshBasicMaterial({
-    color: new Color('#ff3cd2'),
+    color: new Color(tokens.color.limit),
     transparent: true,
     opacity: 0.85,
     depthWrite: false,

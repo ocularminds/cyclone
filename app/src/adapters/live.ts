@@ -1,4 +1,4 @@
-import type { Decision, HeldIntent, SignedRecord } from '../contracts/intent';
+import type { Decision, HeldIntent, SignedRecord, Rehearsed } from '../contracts/intent';
 import {
   GateError,
   type GateCapabilities,
@@ -90,7 +90,7 @@ export class LiveAdapter implements PolicyGateAdapter {
 
   tick(): void {}
 
-  async resolve(decision: Decision): Promise<SignedRecord> {
+  async resolve(decision: Decision, reviewed?: Rehearsed): Promise<SignedRecord> {
     let res: Response;
     try {
       res = await fetch(this.http(`/intents/${encodeURIComponent(decision.intent_id)}/decision`), {
@@ -101,7 +101,10 @@ export class LiveAdapter implements PolicyGateAdapter {
     } catch {
       throw new GateError('UNAVAILABLE');
     }
-    if (res.ok) return (await res.json()) as SignedRecord;
+    if (res.ok) {
+      const record = (await res.json()) as SignedRecord;
+      return reviewed ? { ...record, local_rehearsal: reviewed } : record;
+    }
     const body = (await res.json().catch(() => ({}))) as { code?: GateErrorCode; detail?: string };
     const byStatus: Record<number, GateErrorCode> = {
       401: 'UNAUTHORIZED',

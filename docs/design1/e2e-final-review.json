@@ -1,0 +1,207 @@
+{
+  "at": "2026-11-10T04:02:07.489Z",
+  "source": "IWSDK IWER, actual hand-ray controls",
+  "results": [
+    {
+      "name": "turning the head does not drag the open card",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "named full rationale opens at 125% text",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "rationale page 1: loaded, scaled and unclipped",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "rationale page 2: loaded, scaled and unclipped",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "pagination retains the complete rationale",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "all visible canvas labels use ready fonts without overflow",
+      "ok": true,
+      "detail": [
+        {
+          "name": "rehearsal-caption",
+          "rendered": [
+            {
+              "text": "Proposed rehearsal 0% / dashed =",
+              "font": "600 27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01125
+            },
+            {
+              "text": "original",
+              "font": "600 27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01125
+            }
+          ],
+          "overflow": false,
+          "textScale": 1.25,
+          "fonts": "ready",
+          "width": 0.2,
+          "height": 0.035
+        },
+        {
+          "name": "card-caption",
+          "rendered": [
+            {
+              "text": "Review page 1",
+              "font": "600 27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01125
+            }
+          ],
+          "overflow": false,
+          "textScale": 1.25,
+          "fonts": "ready",
+          "width": 0.28,
+          "height": 0.036
+        },
+        {
+          "name": "decision-card",
+          "rendered": [
+            {
+              "text": "Robot arm, cell 3",
+              "font": "bold 45px Manrope, system-ui, sans-serif",
+              "emMetres": 0.01875
+            },
+            {
+              "text": "Cell Agent / Review",
+              "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01125
+            },
+            {
+              "text": "170 → 180 °/s",
+              "font": "bold 54px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.0225
+            },
+            {
+              "text": "Original → proposed",
+              "font": "22.5px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.009375
+            },
+            {
+              "text": "Morning batch is 6% larger. 170°/s keeps cycle",
+              "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01125
+            },
+            {
+              "text": "time...",
+              "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01125
+            },
+            {
+              "text": "Within rehearsal envelope",
+              "font": "bold 30px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.0125
+            }
+          ],
+          "overflow": false,
+          "textScale": 1.25,
+          "fonts": "ready",
+          "width": 0.28,
+          "height": 0.16
+        },
+        {
+          "name": "",
+          "rendered": [
+            {
+              "text": "180 °/s",
+              "font": "bold 30px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.0125
+            }
+          ],
+          "overflow": false,
+          "textScale": 1.25,
+          "fonts": "ready",
+          "width": 0.078,
+          "height": 0.024
+        },
+        {
+          "name": "agent-label:line-agent",
+          "rendered": [
+            {
+              "text": "Line",
+              "font": "600 27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01125
+            }
+          ],
+          "overflow": false,
+          "textScale": 1.25,
+          "fonts": "ready",
+          "width": 0.07,
+          "height": 0.024
+        },
+        {
+          "name": "agent-label:cell-agent",
+          "rendered": [
+            {
+              "text": "Cell",
+              "font": "600 27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01125
+            }
+          ],
+          "overflow": false,
+          "textScale": 1.25,
+          "fonts": "ready",
+          "width": 0.07,
+          "height": 0.024
+        },
+        {
+          "name": "agent-label:thermal-agent",
+          "rendered": [
+            {
+              "text": "Thermal",
+              "font": "600 27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01125
+            }
+          ],
+          "overflow": false,
+          "textScale": 1.25,
+          "fonts": "ready",
+          "width": 0.07,
+          "height": 0.024
+        },
+        {
+          "name": "rule-label",
+          "rendered": [
+            {
+              "text": "Conveyor 1: 0 to +5%, routine only,",
+              "font": "bold 27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01125
+            },
+            {
+              "text": "8 hours",
+              "font": "bold 27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01125
+            },
+            {
+              "text": "Drop on Line Agent to accept.",
+              "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01125
+            },
+            {
+              "text": "Revoke in Settings.",
+              "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+              "emMetres": 0.01125
+            }
+          ],
+          "overflow": false,
+          "textScale": 1.25,
+          "fonts": "ready",
+          "width": 0.2,
+          "height": 0.075
+        }
+      ]
+    }
+  ]
+}

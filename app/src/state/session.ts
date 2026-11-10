@@ -2,11 +2,11 @@ import type { DecisionKind } from '../contracts/intent';
 
 export type SessionEvent = {
   t: number;
-  type: 'decision' | 'beat' | 'drill' | 'expired' | 'denied' | 'refused' | 'rule';
+  type: 'decision' | 'beat' | 'drill' | 'expired' | 'denied' | 'refused' | 'rule' | 'false_alarm';
   intent_id?: string;
   decision?: DecisionKind;
   amended?: boolean;
-  drill?: 'caught' | 'missed';
+  drill?: 'caught' | 'missed' | 'timeout' | 'escalated' | 'corrected';
   note?: string;
 };
 
@@ -20,6 +20,8 @@ export type Summary = {
   auto: number;
   drillsCaught: number;
   drillsMissed: number;
+  drillsUnassessed: number;
+  falseAlarms: number;
 };
 
 /** This session's event log; the shift summary is computed from it (C18). */
@@ -49,10 +51,14 @@ export class SessionLog {
       auto: 0,
       drillsCaught: 0,
       drillsMissed: 0,
+      drillsUnassessed: 0,
+      falseAlarms: 0,
     };
     for (const e of this.events) {
+      if (e.type === 'false_alarm') s.falseAlarms++;
       if (e.type === 'drill') {
-        if (e.drill === 'caught') s.drillsCaught += 1;
+        if (e.drill === 'escalated') { s.drillsUnassessed++; continue; }
+        if (e.drill === 'caught' || e.drill === 'corrected') s.drillsCaught += 1;
         else s.drillsMissed += 1;
       }
       if (e.type === 'expired') s.expired += 1;

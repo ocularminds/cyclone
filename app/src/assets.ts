@@ -9,6 +9,9 @@ const publicAssetUrl = (filePath: string): string =>
  * settings panel (C30: no third-party or branded assets).
  */
 export default defineAssets({
+  'review-controls': {
+    url: publicAssetUrl('ui/review.uikitml'), type: AssetType.UIKitML, name: 'Review controls',
+  },
   'settings-panel': {
     url: publicAssetUrl('ui/settings.uikitml'),
     type: AssetType.UIKitML,

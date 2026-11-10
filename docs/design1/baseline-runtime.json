@@ -1,0 +1,178 @@
+{
+  "commit": "481fa6d",
+  "source": "IWSDK managed Chromium / Quest 3 IWER, hands only",
+  "state": {
+    "ready": true,
+    "t": 30.38379999998212,
+    "paused": false,
+    "anchor": "plinth",
+    "focus": null,
+    "scrub": 0,
+    "holding": false,
+    "tokens": [
+      {
+        "id": "dd3dfdb7-664d-4df3-acb1-ebd5ef1d0ade",
+        "tool": "set_arm_velocity",
+        "requires": "two_hand",
+        "status": "held",
+        "place": "tray",
+        "value": 250,
+        "breach": "walkway-w1",
+        "glyph": "9698fad196471a03",
+        "at": [
+          -0.175,
+          1.1929,
+          -0.34
+        ],
+        "hold": 0
+      }
+    ],
+    "slot": [
+      0.05,
+      1.2,
+      -0.34
+    ],
+    "pad": [
+      0.135,
+      1.2,
+      -0.34
+    ],
+    "chute": [
+      0.27,
+      1.18,
+      -0.292
+    ],
+    "offEdge": [
+      0.3,
+      1.2,
+      -0.2
+    ],
+    "deskRoot": [
+      0,
+      1.18,
+      -0.28
+    ],
+    "head": [
+      0,
+      1.6,
+      0
+    ],
+    "handle": [
+      0,
+      1.18,
+      -0.28
+    ],
+    "handleVisible": false,
+    "dial": [
+      0,
+      1.18,
+      -0.28
+    ],
+    "replay": null,
+    "agents": [
+      {
+        "id": "line-agent",
+        "at": [
+          -0.11,
+          1.29,
+          -0.415
+        ],
+        "visible": true
+      },
+      {
+        "id": "cell-agent",
+        "at": [
+          0,
+          1.29,
+          -0.415
+        ],
+        "visible": true
+      },
+      {
+        "id": "thermal-agent",
+        "at": [
+          0.11,
+          1.29,
+          -0.415
+        ],
+        "visible": true
+      }
+    ],
+    "seals": [
+      [
+        -0.286,
+        1.202,
+        -0.34
+      ]
+    ],
+    "rules": [],
+    "puck": [
+      -0.255,
+      1.18,
+      -0.288
+    ],
+    "settingsOpen": true,
+    "trust": {
+      "line-agent": 0.3333333333333333,
+      "cell-agent": 0,
+      "thermal-agent": 0
+    },
+    "ledger": [
+      {
+        "decision": "APPROVE",
+        "gesture": "place",
+        "glyph": "1de7ed68f20bb4df",
+        "amended_args": null
+      }
+    ],
+    "summary": {
+      "decisions": 1,
+      "approved": 1,
+      "amended": 0,
+      "vetoed": 0,
+      "escalated": 0,
+      "expired": 0,
+      "auto": 0,
+      "drillsCaught": 0,
+      "drillsMissed": 0
+    },
+    "beats": [
+      "bloom@0.0",
+      "first_token@6.0",
+      "first_seal@18.9",
+      "second_token@20.9"
+    ],
+    "settings": {
+      "eyesOnly": false,
+      "oneHanded": false,
+      "preferredHand": "right",
+      "theme": "ink",
+      "textScale": 1,
+      "reducedMotion": false,
+      "highContrast": false,
+      "captions": true,
+      "mode": "demo",
+      "amendedApproval": true,
+      "passthrough": true
+    },
+    "calibration": "No drills yet"
+  },
+  "panelEntities": {
+    "entities": [
+      {
+        "entityIndex": 51,
+        "name": "settings-panel",
+        "componentIds": [
+          "Transform",
+          "Visibility",
+          "LevelTag",
+          "RayInteractable",
+          "PokeInteractable",
+          "Hovered"
+        ]
+      }
+    ],
+    "total": 1,
+    "limited": false
+  }
+}

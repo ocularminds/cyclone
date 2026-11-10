@@ -38,6 +38,12 @@ export type RuleTemplate = {
   tool: string;
   param: string;
   max: number;
+  min: number;
+  asset_id: string;
+  unit: string;
+  risk: 0;
+  requires: 'single';
+  lifetime_s: number;
   label: string;
 };
 

@@ -32,8 +32,7 @@ export type TokenParts = {
 export type SealKind = 'approve' | 'amended' | 'reject' | 'escalate' | 'auto' | 'expired';
 
 /**
- * Token, seal and control models. Risk shape goes smooth → faceted →
- * notched → spiked (C23) so risk reads without colour.
+ * Shape and hatching encode risk independently of colour and policy permission.
  */
 export class Tokens {
   private static readonly shapes = new Map<RiskLevel, BufferGeometry>();
@@ -42,13 +41,13 @@ export class Tokens {
   static outline(level: RiskLevel): BufferGeometry {
     const hit = Tokens.shapes.get(level);
     if (hit) return hit;
-    const [n, ratio] = ([[32, 1], [8, 1], [10, 0.82], [12, 0.58]] as const)[level];
+    const n = [32, 3, 4, 4][level];
     const r = Layout.TOKEN_R;
     const shape = new Shape();
-    const pts = ratio === 1 ? n : n * 2;
+    const pts = n;
     for (let i = 0; i < pts; i++) {
-      const a = (i / pts) * Math.PI * 2;
-      const rr = ratio === 1 || i % 2 === 0 ? r : r * ratio;
+      const a = (i / pts) * Math.PI * 2 + (level === 3 ? Math.PI / 4 : Math.PI / 2);
+      const rr = r;
       if (i === 0) shape.moveTo(Math.cos(a) * rr, Math.sin(a) * rr);
       else shape.lineTo(Math.cos(a) * rr, Math.sin(a) * rr);
     }
@@ -68,11 +67,12 @@ export class Tokens {
     const body = new Mesh(Tokens.outline(level), [caps, sides]);
     root.add(body);
     const glyphMesh = new Mesh(
-      new CircleGeometry(Layout.TOKEN_R * 0.72, 32),
+      new CircleGeometry(Layout.TOKEN_R * (level === 1 ? 0.48 : 0.65), 32),
       new MeshBasicMaterial({ map: GlyphArt.glyph(glyph) }),
     );
     glyphMesh.rotation.x = -Math.PI / 2;
     glyphMesh.position.y = Layout.TOKEN_H / 2 + 0.0006;
+    glyphMesh.userData.glyph = glyph.key;
     root.add(glyphMesh);
     const sigilMesh = new Mesh(
       new PlaneGeometry(0.012, 0.012),
@@ -80,6 +80,13 @@ export class Tokens {
     );
     sigilMesh.position.set(0, Layout.TOKEN_H / 2 + 0.012, Layout.TOKEN_R * 0.2);
     root.add(sigilMesh);
+    if (level === 3) {
+      const lock = new Group();
+      const shackle = new Mesh(new TorusGeometry(0.0035, 0.001, 4, 12, Math.PI), Palette.matte(Palette.warm.ink));
+      const bolt = new Mesh(new CylinderGeometry(0.0035, 0.0035, 0.003, 4), Palette.matte(Palette.warm.ink));
+      bolt.rotation.x = Math.PI / 2; bolt.position.y = -0.001;
+      lock.add(shackle, bolt); lock.position.set(0.018, 0.015, 0); lock.name = 'blocked-lock'; root.add(lock);
+    }
     // halo: onboarding glow and selection ring (shared ghost-pass budget: additive, tiny)
     const halo = new Mesh(
       new TorusGeometry(Layout.TOKEN_R * 1.35, 0.0016, 6, 40),
@@ -95,6 +102,7 @@ export class Tokens {
   static setGlyph(parts: TokenParts, glyph: Glyph): void {
     (parts.glyph.material as MeshBasicMaterial).map = GlyphArt.glyph(glyph);
     (parts.glyph.material as MeshBasicMaterial).needsUpdate = true;
+    parts.glyph.userData.glyph = glyph.key;
   }
 
   /** Timeline handle (C03): a pinchable bead on a rail pointing at the user. */
@@ -138,12 +146,8 @@ export class Tokens {
   static seal(kind: SealKind, glyph: Glyph, verified: boolean): Group {
     const root = new Group();
     const tint: Record<SealKind, string> = {
-      approve: '#9cc8f2',
-      amended: '#f0c56a',
-      reject: '#5d6b78',
-      escalate: '#e9d9b8',
-      auto: '#bcd8f5',
-      expired: '#8a8178',
+      approve: Palette.RISK[0], amended: Palette.RISK[1], reject: Palette.warm.slate,
+      escalate: Palette.warm.sand, auto: Palette.RISK[0], expired: Palette.warm.slate,
     };
     const crystal = new Mesh(
       new OctahedronGeometry(0.0085, 0),
@@ -157,12 +161,21 @@ export class Tokens {
     root.add(base);
     const stamp = new Mesh(
       new CircleGeometry(0.0075, 24),
-      new MeshBasicMaterial({ map: GlyphArt.glyph(glyph, verified ? '#2b2622' : '#8a8178') }),
+      new MeshBasicMaterial({ map: GlyphArt.glyph(glyph, verified ? Palette.warm.ink : Palette.warm.slate), toneMapped: false }),
     );
     stamp.position.set(0, 0.0125, 0.0105);
+    stamp.name = 'seal-stamp';
     root.add(stamp);
     root.name = 'seal';
     return root;
+  }
+
+  static sealProof(root: Group, glyph: Glyph, verified: boolean): void {
+    const stamp = root.getObjectByName('seal-stamp') as Mesh;
+    const material = stamp.material as MeshBasicMaterial;
+    material.map = GlyphArt.glyph(glyph, verified ? Palette.warm.ink : Palette.warm.slate);
+    material.needsUpdate = true;
+    root.userData.proof = verified ? 'checked' : 'unverified';
   }
 
   /** An offered trust rule (C17): a tablet you pick up and drop on an agent. */

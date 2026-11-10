@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-10",
+  "check": "adb devices",
+  "platformTools": "/Users/bonus/Library/Android/sdk/platform-tools/adb",
+  "authorizedDevices": [],
+  "hardwareEvidence": false,
+  "blocker": "H3: no physical Quest connected. Sustained Quest FPS, narrow FoV legibility, two-room anchoring and controller-unpaired physical hand input remain unverified.",
+  "emulatorEvidence": "Recorded separately; it must not be interpreted as physical Quest measurements."
+}

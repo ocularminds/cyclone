@@ -9,12 +9,13 @@ import { Rng } from './core/rng';
 import { DemoSigner } from './core/signer';
 import { Shift } from './flow/shift';
 import { ScenarioEngine } from './scenario/engine';
-import { Rehearsal, type TwinLayout } from './sim/rehearsal';
+import { Rehearsal, type RehearsalResult, type TwinLayout } from './sim/rehearsal';
 import { Calibration } from './state/calibration';
 import { Ledger } from './state/ledger';
 import { SessionLog } from './state/session';
 import { Settings } from './state/settings';
 import { Store } from './state/store';
+import { FirstShift } from './state/onboarding';
 import { TrustBook } from './state/trust';
 import cast from './scenario/agents.json';
 import onboarding from './scenario/onboarding.json';
@@ -46,7 +47,7 @@ export type AppEvents = {
   /** Onboarding hint pulses (C14). */
   hint: { intentId: string; hint: 'glow' | 'pinch' | 'handle' | 'dial' | 'lock' | 'hold' | 'push' };
   /** Ghost replay requests (drill reveal, ledger replay). */
-  replay: { tool: string; asset_id: string; args: Record<string, unknown>; label: string };
+  replay: { tool: string; asset_id: string; args: Record<string, unknown>; label: string; result?: RehearsalResult };
   summary: { show: boolean };
   /** Free text shown briefly on the desk HUD (drill reveal, refusals). */
   toast: { text: string; tone: 'info' | 'warn' | 'good' };
@@ -82,6 +83,7 @@ export class Cyclone {
   readonly gate: PolicyGateAdapter;
   readonly shift: Shift;
   readonly firstVisit: boolean;
+  readonly firstShift: FirstShift;
 
   constructor(readonly boot: BootOptions) {
     const capture = boot.capture !== 'off';
@@ -93,6 +95,7 @@ export class Cyclone {
     this.firstVisit = this.store.read<number>('visits', 0) === 0;
     this.store.write('visits', this.store.read<number>('visits', 0) + 1);
     this.settings = new Settings(this.store, capture ? { captions: true } : {});
+    this.firstShift = new FirstShift(this.store);
     this.ledger = new Ledger(this.store);
     this.ledger.seed((fixtures as { records: SignedRecord[] }).records);
     this.trust = new TrustBook(this.store, this.cast.rules);
@@ -102,12 +105,13 @@ export class Cyclone {
       boot.capture === 'endcard'
         ? { id: 'endcard', title: 'End card', templates: [], beats: [] }
         : boot.scenario === 'onboarding'
-          ? onboarding
-          : handover
+          ? structuredClone(onboarding)
+          : structuredClone(handover)
     ) as ScenarioFile;
     this.engine = new ScenarioEngine(this.cast, this.scenario, this.clock, this.rng, {
       drills: (drills as ScenarioFile).templates,
       drillChance: capture || boot.scenario === 'onboarding' ? 0 : 0.5,
+      completedTemplates: !capture && boot.scenario === 'onboarding' && !this.firstShift.completed ? this.firstShift.finished : [],
     });
     if (boot.live) {
       this.gate = new LiveAdapter(boot.live.relay, boot.live.token);
@@ -115,6 +119,9 @@ export class Cyclone {
       this.gate = new DemoAdapter(this.engine, this.signer, this.clock, this.rng, boot.amend);
     }
     const demo = this.gate instanceof DemoAdapter ? this.gate : null;
+    this.settings.changes.on('change', ({ key }) => {
+      if (key === 'amendedApproval' && demo) demo.capabilities.supportsAmendedApproval = this.settings.get('amendedApproval');
+    });
     this.shift = new Shift(
       this.gate,
       this.rehearsal,
@@ -134,24 +141,19 @@ export class Cyclone {
     const capture = cap === 'endcard' ? 'endcard' : cap === '1' || cap === 'true' ? 'shot' : 'off';
     const relay = q.get('relay');
     const token = q.get('token');
-    const visited = (() => {
-      try {
-        return Number(globalThis.localStorage?.getItem('cyclone.visits') ?? '0') > 0;
-      } catch {
-        return false;
-      }
-    })();
+    const saved = new Store();
+    const completed = new FirstShift(saved).completed;
     const mode = q.get('mode');
     return {
       scenario:
         mode === 'handover' || mode === 'onboarding'
           ? mode
-          : capture !== 'off' || !visited
+          : capture !== 'off' || !completed
             ? 'onboarding'
             : 'handover',
       capture,
       live: q.get('gate') === 'live' && relay && token ? { relay, token } : null,
-      amend: q.get('amend') !== '0',
+      amend: q.has('amend') ? q.get('amend') !== '0' : new Settings(saved).get('amendedApproval'),
       seed: capture !== 'off' ? 1 : Number(q.get('seed') ?? NaN) || undefined!,
     };
   }
@@ -177,6 +179,7 @@ export class Cyclone {
     this.trust.reset();
     this.calibration.reset();
     this.settings.reset();
+    this.firstShift.reset();
     this.store.clear();
   }
 }

@@ -18,9 +18,13 @@ export class RiskEncodingSystem extends createSystem({}) {
   init(): void {
     this.app = this.globals.cyclone as Cyclone;
     this.stage = this.globals.stage as Stage;
+    Palette.theme = this.app.settings.get('theme');
+    Palette.textScale = this.app.settings.get('textScale');
     Palette.setHighContrast(this.app.settings.get('highContrast'));
     this.cleanupFuncs.push(
       this.app.settings.changes.on('change', ({ key, value }) => {
+        if (key === 'theme') Palette.theme = this.app.settings.get('theme');
+        if (key === 'textScale') Palette.textScale = this.app.settings.get('textScale');
         if (key !== 'highContrast') return;
         Palette.setHighContrast(value as boolean);
         for (const v of this.stage.views.values()) this.recolour(v);
@@ -51,6 +55,7 @@ export class RiskEncodingSystem extends createSystem({}) {
   update(delta: number): void {
     this.time += delta;
     const t = this.time;
+    const reduced = this.app.settings.get('reducedMotion');
     for (const [id, v] of this.stage.views) {
       if (v.place === 'leaving' || v.place === 'gone') continue;
       const level = v.token.intent.risk.level;
@@ -58,27 +63,27 @@ export class RiskEncodingSystem extends createSystem({}) {
       const phase = t * rate * Math.PI * 2;
       // stutter: a deterministic broken rhythm, not random noise
       const hitch = stutter * (Math.sin(phase * 2.7) > 0.6 ? Math.sin(phase * 9) * 0.5 : 0);
-      const s = 1 + Math.sin(phase) * depth + hitch * depth;
+      const s = reduced ? 1 : 1 + Math.sin(phase) * depth + hitch * depth;
       const body = v.parts.body;
       body.scale.set(s, 1 + (s - 1) * 0.5, s);
-      body.rotation.y = stutter ? hitch * 0.12 * stutter : t * 0.15;
+      body.rotation.y = reduced ? 0 : stutter ? hitch * 0.12 * stutter : t * 0.15;
       if (v.entity.hasComponent(Grabbed)) body.scale.setScalar(1.08);
       // halo: onboarding "glow until looked at" (C14) and focus ring
       const halo = v.parts.halo.material as MeshBasicMaterial;
       let target = this.stage.focus === id ? 0.55 : 0;
       if (v.hint === 'glow') {
         if (v.token.inspected) v.hint = null;
-        else target = 0.5 + Math.sin(t * 5) * 0.4;
+        else target = reduced ? 0.6 : 0.5 + Math.sin(t * 5) * 0.4;
       } else if (v.hint === 'pinch') {
         v.hintTime += delta;
-        target = v.hintTime < 1.2 ? Math.abs(Math.sin(v.hintTime * Math.PI * 1.6)) : 0;
-        v.parts.halo.scale.setScalar(1 + Math.min(1, v.hintTime) * 0.6);
+        target = reduced ? 0.6 : v.hintTime < 1.2 ? Math.abs(Math.sin(v.hintTime * Math.PI * 1.6)) : 0;
+        v.parts.halo.scale.setScalar(reduced ? 1 : 1 + Math.min(1, v.hintTime) * 0.6);
         if (v.hintTime > 1.2) {
           v.hint = null;
           v.parts.halo.scale.setScalar(1);
         }
       }
-      halo.opacity += (target - halo.opacity) * Math.min(1, delta * 10);
+      halo.opacity = reduced ? target : halo.opacity + (target - halo.opacity) * Math.min(1, delta * 10);
       halo.color.copy(this.c.set(Palette.risk(level)));
       // denied amendments flash the body magenta-hatched until amended again
       v.parts.glyph.visible = true;

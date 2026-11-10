@@ -1,4 +1,4 @@
-import type { Decision, HeldIntent, SignedRecord } from '../contracts/intent';
+import type { Decision, HeldIntent, SignedRecord, Rehearsed } from '../contracts/intent';
 
 export type GateCapabilities = { supportsAmendedApproval: boolean; source: 'demo' | 'live' };
 
@@ -35,7 +35,7 @@ export interface PolicyGateAdapter {
   readonly capabilities: GateCapabilities;
   connect(): Promise<void>;
   onIntent(cb: (event: IntentEvent) => void): () => void;
-  resolve(decision: Decision): Promise<SignedRecord>;
+  resolve(decision: Decision, reviewed?: Rehearsed): Promise<SignedRecord>;
   /** Per-frame hook (demo engine schedule); live adapters ignore it. */
   tick(): void;
   disconnect(): void;

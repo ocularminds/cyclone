@@ -1,0 +1,417 @@
+{
+  "panel": {
+    "entityIndex": 54,
+    "name": "settings-panel",
+    "assetId": "settings-panel",
+    "computedSize": {
+      "width": 28,
+      "height": 26
+    },
+    "targetSize": {
+      "width": 0,
+      "height": 0
+    }
+  },
+  "elements": [
+    {
+      "id": "settings-root",
+      "classes": [
+        "root"
+      ],
+      "componentType": "Panel",
+      "uuid": "419254c7-ddd7-4839-a630-d9545f9abf69",
+      "text": "Settings Handover. Close settings to resume your task. Input Display and comfort Session Back Close",
+      "state": {
+        "active": false,
+        "clipped": false,
+        "disabled": false,
+        "displayed": true,
+        "hovered": false,
+        "visible": true
+      },
+      "layout": {
+        "relativeCenter": [
+          0,
+          0
+        ],
+        "size": [
+          28,
+          26
+        ]
+      },
+      "properties": {
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "title",
+      "classes": [
+        "title"
+      ],
+      "componentType": "_Container",
+      "uuid": "e6a1b149-0d0d-4b70-895e-6a11aba9d629",
+      "text": "Settings",
+      "state": {
+        "active": false,
+        "clipped": false,
+        "disabled": false,
+        "displayed": true,
+        "hovered": false,
+        "visible": true
+      },
+      "layout": {
+        "relativeCenter": [
+          -7.152557373046875e-7,
+          10.674999952316284
+        ],
+        "size": [
+          25.599998474121094,
+          2.25
+        ]
+      },
+      "properties": {
+        "text": "Settings",
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "status",
+      "classes": [
+        "note"
+      ],
+      "componentType": "_Container",
+      "uuid": "99745253-c45c-44bb-825d-1db346f40e1d",
+      "text": "Handover. Close settings to resume your task.",
+      "state": {
+        "active": false,
+        "clipped": false,
+        "disabled": false,
+        "displayed": true,
+        "hovered": false,
+        "visible": true
+      },
+      "layout": {
+        "relativeCenter": [
+          -7.152557373046875e-7,
+          7.200000047683716
+        ],
+        "size": [
+          25.599998474121094,
+          3.0999999046325684
+        ]
+      },
+      "properties": {
+        "text": "Handover. Close settings to resume your task.",
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "action-a",
+      "classes": [
+        "button"
+      ],
+      "componentType": "Button",
+      "uuid": "c8daddfd-74fc-4932-a480-2f53499c69ea",
+      "text": "Input",
+      "state": {
+        "active": false,
+        "clipped": false,
+        "disabled": false,
+        "displayed": true,
+        "hovered": false,
+        "visible": true
+      },
+      "layout": {
+        "relativeCenter": [
+          0,
+          4.15000057220459
+        ],
+        "size": [
+          25.599998474121094,
+          3.5
+        ]
+      },
+      "properties": {
+        "display": "flex",
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "label-a",
+      "classes": [
+        "label"
+      ],
+      "componentType": "ButtonLabel",
+      "uuid": "f635ff00-a557-434c-8827-5e3a4f5f4a19",
+      "text": "Input",
+      "state": {
+        "active": false,
+        "clipped": false,
+        "disabled": false,
+        "displayed": true,
+        "hovered": false,
+        "visible": true
+      },
+      "layout": {
+        "relativeCenter": [
+          9.5367431640625e-7,
+          1.1920928955078125e-7
+        ],
+        "size": [
+          2.5,
+          1.1999998092651367
+        ]
+      },
+      "properties": {
+        "text": "Input",
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "action-b",
+      "classes": [
+        "button"
+      ],
+      "componentType": "Button",
+      "uuid": "07aa1bb2-1efe-497b-9305-59cddb7ef342",
+      "text": "Display and comfort",
+      "state": {
+        "active": false,
+        "clipped": false,
+        "disabled": false,
+        "displayed": true,
+        "hovered": false,
+        "visible": true
+      },
+      "layout": {
+        "relativeCenter": [
+          0,
+          4.76837158203125e-7
+        ],
+        "size": [
+          25.599998474121094,
+          3.5
+        ]
+      },
+      "properties": {
+        "display": "flex",
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "label-b",
+      "classes": [
+        "label"
+      ],
+      "componentType": "ButtonLabel",
+      "uuid": "9eeacc37-7263-4897-a649-dbcd60871df9",
+      "text": "Display and comfort",
+      "state": {
+        "active": false,
+        "clipped": false,
+        "disabled": false,
+        "displayed": true,
+        "hovered": false,
+        "visible": true
+      },
+      "layout": {
+        "relativeCenter": [
+          0.005001068115234375,
+          1.1920928955078125e-7
+        ],
+        "size": [
+          9.870000839233398,
+          1.1999998092651367
+        ]
+      },
+      "properties": {
+        "text": "Display and comfort",
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "action-c",
+      "classes": [
+        "button"
+      ],
+      "componentType": "Button",
+      "uuid": "881b8b97-1b98-4b7a-be38-f1a7c03f0f5f",
+      "text": "Session",
+      "state": {
+        "active": false,
+        "clipped": false,
+        "disabled": false,
+        "displayed": true,
+        "hovered": false,
+        "visible": true
+      },
+      "layout": {
+        "relativeCenter": [
+          0,
+          -4.149999618530273
+        ],
+        "size": [
+          25.599998474121094,
+          3.5
+        ]
+      },
+      "properties": {
+        "display": "flex",
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "label-c",
+      "classes": [
+        "label"
+      ],
+      "componentType": "ButtonLabel",
+      "uuid": "4d584737-f733-4ea9-95bb-dd178b1cda71",
+      "text": "Session",
+      "state": {
+        "active": false,
+        "clipped": false,
+        "disabled": false,
+        "displayed": true,
+        "hovered": false,
+        "visible": true
+      },
+      "layout": {
+        "relativeCenter": [
+          0.005000114440917969,
+          5.960464477539062e-7
+        ],
+        "size": [
+          3.8899993896484375,
+          1.1999988555908203
+        ]
+      },
+      "properties": {
+        "text": "Session",
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "back",
+      "classes": [
+        "nav"
+      ],
+      "componentType": "Button",
+      "uuid": "e530d57f-19d4-40fc-ab3e-ad0f36c177e6",
+      "text": "Back",
+      "state": {
+        "active": false,
+        "clipped": false,
+        "disabled": false,
+        "displayed": true,
+        "hovered": false,
+        "visible": true
+      },
+      "layout": {
+        "relativeCenter": [
+          -6.599998950958252,
+          0
+        ],
+        "size": [
+          12.40000057220459,
+          3.5
+        ]
+      },
+      "properties": {
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "back-label",
+      "classes": [
+        "label"
+      ],
+      "componentType": "ButtonLabel",
+      "uuid": "c1eccc03-06a7-4b2e-8593-61c9eb7e211f",
+      "text": "Back",
+      "state": {
+        "active": false,
+        "clipped": false,
+        "disabled": false,
+        "displayed": true,
+        "hovered": false,
+        "visible": true
+      },
+      "layout": {
+        "relativeCenter": [
+          -2.384185791015625e-7,
+          -3.5762786865234375e-7
+        ],
+        "size": [
+          2.440000057220459,
+          1.2000007629394531
+        ]
+      },
+      "properties": {
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "close",
+      "classes": [
+        "nav"
+      ],
+      "componentType": "Button",
+      "uuid": "a3ffa548-be77-49b3-982a-fb387959e0a3",
+      "text": "Close",
+      "state": {
+        "active": false,
+        "clipped": false,
+        "disabled": false,
+        "displayed": true,
+        "hovered": false,
+        "visible": true
+      },
+      "layout": {
+        "relativeCenter": [
+          6.600000381469727,
+          0
+        ],
+        "size": [
+          12.399999618530273,
+          3.5
+        ]
+      },
+      "properties": {
+        "visibility": "visible"
+      }
+    },
+    {
+      "id": "close-label",
+      "classes": [
+        "label"
+      ],
+      "componentType": "ButtonLabel",
+      "uuid": "68f68895-983a-4a00-8065-cd351029d379",
+      "text": "Close",
+      "state": {
+        "active": false,
+        "clipped": false,
+        "disabled": false,
+        "displayed": true,
+        "hovered": false,
+        "visible": true
+      },
+      "layout": {
+        "relativeCenter": [
+          0,
+          -3.5762786865234375e-7
+        ],
+        "size": [
+          2.799999237060547,
+          1.2000007629394531
+        ]
+      },
+      "properties": {
+        "visibility": "visible"
+      }
+    }
+  ],
+  "total": 13,
+  "limited": false
+}

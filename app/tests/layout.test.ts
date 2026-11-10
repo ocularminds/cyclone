@@ -13,4 +13,11 @@ describe('reach and placement (C21)', () => {
     expect(Layout.PLINTH.x[1] - Layout.PLINTH.x[0]).toBeGreaterThanOrEqual(0.6);
     expect(Layout.TWIN[2] - 0.2).toBeGreaterThanOrEqual(Layout.PLINTH.z[0]);
   });
+
+  it('ledger crystals have at least 16 mm clearance between their 19 mm bases', () => {
+    for (let a = 0; a < 15; a++) for (let b = a + 1; b < 15; b++) {
+      const p = Layout.sealSpot(a), q = Layout.sealSpot(b);
+      expect(Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2])).toBeGreaterThanOrEqual(0.035);
+    }
+  });
 });

@@ -1,173 +1,212 @@
-import {
-  createSystem,
-  Grabbed,
-  PokeInteractable,
-  Pressed,
-  Quaternion,
-  Vector3,
-} from '@iwsdk/core';
+import { createSystem, Grabbed, Group, PokeInteractable, RayInteractable, Vector3, type Entity, type UIKitMLAsset } from '@iwsdk/core';
 import type { Cyclone } from '../app';
-import { CardTag, TokenTag } from '../components';
-import type { Token } from '../flow/shift';
-import { GesturePolicy } from '../flow/policy';
+import { TokenTag } from '../components';
 import { Palette } from '../models/palette';
 import type { Stage } from '../stage';
-import { Label, type Line } from '../ui/label';
+import { Label } from '../ui/label';
+import { Proposal, type ReviewPage } from '../ui/proposal';
+import { ControlStyle } from '../ui/control';
+import { ReadingLayer } from '../ui/reading-layer';
 
-/**
- * Inspect (C02, C21): looking at a token lifts it and unfolds a card in the
- * central view, just above the token — agent and sigil, one-line rationale, the rule that tripped,
- * blast radius, rehearsal verdict. Pinch (or poke) the card for the full
- * rationale. Card centre 9° above the token's line of sight; extents ±16° H / ±8° V.
- */
-export class CardSystem extends createSystem({
-  pressed: { required: [CardTag, Pressed] },
-  grabbedTokens: { required: [TokenTag, Grabbed] },
-}) {
-  static readonly WIDTH = 0.24;
-  static readonly HEIGHT = 0.12;
-  static readonly DISTANCE = 0.42;
-  static readonly LIFT_DEG = 9;
+/** A non-interactive reading surface with separate, named hand/ray controls. */
+export class CardSystem extends createSystem({ grabbedTokens: { required: [TokenTag, Grabbed] } }) {
+  static readonly WIDTH = 0.28;
+  static readonly HEIGHT = 0.245;
+  static readonly DISTANCE = 0.565;
+  static readonly LIFT_DEG = 2.5;
   private app!: Cyclone;
   private stage!: Stage;
   private label!: Label;
+  private caption!: Label;
+  private readonly root = new Group();
+  private rootEntity!: Entity;
+  private controls: UIKitMLAsset | null = null;
+  private controlsEntity: Entity | null = null;
+  private readonly handPoint = new Vector3();
+  private readonly physicalPoint = new Vector3();
+  private page: ReviewPage = 'review';
   private candidate: string | null = null;
   private dwell = 0;
   private open = 0;
+  private controlsKey = '';
+  private textPage = 0;
+  private pageCount = 1;
   private readonly tmp = new Vector3();
   private readonly at = new Vector3();
   private readonly target = new Vector3();
-  private readonly q = new Quaternion();
   private readonly fwd = new Vector3();
+  private readonly right = new Vector3();
+  private readonly up = new Vector3();
 
   init(): void {
-    this.app = this.globals.cyclone as Cyclone;
-    this.stage = this.globals.stage as Stage;
-    this.label = new Label(CardSystem.WIDTH, CardSystem.HEIGHT);
-    this.label.mesh.name = 'decision-card';
-    const entity = this.world.createTransformEntity(this.label.mesh, { parent: this.stage.rootEntity! });
-    entity.addComponent(CardTag);
-    entity.addComponent(PokeInteractable);
-    this.stage.rayTargets.push(entity);
-    this.label.mesh.visible = false;
-    this.label.mesh.scale.setScalar(0.001);
-    this.cleanupFuncs.push(
-      this.queries.pressed.subscribe('qualify', () => {
-        if (!this.stage.focus) return;
-        this.stage.detail = !this.stage.detail;
-        this.app.cue('unfold', this.stage.detail ? 'Full rationale' : 'Summary');
-      }),
-      this.queries.grabbedTokens.subscribe('qualify', (e) => this.focus(e.getValue(TokenTag, 'intentId') as string)),
-      this.app.shift.events.on('amended', () => (this.dwell = 0)),
-    );
+    this.app = this.globals.cyclone as Cyclone; this.stage = this.globals.stage as Stage;
+    this.root.name = 'inspection';
+    this.rootEntity = this.world.createTransformEntity(this.root, { parent: this.stage.rootEntity! });
+    this.label = new Label(CardSystem.WIDTH, 0.16);
+    this.label.mesh.name = 'decision-card'; this.label.mesh.position.y = 0.0425;
+    this.caption = new Label(CardSystem.WIDTH, 0.036);
+    this.caption.mesh.name = 'card-caption'; this.caption.mesh.position.y = -0.0605;
+    this.root.add(this.caption.mesh);
+    this.root.add(this.label.mesh); this.root.visible = false;
+    void this.buildControls();
+    this.cleanupFuncs.push(this.queries.grabbedTokens.subscribe('qualify', e => {
+      const id = e.getValue(TokenTag, 'intentId') as string;
+      if (this.stage.focus === id && this.page === 'review') { this.page = 'rationale'; this.stage.detail = true; }
+      this.focus(id);
+    }));
   }
-
+  private async buildControls(): Promise<void> {
+    const panel = await this.world.assets.instantiate<UIKitMLAsset>('review-controls');
+    this.controls = panel; panel.name = 'card-controls'; panel.position.set(0, -0.105, 0.001);
+    const entity = this.world.createTransformEntity(panel, { parent: this.rootEntity });
+    this.controlsEntity = entity;
+    entity.addComponent(PokeInteractable); entity.addComponent(RayInteractable); this.stage.rayTargets.push(entity); this.stage.alwaysRayTargets.add(entity);
+    for (const [index, id] of ['a', 'b', 'c'].entries()) {
+      const element = panel.requireElementById(id); element.name = `card-${id}`;
+      const click = () => this.act(index);
+      element.addEventListener('click', click); this.cleanupFuncs.push(() => element.removeEventListener('click', click));
+    }
+  }
+  private act(index: number): void {
+    const token = this.stage.focus ? this.app.shift.get(this.stage.focus) : undefined;
+    if (!token || this.stage.settingsOpen || this.app.clock.isPaused || token.status === 'deciding' || token.amending) return;
+    const hasActions = this.page === 'adjust' || this.page === 'compare';
+    if (this.pageCount > 1 && !hasActions) {
+      if (index < 2) this.textPage = Math.max(0, Math.min(this.pageCount - 1, this.textPage + (index === 0 ? -1 : 1)));
+      else { this.page = this.page === 'review' ? 'tools' : 'review'; this.textPage = 0; }
+      this.stage.detail = this.page === 'rationale';
+      this.app.cue('unfold', `Review page ${this.textPage + 1}`); return;
+    }
+    if (hasActions && index === 2 && this.textPage < this.pageCount - 1) {
+      this.textPage++; this.app.cue('unfold', `Review page ${this.textPage + 1}`); return;
+    }
+    if (!hasActions || index === 2) this.textPage = 0;
+    if (this.page === 'review' || this.page === 'tools') {
+      if (index === 0) this.page = 'rationale';
+      if (index === 1 && token.intent.amend && token.intent.policy.requires !== 'forbidden') this.page = 'adjust';
+      if (index === 2) this.page = 'compare';
+    } else if (this.page === 'adjust') {
+      if (index === 2) this.page = 'review';
+      else if (token.intent.amend && token.value !== null) void this.app.shift.amend(token.id, token.value + (index === 0 ? -1 : 1) * token.intent.amend.step);
+    } else if (this.page === 'compare') {
+      if (index === 2) this.page = 'review'; else this.stage.comparison = index === 0 ? 'original' : 'reviewed';
+    } else this.page = index === 0 ? 'review' : index === 1 && token.intent.amend && token.intent.policy.requires !== 'forbidden' ? 'adjust' : index === 2 ? 'compare' : 'rationale';
+    this.stage.detail = this.page === 'rationale';
+    this.app.cue('unfold', this.page === 'rationale' ? 'Full rationale' : this.page === 'review' ? 'Review summary' : this.page === 'adjust' ? 'Amend the proposal' : 'Compare original and proposed');
+  }
   private focus(id: string): void {
-    if (this.stage.focus === id) return;
-    this.stage.focus = id;
-    this.stage.detail = false;
-    this.stage.scrub = 0;
-    this.app.shift.inspect(id);
-    const v = this.stage.views.get(id);
-    this.app.cue('unfold', `Inspecting: ${v?.token.intent.agent.label ?? 'intent'}`, v ? [v.home.x, v.home.y, v.home.z] : undefined);
-    this.placeCard(true);
+    if (this.stage.focus === id || this.stage.settingsOpen) return;
+    this.stage.focus = id; this.stage.detail = false; this.stage.scrub = 0; this.stage.comparison = 'reviewed';
+    this.stage.holdFeedback = '';
+    this.page = 'review'; this.app.shift.inspect(id);
+    this.textPage = 0;
+    const view = this.stage.views.get(id);
+    this.app.cue('unfold', `Inspecting: ${view?.token.intent.agent.label ?? 'proposal'}`, view ? [view.home.x, view.home.y, view.home.z] : undefined);
+    this.placeCard();
   }
-
-  /** Gaze dwell selects the token being looked at (head-gaze cone; eye gaze when the runtime provides it). */
   private gazePick(delta: number): void {
-    let best: string | null = null;
-    let bestAngle = this.app.settings.get('eyesOnly') ? 7 : 9;
-    for (const [id, v] of this.stage.views) {
-      if (v.place !== 'tray' && v.place !== 'slot' && v.place !== 'rack') continue;
-      v.object.getWorldPosition(this.at);
-      this.stage.toDesk(this.at);
-      const a = this.stage.gazeAngle(this.at, this.tmp);
-      if (a < bestAngle) {
-        bestAngle = a;
-        best = id;
-      }
+    if (this.stage.settingsOpen || this.stage.replayOpen || this.page !== 'review') return;
+    let best: string | null = null; let bestAngle = this.app.settings.get('eyesOnly') ? 7 : 9;
+    for (const [id, view] of this.stage.views) {
+      if (!['tray', 'slot', 'rack'].includes(view.place)) continue;
+      view.object.getWorldPosition(this.at); this.stage.toDesk(this.at);
+      const angle = this.stage.gazeAngle(this.at, this.tmp);
+      if (angle < bestAngle) { bestAngle = angle; best = id; }
     }
     if (best && best !== this.stage.focus) {
-      this.dwell = best === this.candidate ? this.dwell + delta : 0;
-      this.candidate = best;
-      if (this.dwell >= (this.app.settings.get('eyesOnly') ? 0.6 : 0.25)) this.focus(best);
-    } else {
-      this.dwell = 0;
-      this.candidate = best;
-    }
+      this.dwell = best === this.candidate ? this.dwell + delta : 0; this.candidate = best;
+      if (this.dwell >= (this.app.settings.get('eyesOnly') ? 0.6 : 0.45)) this.focus(best);
+    } else { this.dwell = 0; this.candidate = best; }
   }
-
-  /**
-   * Card target: 9° above the line of sight to the focused token, 0.42 m out,
-   * so it sits in the central view without occluding the token or the reach
-   * path to it (C21).
-   */
-  private placeCard(snap: boolean): void {
-    const head = this.stage.head;
+  /** Open beside the inspected direction, then stay in the desk frame. */
+  private placeCard(): void {
     const view = this.stage.focus ? this.stage.views.get(this.stage.focus) : undefined;
-    if (view) {
-      view.object.getWorldPosition(this.fwd);
-      this.stage.toDesk(this.fwd).sub(head).normalize();
-    } else this.fwd.copy(this.stage.gaze);
-    const pitch = Math.asin(Math.max(-1, Math.min(1, this.fwd.y))) + (CardSystem.LIFT_DEG * Math.PI) / 180;
-    const yaw = Math.atan2(this.fwd.x, this.fwd.z);
-    this.fwd.set(Math.cos(pitch) * Math.sin(yaw), Math.sin(pitch), Math.cos(pitch) * Math.cos(yaw));
-    this.target.copy(head).addScaledVector(this.fwd, CardSystem.DISTANCE);
-    if (snap) this.label.mesh.position.copy(this.target);
+    if (view) { view.object.getWorldPosition(this.fwd); this.stage.toDesk(this.fwd).sub(this.stage.head).normalize(); }
+    else this.fwd.copy(this.stage.gaze);
+    this.right.crossVectors(this.stage.gaze, this.up.set(0, 1, 0)).normalize();
+    this.up.crossVectors(this.right, this.stage.gaze).normalize();
+    const depth = this.fwd.dot(this.stage.gaze), rad = Math.PI / 180;
+    const yaw = Math.max(-5.5 * rad, Math.min(5.5 * rad, Math.atan2(this.fwd.dot(this.right), depth)));
+    const pitch = Math.max(-2.5 * rad, Math.min(2.5 * rad, Math.atan2(this.fwd.dot(this.up), depth) + CardSystem.LIFT_DEG * rad));
+    this.fwd.copy(this.stage.gaze).addScaledVector(this.right, Math.tan(yaw)).addScaledVector(this.up, Math.tan(pitch)).normalize();
+    this.target.copy(this.stage.head).addScaledVector(this.fwd, CardSystem.DISTANCE);
+    this.root.position.copy(this.target);
+    this.root.lookAt(this.at.copy(this.stage.head).applyMatrix4(this.stage.root.matrixWorld));
   }
-
   update(delta: number): void {
+    this.protectPhysicalInput();
+    // QueueSystem clears focus when a token leaves. Its old detail page must
+    // not suppress dwell inspection of the next proposal.
+    if (!this.stage.focus) { this.page = 'review'; this.textPage = 0; this.stage.detail = false; }
     this.gazePick(delta);
-    const id = this.stage.focus;
-    const view = id ? this.stage.views.get(id) : undefined;
-    if (id && (!view || view.place === 'leaving' || view.place === 'gone')) this.stage.focus = null;
-    const visible = !!this.stage.focus && !!view;
-    this.open += ((visible ? 1 : 0) - this.open) * Math.min(1, delta * 10);
-    const mesh = this.label.mesh;
-    mesh.visible = this.open > 0.02;
-    if (!mesh.visible || !view) return;
-    this.placeCard(false);
-    mesh.position.lerp(this.target, Math.min(1, delta * 4));
-    mesh.lookAt(this.at.copy(this.stage.head).applyMatrix4(this.stage.root.matrixWorld));
-    mesh.scale.set(this.open, Math.max(0.001, this.open * this.open), 1);
-    this.label.draw(this.lines(view.token), {
-      background: '#f6efe2',
-      border: Palette.risk(view.token.intent.risk.level),
-      padding: 0.01,
-      radius: 0.012,
-    });
-  }
-
-  private lines(token: Token): Line[] {
-    const i = token.intent;
-    const app = this.app;
-    const r = token.rehearsal;
-    const assets = r.affected.map((a) => app.rehearsal.asset(a)?.label ?? app.rehearsal.zone(a)?.label ?? a);
-    const ctx = { eyesOnly: app.settings.get('eyesOnly'), oneHanded: app.settings.get('oneHanded'), tampered: token.tampered };
-    const secs = Math.max(0, Math.round((token.deadlineMs - app.clock.ms) / 1000));
-    const ttl = secs >= 120 ? `${Math.round(secs / 60)} min` : `${secs}s`;
-    const risk = `${Palette.RISK_NAMES[i.risk.level]} risk`;
-    const spec = i.amend;
-    const value = spec && token.value !== null ? `${token.value}${spec.unit}${token.amended ? ` (was ${i.args[spec.param]}${spec.unit})` : ''}` : '';
-    const verdict = r.breach
-      ? `Rehearsal: breaches ${r.breach.zone_label} at ${Math.round(r.breach.t * 100)}%`
-      : 'Rehearsal: stays inside every envelope';
-    const out: Line[] = [
-      { text: `${i.agent.label}  ·  ${risk}  ·  ${ttl} left`, size: 0.0085, weight: 600, color: '#5d6b78' },
-      { text: i.summary ?? i.tool, size: 0.0115, weight: 700 },
-    ];
-    if (this.stage.detail) {
-      out.push({ text: i.rationale ?? '(no rationale given)', size: 0.0085 });
-      out.push({ text: `Why held: ${i.risk.reasons.join('; ')}`, size: 0.0078, color: '#5d6b78' });
-      out.push({ text: `Binding ${token.glyph.label} · ${token.hash.slice(0, 23)}…`, size: 0.0072, color: '#5d6b78' });
-    } else {
-      out.push({ text: `Rule: ${i.policy.rule_id}${value ? `  ·  ${value}` : ''}`, size: 0.0085 });
-      out.push({ text: `Blast radius: ${assets.join(', ')}`, size: 0.0085 });
-      out.push({ text: verdict, size: 0.0085, weight: 600, color: r.breach ? '#a8287f' : '#2f6fb8' });
+    const view = this.stage.focus ? this.stage.views.get(this.stage.focus) : undefined;
+    if (this.stage.focus && (!view || ['leaving', 'gone'].includes(view.place))) { this.stage.focus = null; this.page = 'review'; this.stage.detail = false; }
+    const show = !!this.stage.focus && !!view && !this.stage.settingsOpen && !this.stage.replayOpen;
+    const reduced = this.app.settings.get('reducedMotion');
+    this.open = reduced ? +show : this.open + ((+show) - this.open) * Math.min(1, delta * 10);
+    this.root.visible = this.open > 0.02;
+    if (!show || !view) return;
+    // Turning the head never drags the card across the scene. Reposition only
+    // if a seated translation would put one of its actual corners out of reach.
+    for (const x of [-1, 1]) for (const y of [-1, 1]) {
+      this.at.set(x * CardSystem.WIDTH / 2, y * CardSystem.HEIGHT / 2, 0).applyQuaternion(this.root.quaternion).add(this.root.position);
+      if (this.at.distanceTo(this.stage.head) > 0.61) this.placeCard();
     }
-    if (token.tampered) out.push({ text: 'Payload changed after it was held — veto or escalate.', size: 0.0085, weight: 700, color: '#a8287f' });
-    if (token.denial) out.push({ text: `Policy gate: ${token.denial}`, size: 0.0085, weight: 700, color: '#a8287f' });
-    out.push({ text: `${GesturePolicy.approvalHint(i, ctx)} · pinch card for ${this.stage.detail ? 'summary' : 'full rationale'}`, size: 0.0075, color: '#5d6b78' });
-    return out;
+    this.root.scale.setScalar(Math.max(0.001, this.open));
+    const ui = Palette.ui;
+    const style = { background: ui.surface, border: ui.border, padding: 0.008, radius: 0.012 };
+    const pages = this.label.paginate(Proposal.lines(this.app, this.stage, view.token, this.page), style, this.page === 'adjust' || this.page === 'compare' ? 3 : 2);
+    this.pageCount = pages.length; this.textPage = Math.min(this.textPage, pages.length - 1);
+    this.label.draw(pages[this.textPage], style);
+    this.caption.caption(this.stage.caption);
+    this.root.userData.pagination = { page: this.textPage + 1, total: this.pageCount };
+    this.root.userData.page = this.page;
+    this.root.userData.bounds = { width: CardSystem.WIDTH, height: CardSystem.HEIGHT, distance: CardSystem.DISTANCE, offset: CardSystem.LIFT_DEG };
+    this.refreshControls();
+    ReadingLayer.apply(this.root);
+  }
+  /** A reading surface must never capture a pinch intended for a nearby physical control. */
+  private protectPhysicalInput(): void {
+    const entity = this.controlsEntity; if (!entity) return;
+    let near = false;
+    for (const side of ['left', 'right'] as const) {
+      if (!this.input.xr.getPrimaryInputSource(side)) continue;
+      this.player.gripSpaces[side].getWorldPosition(this.handPoint);
+      for (const view of this.stage.views.values()) {
+        if (view.token.status !== 'held') continue;
+        if (view.object.getWorldPosition(this.physicalPoint).distanceTo(this.handPoint) < 0.13) near = true;
+      }
+      for (const name of ['handle', 'dial']) {
+        const object = this.stage.root.getObjectByName(name);
+        if (object?.visible && object.getWorldPosition(this.physicalPoint).distanceTo(this.handPoint) < 0.11) near = true;
+      }
+    }
+    if (near) {
+      this.stage.suppressedRayTargets.add(entity);
+      if (entity.hasComponent(PokeInteractable)) entity.removeComponent(PokeInteractable);
+      if (entity.hasComponent(RayInteractable)) entity.removeComponent(RayInteractable);
+    } else {
+      this.stage.suppressedRayTargets.delete(entity);
+      if (!entity.hasComponent(PokeInteractable)) entity.addComponent(PokeInteractable);
+      if (!entity.hasComponent(RayInteractable)) entity.addComponent(RayInteractable);
+    }
+  }
+  private refreshControls(): void {
+    const panel = this.controls; if (!panel) return;
+    const token = this.stage.focus ? this.app.shift.get(this.stage.focus) : undefined; if (!token) return;
+    const ui = Palette.ui;
+    const key = `${this.page}:${this.textPage}:${this.pageCount}:${token.id}:${token.status}:${token.amending}:${Palette.theme}:${Palette.isHighContrast}:${Palette.textScale}:${this.stage.comparison}`;
+    if (key === this.controlsKey) return;
+    this.controlsKey = key;
+    const more = this.textPage < this.pageCount - 1 ? `More ${this.textPage + 1}/${this.pageCount}` : 'Back';
+    const labels = this.pageCount > 1 && this.page !== 'adjust' && this.page !== 'compare' ? ['Previous', `Next ${this.textPage + 1}/${this.pageCount}`, this.page === 'review' ? 'Review tools' : 'Back']
+      : this.page === 'review' || this.page === 'tools' ? ['Full rationale', token.intent.amend && token.intent.policy.requires !== 'forbidden' ? 'Amend' : 'Not editable', 'Compare']
+      : this.page === 'adjust' ? [`- ${token.intent.amend?.step} ${token.intent.amend?.unit}`, `+ ${token.intent.amend?.step} ${token.intent.amend?.unit}`, more]
+      : this.page === 'compare' ? ['Original', 'Proposed', more] : ['Review', token.intent.amend && token.intent.policy.requires !== 'forbidden' ? 'Amend' : 'Not editable', 'Compare'];
+    for (const [n, id] of ['a', 'b', 'c'].entries()) {
+      const active = this.page === 'compare' && (this.stage.comparison === 'original' ? n === 0 : n === 1);
+      panel.requireElementById(id).setProperties(ControlStyle.properties(active));
+      panel.requireElementById(id + '-label').setProperties({ text: labels[n], fontSize: Palette.textScale, color: active ? ui['on-control'] : ui.text });
+    }
   }
 }

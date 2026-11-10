@@ -1,0 +1,11 @@
+<style>
+  @font-face { font-family: atkinson; src: url(../assets/fonts/atkinson700.ttf); font-weight: 700; }
+  .root { width: 28; height: 3.5; flex-direction: row; gap: 0.8; font-family: atkinson; }
+  .button { width: 8.8; min-width: 0; max-width: 8.8; height: 3.5; min-height: 3.5; padding-left: 0.25; padding-right: 0.25; padding-top: 0; padding-bottom: 0; border-width: 0.08; border-radius: 0.6; }
+  .label { font-size: 1; font-weight: 700; line-height: 1.2; text-align: center; }
+</style>
+<div id="review-controls" class="root">
+  <Button id="a" class="button"><ButtonLabel id="a-label" class="label">Full rationale</ButtonLabel></Button>
+  <Button id="b" class="button"><ButtonLabel id="b-label" class="label">Amend</ButtonLabel></Button>
+  <Button id="c" class="button"><ButtonLabel id="c-label" class="label">Compare</ButtonLabel></Button>
+</div>

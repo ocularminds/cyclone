@@ -15,8 +15,10 @@ import { SealSystem } from './systems/seal';
 import { SettingsSystem } from './systems/settings';
 import { TrustSystem } from './systems/trust';
 import { TwinSystem } from './systems/twin';
+import { Fonts } from './ui/fonts';
 
 const params = new URLSearchParams(location.search);
+void Fonts.prepare();
 if (params.get('reset') === '1') {
   try {
     for (const k of Object.keys(localStorage)) if (k.startsWith('cyclone.')) localStorage.removeItem(k);

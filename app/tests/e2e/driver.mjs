@@ -8,7 +8,7 @@ export class Driver {
   }
 
   cli(args, input) {
-    const argv = ['iwsdk', ...args];
+    const argv = ['@iwsdk/cli', ...args];
     if (input) argv.push('--input-json', JSON.stringify(input));
     const out = execFileSync('npx', argv, { encoding: 'utf8', timeout: 120000 });
     const json = JSON.parse(out);
@@ -60,12 +60,25 @@ export class Driver {
     this.cli(['xr', 'look-at'], { device: 'headset', target: { x: p[0], y: p[1], z: p[2] } });
     this.sleep(600);
   }
+  point(name, id = null) {
+    return this.page(`(()=>{const p=window.cyclone.stage.root.getObjectByName(${JSON.stringify(name)});const e=${id ? `p.requireElementById(${JSON.stringify(id)})` : 'p'};return e.getWorldPosition(new p.position.constructor()).toArray()})()`);
+  }
+  /** Complete select (click), distinct from a held pinch used to grab. */
+  click(name, id) {
+    const p = this.point(name, id);
+    this.cli(['xr', 'look-at'], { device: 'hand-right', target: { x: p[0], y: p[1], z: p[2] } });
+    this.sleep(350);
+    this.cli(['xr', 'select'], { device: 'hand-right', duration: 0.2 });
+    this.sleep(250);
+  }
   shot(name) {
-    if (this.shots) execFileSync('npx', ['iwsdk', 'browser', 'screenshot', '--output-file', `../docs/screens/${name}.png`]);
+    if (this.shots) execFileSync('npx', ['@iwsdk/cli', 'browser', 'screenshot', '--output-file', `${process.env.CYCLONE_EVIDENCE ?? '../docs/screens'}/${name}.png`]);
   }
   /** Pinch-grab the thing at `from`, carry it slowly so it lands on `to`, release. (The emulator reports a lagging mid-grab pose; the release pose is exact.) */
   carry(from, to, hand = 'hand-right', id = null) {
     const start = [from[0], from[1] + 0.01, from[2]];
+    // Approach vertically so an open palm does not accidentally perform the veto push.
+    this.move(hand, [from[0], from[1] + 0.12, from[2]]);
     this.move(hand, start);
     this.pinch(hand, 1);
     let h = [start[0] + to[0] - from[0], start[1] + to[1] - from[1], start[2] + to[2] - from[2]];

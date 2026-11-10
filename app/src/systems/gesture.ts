@@ -11,6 +11,7 @@ import {
 } from '@iwsdk/core';
 import type { Cyclone } from '../app';
 import { Station, TokenTag } from '../components';
+import { Commitment } from '../flow/commitment';
 import type { DecisionKind, Gesture } from '../contracts/intent';
 import { Layout } from '../models/layout';
 import { Palette } from '../models/palette';
@@ -28,10 +29,8 @@ export class DecisionGestureSystem extends createSystem({
   grabbed: { required: [TokenTag, Grabbed] },
   stationPressed: { required: [Station, Pressed] },
 }) {
-  static readonly HOLD_SECONDS = 1.5;
+  static readonly HOLD_SECONDS = Commitment.SECONDS;
   static readonly PALM_RADIUS = 0.075;
-  /** A hand must be off the token this long to abort (one dropped tracking frame must not). */
-  static readonly RELEASE_GRACE = 0.15;
   private app!: Cyclone;
   private stage!: Stage;
   private shutter!: Mesh;
@@ -52,6 +51,10 @@ export class DecisionGestureSystem extends createSystem({
     this.shutter = this.stage.slot!.shutter;
     this.ring = this.stage.slot!.ring;
     this.cleanupFuncs.push(
+      this.app.shift.events.on('amending', (token) => {
+        const v = this.stage.views.get(token.id);
+        if (v?.place === 'slot') { this.toTray(v); this.stage.holdFeedback = 'Edit cancelled the hold. Start again.'; }
+      }),
       this.queries.grabbed.subscribe('disqualify', (e) => this.onRelease(e)),
       this.queries.stationPressed.subscribe('qualify', (e) => this.onStationPinch(e)),
       this.app.shift.events.on('refused', ({ token, reason }) => {
@@ -74,6 +77,7 @@ export class DecisionGestureSystem extends createSystem({
     v.moveTo(v.home, 'tray');
     v.place = 'tray';
     v.holdTime = 0;
+    v.commitment.reset();
     this.stage.holding = false;
   }
 
@@ -101,6 +105,7 @@ export class DecisionGestureSystem extends createSystem({
   }
 
   private land(v: TokenView, p: Vector3): void {
+    if (this.app.clock.isPaused || this.stage.settingsOpen) { this.toTray(v); return; }
     const intent = v.token.intent;
     console.info(`[cyclone][land] ${intent.tool} desk=(${p.x.toFixed(3)}, ${p.y.toFixed(3)}, ${p.z.toFixed(3)}) onDesk=${this.stage.onDesk(p.x, p.z)}`);
     v.from.copy(p);
@@ -139,13 +144,14 @@ export class DecisionGestureSystem extends createSystem({
 
   /** Gaze + pinch (or poke) on a station decides for the inspected token in eyes-only mode (C25). */
   private onStationPinch(e: Entity): void {
+    if (this.app.clock.isPaused || this.stage.settingsOpen) return;
     const kind = e.getValue(Station, 'kind') as string;
     if (kind === 'puck') return;
     const id = this.stage.focus;
     const v = id ? this.stage.views.get(id) : undefined;
     if (!v || v.token.status !== 'held') return;
     if (!this.app.settings.get('eyesOnly')) {
-      if (kind === 'slot') this.app.bus.emit('toast', { text: 'Place the token in the slot, or turn on eyes-only mode.', tone: 'info' });
+      if (kind === 'slot') this.app.bus.emit('toast', { text: 'Place the token in the slot, or select Gaze + pinch in settings.', tone: 'info' });
       return;
     }
     if (kind === 'slot') {
@@ -165,8 +171,14 @@ export class DecisionGestureSystem extends createSystem({
 
   private hands(): { l: boolean; r: boolean } {
     const xr = this.input.xr;
-    const l = !!xr.getPrimaryInputSource?.('left');
-    const r = !!xr.getPrimaryInputSource?.('right');
+    const frame = this.world.renderer.xr.getFrame();
+    const reference = this.world.renderer.xr.getReferenceSpace();
+    const tracked = (side: 'left' | 'right') => {
+      const source = xr.getPrimaryInputSource(side);
+      return !!(source?.gripSpace && frame && reference && frame.getPose(source.gripSpace, reference));
+    };
+    const l = tracked('left');
+    const r = tracked('right');
     this.prevL.copy(this.left);
     this.prevR.copy(this.right);
     if (l) this.stage.toDesk(this.player.gripSpaces.left.getWorldPosition(this.left));
@@ -184,8 +196,9 @@ export class DecisionGestureSystem extends createSystem({
     const sources = this.world.session?.inputSources;
     let gaze = false;
     if (sources) for (const src of sources) if (src.targetRayMode === 'gaze') gaze = true;
-    const want = gaze || this.app.settings.get('eyesOnly') || !this.world.session;
+    const enabled = gaze || this.app.settings.get('eyesOnly') || !this.world.session;
     for (const e of this.stage.rayTargets) {
+      const want = (enabled || this.stage.alwaysRayTargets.has(e)) && !this.stage.suppressedRayTargets.has(e);
       const has = e.hasComponent(RayInteractable);
       if (want && !has) e.addComponent(RayInteractable);
       if (!want && has) e.removeComponent(RayInteractable);
@@ -196,6 +209,12 @@ export class DecisionGestureSystem extends createSystem({
     this.syncRayTargets(delta);
     const { l, r } = this.hands();
     this.slotState(delta);
+    if (this.app.clock.isPaused || this.stage.settingsOpen) {
+      for (const v of this.stage.views.values()) if (v.place === 'slot') this.toTray(v);
+      this.stage.holding = false;
+      this.stage.holdFeedback = 'Paused. Start a fresh hold when ready.';
+      return;
+    }
     let holding = false;
     for (const v of this.stage.views.values()) {
       if (v.token.status !== 'held' || v.entity.hasComponent(Grabbed)) continue;
@@ -256,30 +275,31 @@ export class DecisionGestureSystem extends createSystem({
     const oneHanded = this.app.settings.get('oneHanded');
     const gazeOnSeal = this.stage.gazeAngle(this.slotSeal, this.tmp) < 10;
     const both = lOn && rOn;
-    const single = oneHanded && (lOn || rOn) && gazeOnSeal;
-    if (both || single) {
-      v.offTime = 0;
+    const preferred = this.app.settings.get('preferredHand');
+    const single = oneHanded && (preferred === 'left' ? lOn : rOn) && gazeOnSeal;
+    const state = v.commitment.step({
+      delta, tracked: oneHanded ? (preferred === 'left' ? l : r) : l && r,
+      engaged: oneHanded ? single : both,
+      permitted: !v.token.amending && !v.token.validation && !this.app.shift.isExpired(v.token),
+      binding: v.token.hash,
+    });
+    v.holdTime = v.commitment.elapsed;
+    if (state === 'cancelled') {
+      this.stage.holdFeedback = 'Hold cancelled. Nothing sent. Place the token again.';
+      this.app.cue('lock', this.stage.holdFeedback, [this.p.x, this.p.y, this.p.z]);
+      this.toTray(v);
+    } else if (state === 'complete') {
+      this.stage.holdFeedback = 'Decision sent. Checking the record.';
+      this.decide(v, 'APPROVE', oneHanded ? 'one_hand_gaze_hold' : 'two_hand_hold');
+      v.commitment.reset(); v.holdTime = 0;
+    } else if (state === 'holding') {
       if (!this.holdCue) {
         this.holdCue = true;
-        this.app.cue('hold', both ? 'Holding with both hands…' : 'Holding with one hand and gaze…', [this.p.x, this.p.y, this.p.z], 2);
+        this.app.cue('hold', oneHanded ? 'Hold with one hand and gaze; release cancels.' : 'Hold with both palms; release cancels.', [this.p.x, this.p.y, this.p.z], 2);
       }
-      v.holdTime += delta;
-      if (v.holdTime >= DecisionGestureSystem.HOLD_SECONDS) {
-        v.holdTime = 0;
-        this.decide(v, 'APPROVE', both ? 'two_hand_hold' : 'one_hand_gaze_hold');
-        return false;
-      }
+      this.stage.holdFeedback = `Hold ${v.holdTime.toFixed(1)} / 1.5 s. Release to cancel.`;
       return true;
-    }
-    if (v.holdTime > 0) {
-      v.offTime += delta;
-      if (v.offTime < DecisionGestureSystem.RELEASE_GRACE) return true;
-      // a hand let go before 1.5 s: abort, nothing is sent, the token returns
-      v.holdTime = 0;
-      v.offTime = 0;
-      this.app.cue('lock', 'Hold released: aborted, nothing sent');
-      this.toTray(v);
-    }
+    } else if (state === 'interrupted') this.stage.holdFeedback = 'Tracking interrupted. Hold progress is frozen.';
     return false;
   }
 
@@ -289,7 +309,7 @@ export class DecisionGestureSystem extends createSystem({
     const locked = token?.intent.policy.requires === 'forbidden' && token.status === 'held';
     this.shutter.visible = !!locked;
     this.lockFlash = Math.max(0, this.lockFlash - delta * 2);
-    this.shutter.position.y = 0.012 + Math.sin(this.lockFlash * 20) * 0.003 * this.lockFlash;
+    this.shutter.position.y = this.app.settings.get('reducedMotion') ? 0.012 : 0.012 + Math.sin(this.lockFlash * 20) * 0.003 * this.lockFlash;
     const level = token?.intent.risk.level ?? 0;
     const view = id ? this.stage.views.get(id) : undefined;
     const progress = view ? view.holdTime / DecisionGestureSystem.HOLD_SECONDS : 0;

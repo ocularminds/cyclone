@@ -1,0 +1,13 @@
+# Local typography
+
+The application uses Manrope for display text and Atkinson Hyperlegible Next for task text. Both original OFL notices ship in `app/public/assets/fonts/`. Source files came from the supplied `design/brand1/fonts/` kit; its documented upstreams are [Manrope](https://github.com/google/fonts/tree/main/ofl/manrope) and [Atkinson Hyperlegible Next](https://github.com/google/fonts/tree/main/ofl/atkinsonhyperlegiblenext).
+
+Canvas labels load local variable TTFs through the browser FontFace API. The first task does not wait for font downloads: a system font renders immediately in the same fixed panel bounds, and the label cache redraws when the local face is ready. Runtime evidence records whether this completed or fell back. Manrope uses weights 600–700; task text uses 400–700.
+
+UIKitML in the installed SDK accepts a TTF URL in `@font-face`, preloads it, and generates/caches its own atlas. It does not accept a BMFont JSON URL in that declaration. The production panels therefore declare local static TTF instances at Atkinson 400 and 700 and Manrope 700. No hand-authored atlas, font CDN, or duplicate renderer ships.
+
+Atkinson's default digits are proportional. The shipped derivative maps the Unicode digits to the font's supplied `tnum` forms (`zero.tf` through `nine.tf`) so both canvas and UIKit render equal advances without relying on unsupported canvas font-feature settings. All ten advances are 632 font units. The derivative's internal family is named “Cyclone Atkinson Tabular”; the original copyright and OFL remain intact. Degree signs are present in the source. Canvas may use its local system fallback for symbols absent from Atkinson, such as the comparison arrow; UIKit control copy uses ASCII punctuation.
+
+Reproduction used fontTools 4.68.0: load the kit TTF with `TTFont`, replace digit entries in each Unicode cmap with their `.tf` counterpart, rename family/full/PostScript/typographic-family name records, save `atkinsonhyperlegiblenext-tabular.ttf`, then use `instantiateVariableFont(font, {'wght': 400 or 700}, inplace=False)` to write the static UIKit instances. Manrope's UIKit instance is generated at weight 700 from its unchanged variable source. Production URL resolution is checked under a nested site path, in addition to the development origin.
+
+The semantic text, accent, warning and danger roles are tested at ≥4.5:1 on their intended opaque surface/canvas. Focus and boundary roles are tested at ≥3:1. Runtime hover and pressed states override Horizon's pale defaults while preserving the selected foreground/background pairing. These are sRGB contrast checks, not certification of headset legibility.

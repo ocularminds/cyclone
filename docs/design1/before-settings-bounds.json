@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "data": {
+    "workspaceRoot": "/Users/bonus/develop/products/Cyclone/app",
+    "operation": "ui.inspect",
+    "result": {
+      "panel": {
+        "entityIndex": 51,
+        "name": "settings-panel",
+        "assetId": "settings-panel",
+        "computedSize": {
+          "width": 22,
+          "height": 23.980003356933594
+        },
+        "targetSize": {
+          "width": 0,
+          "height": 0
+        }
+      },
+      "selector": "#eyes",
+      "elements": [
+        {
+          "id": "eyes",
+          "classes": [
+            "button"
+          ],
+          "componentType": "Button",
+          "uuid": "5daca015-b01b-4602-9dbe-14bce3a949e1",
+          "text": "Eyes-only: off",
+          "state": {
+            "active": false,
+            "clipped": false,
+            "disabled": false,
+            "displayed": true,
+            "hovered": false,
+            "visible": true
+          },
+          "layout": {
+            "relativeCenter": [
+              30.399999618530273,
+              0
+            ],
+            "size": [
+              80,
+              2.5999999046325684
+            ]
+          },
+          "properties": {
+            "visibility": "visible"
+          }
+        }
+      ],
+      "total": 1,
+      "limited": false
+    }
+  }
+}

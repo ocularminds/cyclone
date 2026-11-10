@@ -27,7 +27,13 @@ export class OnboardingSystem extends createSystem({}) {
     this.mark('bloom');
     this.cleanupFuncs.push(
       shift.events.on('arrived', (t) => this.arrived(t)),
+      shift.events.on('escalated', () => {
+        if (this.app.boot.scenario === 'onboarding' && this.app.gate.capabilities.source === 'demo') this.app.firstShift.save(this.app.engine.completedTemplates);
+      }),
       shift.events.on('sealed', ({ token }) => {
+        if (this.app.boot.scenario === 'onboarding' && this.app.gate.capabilities.source === 'demo') {
+          this.app.firstShift.save(this.app.engine.completedTemplates);
+        }
         if (!this.firstSeal) {
           this.firstSeal = true;
           this.mark('first_seal', token.id);
@@ -86,6 +92,9 @@ export class OnboardingSystem extends createSystem({}) {
     }
     if (!this.ended && this.app.scenario.ends_with_summary && this.app.engine.finished && this.app.shift.waiting().length === 0) {
       this.ended = true;
+      if (this.app.boot.scenario === 'onboarding' && this.app.gate.capabilities.source === 'demo') {
+        this.app.firstShift.save(this.app.engine.completedTemplates, true);
+      }
       this.mark('summary');
       this.app.bus.emit('summary', { show: true });
     }

@@ -122,17 +122,17 @@ export class Furniture {
     return Furniture.at(g, Layout.RACK);
   }
 
-  /** Ledger shelf: three stepped tiers for seal crystals (C10). */
+  /** Ledger shelf: enough separation to pinch one receipt without its neighbour. */
   static ledger(): Group {
     const g = new Group();
-    for (let tier = 0; tier < 3; tier++) {
-      const step = new Mesh(new BoxGeometry(0.1, 0.006, 0.026), Palette.matte(Palette.warm.walnut));
-      step.position.set(0, 0.016 + tier * 0.034, -tier * 0.012);
+    for (let tier = 0; tier < Layout.SEAL_TIERS; tier++) {
+      const step = new Mesh(new BoxGeometry(0.118, 0.006, 0.026), Palette.matte(Palette.warm.walnut));
+      step.position.set(0, 0.016 + tier * Layout.SEAL_RISE, -tier * 0.012);
       g.add(step);
     }
-    for (const x of [-0.052, 0.052]) {
-      const side = new Mesh(new BoxGeometry(0.004, 0.1, 0.05), Palette.matte(Palette.warm.walnut));
-      side.position.set(x, 0.05, -0.012);
+    for (const x of [-0.061, 0.061]) {
+      const side = new Mesh(new BoxGeometry(0.004, 0.212, 0.074), Palette.matte(Palette.warm.walnut));
+      side.position.set(x, 0.106, -0.024);
       g.add(side);
     }
     g.name = 'ledger';

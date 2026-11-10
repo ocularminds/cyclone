@@ -1,0 +1,596 @@
+{
+  "at": "2026-11-10T03:00:47.650Z",
+  "source": "IWSDK IWER immersive hand input",
+  "results": [
+    {
+      "name": "puck opens home without activating a setting",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "home-100: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"action-c\",\"width\":0.25599998474121094,\"reach\":0.56},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "home-100: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "home-100: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "home-1: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"action-c\",\"width\":0.25599998474121094,\"reach\":0.56},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "home-1: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "home-1: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open input",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "input-1: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"action-c\",\"width\":0.25599998474121094,\"reach\":0.56},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "input-1: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "input-1: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Gaze + pinch selected",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "hand-1: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "hand-1: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "hand-1: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "preferred left hand selected",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open display",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "display-1: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"action-c\",\"width\":0.25599998474121094,\"reach\":0.56},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "display-1: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "display-1: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "theme changes to Porcelain",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open comfort",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "comfort-1: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"action-c\",\"width\":0.25599998474121094,\"reach\":0.56},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "comfort-1: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "comfort-1: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "high-contrast-1: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"action-c\",\"width\":0.25599998474121094,\"reach\":0.56},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "high-contrast-1: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "high-contrast-1: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "captions toggle off",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "reduced motion on",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open session",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "session-1: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"action-c\",\"width\":0.25599998474121094,\"reach\":0.56},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "session-1: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "session-1: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "fallback surface selected",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open restart",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "restart-1: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "restart-1: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "restart-1: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "restart cancellation preserves receipt",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open advanced",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "advanced-1: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"action-c\",\"width\":0.25599998474121094,\"reach\":0.56},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "advanced-1: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "advanced-1: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "counter-offer mode active",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "unavailable live keeps demo",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open rules",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "rules-1: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "rules-1: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "rules-1: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open reset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "reset-1: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "reset-1: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "reset-1: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "reset cancellation preserves receipt and text size",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open display",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "125% text setting applies",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "home-1.25: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"action-c\",\"width\":0.25599998474121094,\"reach\":0.56},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "home-1.25: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "home-1.25: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open input",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "input-1.25: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"action-c\",\"width\":0.25599998474121094,\"reach\":0.56},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "input-1.25: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "input-1.25: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Gaze + pinch selected",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "hand-1.25: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "hand-1.25: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "hand-1.25: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "preferred left hand selected",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open display",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "display-1.25: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"action-c\",\"width\":0.25599998474121094,\"reach\":0.56},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "display-1.25: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "display-1.25: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "theme changes to Porcelain",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open comfort",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "comfort-1.25: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"action-c\",\"width\":0.25599998474121094,\"reach\":0.56},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "comfort-1.25: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "comfort-1.25: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "high-contrast-1.25: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"action-c\",\"width\":0.25599998474121094,\"reach\":0.56},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "high-contrast-1.25: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "high-contrast-1.25: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "captions toggle off",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "reduced motion on",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open session",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "session-1.25: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"action-c\",\"width\":0.25599998474121094,\"reach\":0.56},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "session-1.25: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "session-1.25: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "fallback surface selected",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open restart",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "restart-1.25: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "restart-1.25: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "restart-1.25: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "restart cancellation preserves receipt",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open advanced",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "advanced-1.25: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"action-c\",\"width\":0.25599998474121094,\"reach\":0.56},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "advanced-1.25: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "advanced-1.25: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "counter-offer mode active",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "unavailable live keeps demo",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open rules",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "rules-1.25: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "rules-1.25: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "rules-1.25: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open reset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "reset-1.25: mounted controls contained and reachable",
+      "ok": true,
+      "detail": "[{\"id\":\"action-a\",\"width\":0.25599998474121094,\"reach\":0.557},{\"id\":\"action-b\",\"width\":0.25599998474121094,\"reach\":0.556},{\"id\":\"back\",\"width\":0.12320000648498536,\"reach\":0.567},{\"id\":\"close\",\"width\":0.12319999694824219,\"reach\":0.567}]"
+    },
+    {
+      "name": "reset-1.25: central FoV",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "reset-1.25: no clipped visible elements",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "reset cancellation preserves receipt and text size",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open input",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Close returns to the task",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "named full-rationale disclosure works for the arm",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "recorded demo signature verifies",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "puck opens home without activating a setting",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open session",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open advanced",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open rules",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "open reset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "confirmed reset clears local receipts, preferences and completion",
+      "ok": true,
+      "detail": ""
+    }
+  ]
+}

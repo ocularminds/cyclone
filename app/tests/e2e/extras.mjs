@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Emulator e2e, part 2 (hands only): escalate pad, one-handed hold, eyes-only
+// Emulator e2e, part 2 (hands only): escalate pad, one-handed hold, Gaze + pinch
 // gaze-pinch veto, push-veto of a drill, seal pickup replay, settings puck,
 // pause on exit, then shift handover with trust rule drop and auto-seal.
 // Usage: node tests/e2e/extras.mjs [--shots]
@@ -65,12 +65,26 @@ s = d.waitFor('arm in slot', (x) => x.tokens.some((t) => t.id === tok.id && t.pl
 const at = s.tokens.find((t) => t.id === tok.id).at;
 d.look([s.slot[0], s.slot[1] + 0.01, s.slot[2]]);
 d.move('hand-right', [at[0] + 0.02, at[1] + 0.01, at[2]]);
+// A lost required input cannot finish the commitment. This models source
+// disconnection; the sub-150 ms pose-dropout tolerance is unit-tested separately.
+d.cli(['xr', 'set-connected'], { device: 'hand-right', connected: false });
+d.sleep(500);
+s = d.probe();
+check('required hand disconnect cancels without a decision', s.ledger.length === 1 && s.tokens.find(t => t.id === tok.id)?.place === 'tray');
+d.cli(['xr', 'set-connected'], { device: 'hand-right', connected: true });
+d.park();
+s = d.probe();tok = s.tokens.find(t => t.id === tok.id);d.look(tok.at);
+d.carry(tok.at, s.slot, 'hand-right', tok.id);
+s = d.waitFor('arm in slot after tracking returns', x => x.tokens.some(t => t.id === tok.id && t.place === 'slot'), 10);
+const fresh = s.tokens.find(t => t.id === tok.id).at;
+d.look([s.slot[0], s.slot[1] + 0.01, s.slot[2]]);
+d.move('hand-right', [fresh[0] + 0.02, fresh[1] + 0.01, fresh[2]]);
 s = d.waitFor('one-hand sealed', (x) => x.ledger.length >= 2, 10);
 d.park();
 check('one hand + gaze on the seal 1.5 s → APPROVE (C26)', s.ledger[1].gesture === 'one_hand_gaze_hold', s.ledger[1].gesture);
 d.page(`window.cyclone.app.settings.set('oneHanded', false)`);
 
-// eyes-only: dwell on the oven token, then look at the chute and pinch (C25)
+// Gaze + pinch: head-directed inspection, hand-ray chute selection (C25).
 d.page(`window.cyclone.app.settings.set('eyesOnly', true)`);
 tok = inspect('set_oven_setpoint');
 s = d.probe();
@@ -84,7 +98,7 @@ d.pinch('hand-right', 1);
 d.sleep(200);
 d.pinch('hand-right', 0);
 s = d.waitFor('oven vetoed by pinch', (x) => x.ledger.length >= 3, 10);
-check('eyes-only: pinch on the chute vetoes the inspected token (C25)', s.ledger[2].decision === 'REJECT' && s.ledger[2].gesture === 'gaze_pinch', s.ledger[2].gesture);
+check('Gaze + pinch: chute selection vetoes the inspected token (C25)', s.ledger[2].decision === 'REJECT' && s.ledger[2].gesture === 'gaze_pinch', s.ledger[2].gesture);
 d.page(`window.cyclone.app.settings.set('eyesOnly', false)`);
 d.park();
 
@@ -122,7 +136,8 @@ check('session hidden → clock frozen (C29)', s.paused && Math.abs(s.t - t0) < 
 // ---- handover: trust ring fills, rule offered, dropped on the agent, auto-seal (C15, C17) ----
 start('?mode=handover');
 s = d.waitFor('handover queue', (x) => x.tokens.filter((t) => t.status === 'held').length >= 3, 20);
-check('handover: overnight queue loads, first token ≤ 15 s (C15)', s.t <= 15, `${s.tokens.length} held at ${s.t.toFixed(1)} s`);
+const queueStart = Number(s.beats.find(b => b.startsWith('held_1@'))?.split('@')[1] ?? s.t);
+check('handover: overnight queue loads, first token ≤ 15 s (C15)', queueStart <= 15, `${s.tokens.length} held; first at ${queueStart.toFixed(1)} s`);
 // three clean approvals by the line agent, eyes-only (look at the token, then look-and-pinch the slot)
 d.page(`window.cyclone.app.settings.set('eyesOnly', true)`);
 for (const tool of ['set_conveyor_speed', 'set_conveyor_speed', 'lift_pallet']) {
@@ -148,7 +163,22 @@ d.carry(s.rules[0], line.at);
 s = d.waitFor('auto-sealed', (x) => x.ledger.some((r) => r.decision === 'AUTO_APPROVE_RULE'), 25);
 check('drop rule on agent → matching intent auto-executes and auto-seals (C17)', true, s.ledger.map((r) => r.decision).join(','));
 
-writeFileSync('../docs/e2e-extras.json', JSON.stringify({ at: new Date().toISOString(), results }, null, 2));
+// Revoke through the actual UIKit controls, then introduce a matching proposal
+// as test data. Revocation must affect behavior, not only the displayed setting.
+s=d.probe();d.move('hand-right',[s.puck[0],s.puck[1]+.12,s.puck[2]]);d.move('hand-right',[s.puck[0],s.puck[1]+.01,s.puck[2]]);d.pinch('hand-right',1);d.pinch('hand-right',0);
+d.waitFor('settings for revocation',s=>s.settingsOpen);d.lift('hand-right',[s.head[0]+.2,s.head[1]-.15,s.head[2]-.15]);d.sleep(700);
+const action = id => {
+  const actions=d.page(`window.cyclone.stage.root.getObjectByName('settings-panel').userData.actions`);
+  const i=actions.findIndex(a=>a.id===id);if(i<0)throw Error(`Missing settings action ${id}`);d.click('settings-panel',`action-${'abc'[i]}`);
+};
+action('page:session');action('page:advanced');action('page:rules');action('revoke');
+check('Revoke control removes accepted rule authority',d.page(`window.cyclone.app.trust.accepted().length`)===0);
+d.click('settings-panel','close');
+const freshId=d.page(`(async()=>{const a=window.cyclone.app,t=await a.engine.factory.build(a.engine.template('conveyor-2'));await a.shift.receive(t);return t.intent_id})()`);
+s=d.waitFor('revoked rule requires review',s=>s.tokens.some(t=>t.id===freshId&&t.status==='held'));
+check('matching proposal stays held after revocation',s.tokens.some(t=>t.id===freshId&&t.status==='held'));
+
+writeFileSync(process.env.CYCLONE_EVIDENCE ? `${process.env.CYCLONE_EVIDENCE}/e2e-extras.json` : '../docs/e2e-extras.json', JSON.stringify({ at: new Date().toISOString(), source: 'IWSDK IWER, hands only', results }, null, 2));
 const failed = results.filter((r) => !r.ok).length;
 console.log(failed ? `${failed} FAILED` : 'ALL PASS');
 process.exit(failed ? 1 : 0);

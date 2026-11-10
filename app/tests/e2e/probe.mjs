@@ -26,6 +26,7 @@ export default async function run({ frame }) {
       value: v.token.value,
       breach: v.token.rehearsal.breach?.zone_id ?? null,
       glyph: v.token.glyph.key,
+      drawnGlyph: v.parts.glyph.userData.glyph,
       at: world(v.object),
       hold: v.holdTime,
     }));
@@ -57,7 +58,7 @@ export default async function run({ frame }) {
       tokens,
       slot: deskToWorld([0.05, 0.02, -0.06]),
       pad: deskToWorld([0.135, 0.02, -0.06]),
-      chute: deskToWorld([0.27, 0.0, -0.012]),
+      chute: world(byName('chute')),
       offEdge: deskToWorld([0.3, 0.02, 0.08]),
       deskRoot: world(stage.root),
       head: deskToWorld([stage.head.x, stage.head.y, stage.head.z]),

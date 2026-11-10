@@ -53,11 +53,18 @@ export class IntentQueueSystem extends createSystem({
         this.syncClock();
       }),
       shift.events.on('arrived', (t) => this.spawn(t)),
+      shift.events.on('amended', t => {
+        const view = this.stage.views.get(t.id);
+        if (view) Tokens.setGlyph(view.parts, t.glyph);
+      }),
       shift.events.on('superseded', ({ token }) => this.leave(token.id, 'gone')),
       shift.events.on('escalated', ({ token }) => {
         const v = this.stage.views.get(token.id);
         if (!v) return;
         v.moveTo(Layout.rackSpot(this.rackCount++), 'rack');
+        // Escalation completes this review even though the action remains held.
+        // Release its detail page so looking at the next proposal can inspect it.
+        if (this.stage.focus === token.id) this.stage.focus = null;
       }),
       shift.events.on('sealed', ({ token }) => this.leave(token.id, 'leaving')),
       shift.events.on('auto', ({ token }) => this.leave(token.id, 'leaving')),
@@ -155,18 +162,19 @@ export class IntentQueueSystem extends createSystem({
   update(delta: number): void {
     this.app.tick(delta);
     this.reflow();
+    const reduced = this.app.settings.get('reducedMotion');
     const now = this.app.clock.ms;
     for (const [id, v] of this.stage.views) {
       const obj = v.object;
       const grabbed = v.entity.hasComponent(Grabbed);
       if (!grabbed && v.place !== 'grabbed') {
-        v.tween = Math.min(1, v.tween + delta * (v.place === 'leaving' ? 1.6 : 2.4));
+        v.tween = reduced ? 1 : Math.min(1, v.tween + delta * (v.place === 'leaving' ? 1.6 : 2.4));
         const k = v.tween;
         const ease = v.place === 'tray' && v.from.y > v.home.y + 0.1 ? IntentQueueSystem.bounce(k) : 1 - Math.pow(1 - k, 3);
         obj.position.lerpVectors(v.from, v.home, ease);
         // inspected tokens lift; dying tokens sink into the tray (C29)
         const lifted = this.stage.focus === id && (v.place === 'tray' || v.place === 'rack');
-        v.lift += ((lifted ? 1 : 0) - v.lift) * Math.min(1, delta * 8);
+        v.lift = reduced ? (lifted ? 1 : 0) : v.lift + ((lifted ? 1 : 0) - v.lift) * Math.min(1, delta * 8);
         const sink = v.place === 'tray' ? (1 - v.token.life(now)) * 0.009 : 0;
         obj.position.y += v.lift * 0.05 - sink;
         if (v.place === 'leaving' || v.place === 'gone') {

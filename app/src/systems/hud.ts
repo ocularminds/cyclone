@@ -1,8 +1,9 @@
 import { createSystem, Vector3 } from '@iwsdk/core';
 import type { Cyclone } from '../app';
-import { Layout } from '../models/layout';
+import { Palette } from '../models/palette';
 import type { Stage } from '../stage';
 import { Label, type Line } from '../ui/label';
+import { ReadingLayer } from '../ui/reading-layer';
 
 type Caption = { text: string; age: number };
 
@@ -28,9 +29,10 @@ export class HudSystem extends createSystem({}) {
     this.app = this.globals.cyclone as Cyclone;
     this.stage = this.globals.stage as Stage;
     this.hidden = this.app.boot.capture === 'endcard';
-    this.captions = new Label(0.26, 0.05);
-    this.toast = new Label(0.22, 0.03);
-    this.summary = new Label(0.26, 0.16);
+    this.captions = new Label(0.30, 0.018);
+    this.toast = new Label(0.28, 0.045);
+    this.summary = new Label(0.28, 0.245);
+    this.captions.mesh.name = 'cue-caption'; this.toast.mesh.name = 'feedback'; this.summary.mesh.name = 'shift-summary';
     for (const l of [this.captions, this.toast, this.summary]) {
       l.mesh.visible = false;
       this.stage.root.add(l.mesh);
@@ -68,51 +70,53 @@ export class HudSystem extends createSystem({}) {
     const captionsOn = this.app.settings.get('captions');
     for (const c of this.lines) c.age += delta;
     while (this.lines.length && this.lines[this.lines.length - 1].age > 4) this.lines.pop();
+    this.stage.caption = captionsOn && this.lines.length ? this.lines[0].text : '';
     const cap = this.captions.mesh;
-    cap.visible = captionsOn && this.lines.length > 0;
+    cap.visible = !!this.stage.caption && !this.stage.settingsOpen && !this.stage.focus && !this.stage.replayOpen;
     if (cap.visible) {
-      this.spot(cap.position, 16, 0.5);
+      this.spot(cap.position, 14, 0.55);
       this.face(cap);
-      this.captions.draw(
-        this.lines.map((c, i): Line => ({ text: c.text, size: i === 0 ? 0.0095 : 0.0078, weight: i === 0 ? 600 : 400, color: i === 0 ? '#ffffff' : '#d9d2c4' })),
-        { background: 'rgba(28,24,20,0.78)', padding: 0.006, radius: 0.006, align: 'center' },
-      );
+      this.captions.caption(this.stage.caption);
     }
     const t = this.toastText;
     if (t) t.age += delta;
-    this.toast.mesh.visible = !!t && t.age < 4.5;
+    this.toast.mesh.visible = !!t && t.age < 4.5 && !this.stage.settingsOpen && !this.stage.focus && !this.stage.replayOpen;
     if (t && this.toast.mesh.visible) {
-      this.spot(this.toast.mesh.position, -14, 0.55);
+      this.spot(this.toast.mesh.position, -9, 0.55);
       this.face(this.toast.mesh);
-      const colour = t.tone === 'warn' ? '#a8287f' : t.tone === 'good' ? '#2f6fb8' : '#2b2622';
-      this.toast.draw([{ text: t.text, size: 0.0105, weight: 700, color: colour }], {
-        background: '#f6efe2',
+      const colour = t.tone === 'warn' ? Palette.ui.danger : t.tone === 'good' ? Palette.ui.accent : Palette.ui.text;
+      this.toast.draw([{ text: t.text, size: 0.009, weight: 700, color: colour }], {
+        background: Palette.ui.surface,
         border: colour,
         padding: 0.006,
         radius: 0.008,
         align: 'center',
       });
     }
-    this.summary.mesh.visible = this.showSummary;
-    if (this.showSummary) {
-      this.summary.mesh.position.set(Layout.HUD[0], Layout.HUD[1], Layout.HUD[2]);
+    this.summary.mesh.visible = this.showSummary && !this.stage.settingsOpen && !this.stage.replayOpen;
+    if (this.summary.mesh.visible) {
+      this.spot(this.summary.mesh.position, 0, 0.565);
       this.face(this.summary.mesh);
-      this.summary.draw(this.summaryLines(), { background: '#f6efe2', border: '#6e4f37', padding: 0.012, radius: 0.012 });
+      this.summary.draw(this.summaryLines(), { background: Palette.ui.surface, border: Palette.ui.border, padding: 0.01, radius: 0.012 });
     }
+    if (this.captions.mesh.visible) ReadingLayer.apply(this.captions.mesh);
+    if (this.toast.mesh.visible) ReadingLayer.apply(this.toast.mesh);
+    if (this.summary.mesh.visible) ReadingLayer.apply(this.summary.mesh);
   }
 
   private summaryLines(): Line[] {
     const s = this.app.log.summary();
-    const rings = this.app.cast.agents
-      .map((a) => `${a.label} ${Math.round(this.app.trust.ring(a.id) * 100)}%`)
-      .join('  ·  ');
+    const rings = this.app.cast.agents.map((a) => `${a.label.replace(/ Agent$/, '')} ${Math.round(this.app.trust.ring(a.id) * 100)}%`).join(' / ');
     return [
-      { text: 'Shift summary', size: 0.014, weight: 700 },
-      { text: `${s.decisions} decisions · ${s.amended} amended · ${s.vetoed} vetoed · ${s.escalated} escalated`, size: 0.01 },
-      { text: `${s.drillsMissed} drill${s.drillsMissed === 1 ? '' : 's'} missed · ${s.drillsCaught} caught · ${s.auto} auto-executed by rules · ${s.expired} expired`, size: 0.0095 },
-      { text: `Calibration: ${this.app.calibration.label}`, size: 0.0095, weight: 600, color: '#2f6fb8' },
-      { text: `Trust rings: ${rings}`, size: 0.0085, color: '#5d6b78' },
-      { text: 'Execution in this demo is simulated. Rehearsals come from the twin’s kinematic model, not predictions.', size: 0.0072, color: '#5d6b78' },
+      { text: 'Shift summary', size: 0.015, weight: 700, display: true },
+      { text: `${s.decisions} decisions · ${s.amended} amended · ${s.vetoed} vetoed`, size: 0.01 },
+      { text: `${s.escalated} escalated · ${s.drillsMissed} drills missed · ${s.drillsCaught} caught`, size: 0.009 },
+      { text: `${s.drillsUnassessed} drills unassessed`, size: 0.009 },
+      { text: `${s.falseAlarms} false alarms · ${s.auto} rule approvals · ${s.expired} expired`, size: 0.009 },
+      { text: `Calibration: ${this.app.calibration.label}`, size: 0.01, weight: 600, color: Palette.ui.accent },
+      { text: `Trust rings: ${rings}`, size: 0.009, color: Palette.ui.muted },
+      { text: 'Rings show progression, not safety evidence.', size: 0.009, color: Palette.ui.muted },
+      { text: this.app.gate.capabilities.source === 'demo' ? 'Demo execution is simulated. Rehearsals are models.' : 'Physical execution is not confirmed. Rehearsals are models.', size: 0.009, color: Palette.ui.muted },
     ];
   }
 }

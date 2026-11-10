@@ -11,16 +11,18 @@ import { Bus } from '../core/bus';
 import type { Clock } from '../core/clock';
 import { Glyph } from '../core/glyph';
 import { IntentHasher } from '../core/hash';
+import { Receipt } from '../core/receipt';
+import { Proof } from '../core/proof';
 import type { RehearsalResult } from '../sim/rehearsal';
 import { Rehearsal } from '../sim/rehearsal';
-import type { Calibration } from '../state/calibration';
+import type { Calibration, DrillOutcome } from '../state/calibration';
 import type { Ledger } from '../state/ledger';
 import type { SessionLog } from '../state/session';
 import type { Settings } from '../state/settings';
 import type { TrustBook } from '../state/trust';
 import { GesturePolicy } from './policy';
 
-export type TokenStatus = 'held' | 'deciding' | 'escalated' | 'sealed' | 'expired';
+export type TokenStatus = 'held' | 'deciding' | 'escalated' | 'sealed' | 'expired' | 'unverified';
 
 /** Client-side view of one held intent while it sits on the desk. */
 export class Token {
@@ -31,6 +33,9 @@ export class Token {
   status: TokenStatus = 'held';
   denial: string | null = null;
   tampered = false;
+  amending = false;
+  editRevision = 0;
+  validation: string | null = null;
   inspected = false;
   record: SignedRecord | null = null;
 
@@ -71,13 +76,14 @@ export class Token {
 export type ShiftEvents = {
   arrived: Token;
   amended: Token;
+  amending: Token;
   deciding: { token: Token; kind: DecisionKind };
   sealed: { token: Token; record: SignedRecord };
   escalated: { token: Token; record: SignedRecord };
   refused: { token: Token; reason: string };
   denied: { token: Token; reason: string };
   expired: Token;
-  drill: { token: Token; caught: boolean };
+  drill: { token: Token; caught: boolean; outcome: DrillOutcome };
   auto: { token: Token; record: SignedRecord; rule: RuleTemplate };
   offer: { rule: RuleTemplate };
   accepted: { rule: RuleTemplate };
@@ -130,6 +136,8 @@ export class Shift {
   }
 
   async receive(intent: HeldIntent): Promise<Token> {
+    const existing = this.tokens.get(intent.intent_id);
+    if (existing) return existing;
     const r = this.rehearsal.run(intent.tool, intent.target.asset_id, intent.args);
     const token = new Token(intent, r, this.clock.ms, this.deadlineOf(intent));
     // Fail closed if the payload no longer matches the hash it was held under.
@@ -139,7 +147,7 @@ export class Shift {
       const old = this.tokens.get(intent.supersedes);
       if (old) this.events.emit('superseded', { token: old, by: intent.intent_id });
     }
-    const rule = token.tampered ? null : this.trust.match(intent);
+    const rule = token.tampered || this.gate.capabilities.source !== 'demo' ? null : this.trust.match(intent);
     if (rule) {
       await this.autoApprove(token, rule);
       return token;
@@ -153,16 +161,27 @@ export class Shift {
     const token = this.tokens.get(id);
     const spec = token?.intent.amend;
     if (!token || !spec || token.status !== 'held') return null;
-    const stepped = Math.round((value - spec.min) / spec.step) * spec.step + spec.min;
-    const v = Math.max(spec.min, Math.min(spec.max, stepped));
-    if (token.args[spec.param] === v) return token;
-    token.args = { ...token.args, [spec.param]: v };
+    const steps = (value - spec.min) / spec.step;
+    if (!Number.isFinite(value) || value < spec.min || value > spec.max || Math.abs(steps - Math.round(steps)) > 1e-6) {
+      token.validation = `${value} ${spec.unit} is invalid. Use ${spec.min} to ${spec.max} ${spec.unit}, step ${spec.step}. Last valid: ${token.value} ${spec.unit}.`;
+      this.events.emit('amending', token);
+      return null;
+    }
+    token.validation = null;
+    if (token.args[spec.param] === value) return token;
+    const revision = ++token.editRevision;
+    token.amending = true;
+    this.events.emit('amending', token);
+    token.args = { ...token.args, [spec.param]: value };
     token.denial = null;
     token.rehearsal = this.rehearsal.run(token.intent.tool, token.intent.target.asset_id, token.args);
-    token.hash = token.amended
+    const hash = token.amended
       ? (await IntentHasher.hash(IntentHasher.amend(token.intent.binding!, token.args))).intent_hash
       : token.intent.intent_hash;
-    token.glyph = Glyph.from(token.hash);
+    if (revision !== token.editRevision) return null;
+    token.hash = hash;
+    token.glyph = Glyph.from(hash);
+    token.amending = false;
     this.events.emit('amended', token);
     return token;
   }
@@ -175,7 +194,11 @@ export class Shift {
   /** Gesture → decision. Returns the record, or null when refused/denied. */
   async decide(id: string, kind: DecisionKind, gesture: Gesture): Promise<SignedRecord | null> {
     const token = this.tokens.get(id);
-    if (!token || token.status !== 'held') return null;
+    if (!token || token.status !== 'held' || token.amending) return null;
+    if (token.validation && ['APPROVE', 'APPROVE_AMENDED', 'AUTO_APPROVE_RULE'].includes(kind)) {
+      this.events.emit('refused', { token, reason: token.validation }); return null;
+    }
+    if (this.isExpired(token) && gesture !== 'timeout') { this.markExpired(token); return null; }
     const ctx = {
       eyesOnly: this.settings.get('eyesOnly'),
       oneHanded: this.settings.get('oneHanded'),
@@ -184,7 +207,11 @@ export class Shift {
     // An approval of changed args is APPROVE_AMENDED, or a counter-offer if the gate can't amend.
     if (kind === 'APPROVE' && token.amended) {
       if (this.gate.capabilities.supportsAmendedApproval) kind = 'APPROVE_AMENDED';
-      else return this.counterOffer(token, gesture);
+      else {
+        const invalid = GesturePolicy.check(token.intent, 'APPROVE', gesture, ctx);
+        if (invalid) { this.events.emit('refused', { token, reason: invalid }); return null; }
+        return this.counterOffer(token, gesture);
+      }
     }
     const refusal = GesturePolicy.check(token.intent, kind, gesture, ctx);
     if (refusal) {
@@ -226,7 +253,8 @@ export class Shift {
     this.events.emit('deciding', { token, kind: decision.decision });
     let record: SignedRecord;
     try {
-      record = await this.gate.resolve(decision);
+      const reviewed = await Receipt.capture(this.rehearsal, token.intent, token.args);
+      record = await this.gate.resolve(decision, reviewed);
     } catch (err) {
       token.status = 'held';
       const e = err as GateError;
@@ -239,6 +267,12 @@ export class Shift {
         this.log.log({ t: this.clock.ms, type: 'refused', intent_id: token.id, note: e.message });
         this.events.emit('refused', { token, reason: Shift.explain(e) });
       }
+      return null;
+    }
+    if (!Proof.matches(record, decision)) {
+      token.status = 'unverified';
+      token.denial = 'Record does not match this decision. Request already sent; approval is disabled.';
+      this.events.emit('refused', { token, reason: token.denial });
       return null;
     }
     token.record = record;
@@ -266,14 +300,20 @@ export class Shift {
   private afterDecision(token: Token, decision: Decision): void {
     const intent = token.intent;
     if (intent.is_drill) {
-      const caught = decision.decision !== 'APPROVE' && decision.decision !== 'APPROVE_AMENDED'
-        ? true
-        : token.rehearsal.breach === null; // amending the drill clear of its breach also counts
-      this.calibration.record(caught);
-      this.log.log({ t: this.clock.ms, type: 'drill', intent_id: token.id, drill: caught ? 'caught' : 'missed' });
-      this.events.emit('drill', { token, caught });
+      const outcome: DrillOutcome = decision.reason?.code === 'expired' ? 'timeout'
+        : decision.decision === 'ESCALATE' ? 'escalated'
+        : decision.decision === 'REJECT' && decision.reason?.code === 'user_veto' ? 'caught'
+        : token.amended && !token.rehearsal.breach ? 'corrected' : 'missed';
+      const caught = outcome === 'caught' || outcome === 'corrected';
+      this.calibration.record(outcome);
+      this.log.log({ t: this.clock.ms, type: 'drill', intent_id: token.id, drill: outcome });
+      this.events.emit('drill', { token, caught, outcome });
       this.trust.record(intent, 'drill');
       return;
+    }
+    if (decision.reason?.code === 'user_veto' && token.rehearsal.breach === null && intent.policy.requires !== 'forbidden') {
+      this.calibration.falseAlarm();
+      this.log.log({ t: this.clock.ms, type: 'false_alarm', intent_id: token.id });
     }
     const outcome =
       decision.decision === 'APPROVE'
@@ -293,6 +333,7 @@ export class Shift {
   }
 
   private async autoApprove(token: Token, rule: RuleTemplate): Promise<void> {
+    if (this.isExpired(token) || this.trust.match(token.intent)?.id !== rule.id) return;
     token.status = 'deciding';
     const decision: Decision = {
       intent_id: token.id,
@@ -302,7 +343,10 @@ export class Shift {
       client_ts: new Date().toISOString(),
     };
     try {
-      const record = await this.gate.resolve(decision);
+      const reviewed = await Receipt.capture(this.rehearsal, token.intent, token.args);
+      if (this.isExpired(token) || this.trust.match(token.intent)?.id !== rule.id) throw new Error('RULE_NO_LONGER_VALID');
+      const record = await this.gate.resolve(decision, reviewed);
+      if (!Proof.matches(record, decision)) { token.status = 'unverified'; return; }
       token.status = 'sealed';
       token.record = record;
       this.ledger.add(record);
@@ -317,6 +361,7 @@ export class Shift {
 
   /** Accept an offered rule by dropping it on its agent (C17). */
   acceptRule(ruleId: string, agentId: string): boolean {
+    if (this.gate.capabilities.source !== 'demo') return false;
     const ok = this.trust.accept(ruleId, agentId);
     const rule = this.trust.accepted().find((r) => r.id === ruleId);
     if (ok && rule) {
@@ -330,11 +375,16 @@ export class Shift {
     return ok;
   }
 
+  isExpired(token: Token): boolean {
+    return this.gate.capabilities.source === 'live'
+      ? Date.now() >= Date.parse(token.intent.expires_at)
+      : this.clock.ms >= token.deadlineMs;
+  }
+
   /** Per-frame: fail closed on expiry (C29). */
   tick(): void {
-    const now = this.clock.ms;
     for (const t of this.tokens.values()) {
-      if ((t.status === 'held' || t.status === 'escalated') && now >= t.deadlineMs) this.markExpired(t);
+      if ((t.status === 'held' || t.status === 'escalated') && this.isExpired(t)) this.markExpired(t);
     }
   }
 

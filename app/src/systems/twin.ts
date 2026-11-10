@@ -16,8 +16,10 @@ import type { Cyclone } from '../app';
 import { Machine, Station } from '../components';
 import { Furniture } from '../models/desk';
 import { Layout } from '../models/layout';
+import { Placement } from '../models/placement';
 import { Machines } from '../models/machines';
 import type { SignedRecord } from '../contracts/intent';
+import { Proof } from '../core/proof';
 import type { BoxZone } from '../sim/envelope';
 import { Motion, type Pose } from '../sim/kinematics';
 import { Stage } from '../stage';
@@ -93,7 +95,9 @@ export class TwinSystem extends createSystem({
     this.scene.add(hemi, sun, new AmbientLight('#ffffff', 0.25));
 
     this.initRunning();
-    const execute = ({ record }: { record: SignedRecord }) => {
+    const execute = async ({ record }: { record: SignedRecord }) => {
+      // A local animation is explicitly simulated. Live authorization is not an execution receipt.
+      if (record.source !== 'demo' || !Proof.matches(record, record.decision) || !(await this.app.signer.verify(record))) return;
       const kind = record.decision.decision;
       if (kind !== 'APPROVE' && kind !== 'APPROVE_AMENDED' && kind !== 'AUTO_APPROVE_RULE') return;
       if (!record.tool || !record.asset_id) return;
@@ -163,6 +167,7 @@ export class TwinSystem extends createSystem({
       obj.updateWorldMatrix(true, false);
       // the plane's polygon in world space
       const pts = found.plane.polygon.map((p) => obj.localToWorld(new Vector3(p.x, 0, p.z)));
+      if (pts.length < 3) { if (this.waiting >= 3) this.place('plinth'); return; }
       const y = pts.reduce((s, p) => s + p.y, 0) / pts.length;
       // nearest boundary point to the head (horizontal)
       let bestD = Infinity;
@@ -180,8 +185,9 @@ export class TwinSystem extends createSystem({
           near.set(px, y, pz);
         }
       }
-      if (bestD > 0.6) return this.place('plinth');
+      if (bestD > 0.6) { if (this.waiting >= 3) this.place('plinth'); return; }
       const faceYaw = Math.atan2(this.v.x - near.x, this.v.z - near.z);
+      const previousPosition = root.position.clone(), previousRotation = root.quaternion.clone(), previousPolygon = this.stage.polygon;
       root.position.copy(near);
       root.quaternion.setFromAxisAngle(new Vector3(0, 1, 0), faceYaw);
       root.updateWorldMatrix(true, false);
@@ -189,6 +195,13 @@ export class TwinSystem extends createSystem({
         const local = this.stage.toDesk(p.clone());
         return [local.x, local.z] as [number, number];
       });
+      const seated = this.stage.toDesk(this.v.clone());
+      if (!Placement.fits(this.stage.polygon, [seated.x, seated.y, seated.z])) {
+        root.position.copy(previousPosition); root.quaternion.copy(previousRotation); this.stage.polygon = previousPolygon; root.updateWorldMatrix(true, false);
+        // Unsuitable geometry remains a pending search until the 3 s deadline.
+        if (this.waiting >= 3) { this.place('plinth'); this.app.cue('drop', 'Table is too small or out of reach. Using the seated plinth.'); }
+        return;
+      }
       this.stage.anchor = 'plane';
       this.plinth.visible = !this.app.settings.get('passthrough');
       this.app.cue('drop', 'Desk found: the factory blooms on your table');
@@ -220,13 +233,14 @@ export class TwinSystem extends createSystem({
   }
 
   private animateMachines(delta: number): void {
-    const still = this.app.boot.capture === 'endcard';
+    const still = this.app.boot.capture === 'endcard' || this.app.settings.get('reducedMotion') || this.app.clock.isPaused;
     for (const [id, rig] of this.stage.rigs) {
       const run = this.running.get(id);
       const asset = this.app.rehearsal.asset(id);
       if (!run || !asset) continue;
       const exec = this.executing.get(id);
       if (exec) {
+        if (this.app.clock.isPaused) continue;
         exec.t += delta / exec.duration;
         this.app.rehearsal.poseAt(exec.tool, id, exec.args, Math.min(1, exec.t), this.pose);
         Machines.pose(rig, asset.position, this.pose);
@@ -270,6 +284,6 @@ export class TwinSystem extends createSystem({
     // bloom-in on (re)anchor
     this.idle = Math.min(1, this.idle + delta * 1.5);
     const s = 0.2 + 0.8 * (1 - Math.pow(1 - this.idle, 3));
-    this.twin.scale.setScalar(s);
+    this.twin.scale.setScalar(this.app.settings.get('reducedMotion') ? 1 : s);
   }
 }

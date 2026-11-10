@@ -1,0 +1,157 @@
+[
+  {
+    "name": "rehearsal-caption",
+    "rendered": [
+      {
+        "text": "Rehearsal 0%",
+        "font": "600 27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+        "emMetres": 0.01125
+      }
+    ],
+    "overflow": false,
+    "textScale": 1.25,
+    "fonts": "ready",
+    "width": 0.2,
+    "height": 0.035
+  },
+  {
+    "name": "decision-card",
+    "rendered": [
+      {
+        "text": "Robot arm, cell 3",
+        "font": "bold 45px Manrope, system-ui, sans-serif",
+        "emMetres": 0.01875
+      },
+      {
+        "text": "Cell Agent / High attention",
+        "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+        "emMetres": 0.01125
+      },
+      {
+        "text": "Full rationale",
+        "font": "bold 36px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+        "emMetres": 0.015
+      },
+      {
+        "text": "Cell 3 is running 9% behind its cycle-time target.",
+        "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+        "emMetres": 0.01125
+      },
+      {
+        "text": "Raising axis 3 from 160 to 250°/s recovers the gap;",
+        "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+        "emMetres": 0.01125
+      },
+      {
+        "text": "braking distance grows with speed.",
+        "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+        "emMetres": 0.01125
+      },
+      {
+        "text": "Rule: arm.velocity.walkway_adjacent",
+        "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+        "emMetres": 0.01125
+      },
+      {
+        "text": "Why held: Cell 3 sits next to walkway W1; Axis",
+        "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+        "emMetres": 0.01125
+      },
+      {
+        "text": "velocity above 200°/s",
+        "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+        "emMetres": 0.01125
+      },
+      {
+        "text": "Affected: Robot arm, cell 3, Walkway W1",
+        "font": "27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+        "emMetres": 0.01125
+      },
+      {
+        "text": "Action glyph: 0486·083d",
+        "font": "22.5px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+        "emMetres": 0.009375
+      }
+    ],
+    "overflow": false,
+    "textScale": 1.25,
+    "fonts": "ready",
+    "width": 0.28,
+    "height": 0.2
+  },
+  {
+    "name": "",
+    "rendered": [
+      {
+        "text": "250 °/s",
+        "font": "bold 30px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+        "emMetres": 0.0125
+      }
+    ],
+    "overflow": false,
+    "textScale": 1.25,
+    "fonts": "ready",
+    "width": 0.078,
+    "height": 0.024
+  },
+  {
+    "name": "",
+    "rendered": [
+      {
+        "text": "Line Agent",
+        "font": "600 21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+        "emMetres": 0.009
+      }
+    ],
+    "overflow": false,
+    "textScale": 1,
+    "fonts": "ready",
+    "width": 0.07,
+    "height": 0.024
+  },
+  {
+    "name": "",
+    "rendered": [
+      {
+        "text": "Cell Agent",
+        "font": "600 21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+        "emMetres": 0.009
+      }
+    ],
+    "overflow": false,
+    "textScale": 1,
+    "fonts": "ready",
+    "width": 0.07,
+    "height": 0.024
+  },
+  {
+    "name": "",
+    "rendered": [
+      {
+        "text": "Thermal Agent",
+        "font": "600 21.6px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+        "emMetres": 0.009
+      }
+    ],
+    "overflow": false,
+    "textScale": 1,
+    "fonts": "ready",
+    "width": 0.07,
+    "height": 0.024
+  },
+  {
+    "name": "cue-caption",
+    "rendered": [
+      {
+        "text": "Full rationale",
+        "font": "600 27px \"Atkinson Hyperlegible Next\", system-ui, sans-serif",
+        "emMetres": 0.01125
+      }
+    ],
+    "overflow": false,
+    "textScale": 1.25,
+    "fonts": "ready",
+    "width": 0.3,
+    "height": 0.036
+  }
+]

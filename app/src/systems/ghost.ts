@@ -9,6 +9,7 @@ import {
   Group,
   Line,
   LineBasicMaterial,
+  LineDashedMaterial,
   LineSegments,
   Mesh,
   OneHandGrabbable,
@@ -19,6 +20,7 @@ import {
 } from '@iwsdk/core';
 import type { Cyclone } from '../app';
 import { Control } from '../components';
+import { Receipt } from '../core/receipt';
 import { Layout } from '../models/layout';
 import { Machines, type Rig } from '../models/machines';
 import { Palette } from '../models/palette';
@@ -54,6 +56,7 @@ export class GhostRehearsalSystem extends createSystem({
   private ghost: Rig | null = null;
   private ghostAsset = '';
   private trail!: Line;
+  private originalTrail!: Line;
   private flare!: Mesh;
   private zoneBox!: LineSegments;
   private caption!: Label;
@@ -86,7 +89,7 @@ export class GhostRehearsalSystem extends createSystem({
     this.dial = this.world.createTransformEntity(this.dialRoot, { parent: root });
     this.dial.addComponent(Control, { intentId: '', kind: 'dial' });
     this.dial.addComponent(OneHandGrabbable, { rotate: true, translate: false });
-    this.dialLabel = new Label(0.06, 0.018);
+    this.dialLabel = new Label(0.078, 0.024);
     this.dialRoot.add(this.dialLabel.mesh);
     this.dialLabel.mesh.position.set(0, 0.024, 0);
 
@@ -94,13 +97,18 @@ export class GhostRehearsalSystem extends createSystem({
     trailGeo.setAttribute('position', new BufferAttribute(new Float32Array(64 * 3), 3));
     this.trail = new Line(trailGeo, new LineBasicMaterial({ color: new Color(Palette.ghost) }));
     this.trail.frustumCulled = false;
+    this.originalTrail = new Line(new BufferGeometry(), new LineDashedMaterial({ color: new Color(Palette.RISK[1]), dashSize: 0.009, gapSize: 0.006 }));
+    this.originalTrail.frustumCulled = false;
+    this.originalTrail.name = 'original-path-dashed';
+    this.trail.name = 'proposed-path-solid';
     this.flare = new Mesh(new SphereGeometry(0.012, 16, 12), Palette.flareMaterial);
     this.zoneBox = new LineSegments(
       new EdgesGeometry(new BoxGeometry(1, 1, 1)),
       new LineBasicMaterial({ color: new Color(Palette.RISK[3]) }),
     );
-    this.caption = new Label(0.16, 0.022);
-    for (const o of [this.trail, this.flare, this.zoneBox, this.caption.mesh]) {
+    this.caption = new Label(0.20, 0.035);
+    this.caption.mesh.name = 'rehearsal-caption';
+    for (const o of [this.trail, this.originalTrail, this.flare, this.zoneBox, this.caption.mesh]) {
       o.visible = false;
       this.twinGroup().add(o);
     }
@@ -117,8 +125,8 @@ export class GhostRehearsalSystem extends createSystem({
       this.queries.grabbedControls.subscribe('disqualify', (e) => {
         if (e === this.handle) this.placeHandle();
       }),
-      this.app.bus.on('replay', ({ tool, asset_id, args, label }) => {
-        const result = this.app.rehearsal.run(tool, asset_id, args);
+      this.app.bus.on('replay', ({ tool, asset_id, args, label, result: stored }) => {
+        const result = stored ?? this.app.rehearsal.run(tool, asset_id, args);
         this.replay = { result, t: 0, label, loops: 2 };
         this.stage.replay = label;
       }),
@@ -163,9 +171,10 @@ export class GhostRehearsalSystem extends createSystem({
   }
 
   update(delta: number): void {
+    if (this.app.clock.isPaused) delta = 0;
     const token = this.focusToken();
     const view = token ? this.stage.views.get(token.id) : undefined;
-    const active = !!token && !!view && token.status === 'held' && (view.place === 'tray' || view.place === 'slot');
+    const active = !!token && !!view && token.status === 'held' && !this.stage.settingsOpen && !this.stage.replayOpen && (view.place === 'tray' || view.place === 'slot');
     const canAmend = active && !!token!.intent.amend && token!.intent.policy.requires !== 'forbidden';
     this.setControlsVisible(active, canAmend);
     if (token && this.handle.getValue(Control, 'intentId') !== token.id) {
@@ -174,12 +183,14 @@ export class GhostRehearsalSystem extends createSystem({
       this.stage.scrub = 0;
       this.dialRoot.rotation.set(0, 0, 0);
     }
-    if (active) this.controls(delta, token!.id);
+    if (active && !this.app.clock.isPaused) this.controls(delta, token!.id);
 
     // which motion does the ghost show?
     let result: RehearsalResult | null = null;
     let t = this.stage.scrub;
     let caption = '';
+    let original: RehearsalResult | null = null;
+    let proposed: RehearsalResult | null = null;
     if (this.replay) {
       const r = this.replay;
       r.t += delta / Math.max(2.5, r.result.duration);
@@ -196,16 +207,25 @@ export class GhostRehearsalSystem extends createSystem({
       caption = r.label;
     } else if (token && active) {
       result = token.rehearsal;
+      if (token.amended && !this.stage.holding) {
+        original = this.app.rehearsal.run(token.intent.tool, token.intent.target.asset_id, token.intent.args);
+        proposed = token.rehearsal;
+        if (this.stage.comparison === 'original') result = original;
+        // One shared elapsed-time cursor, so both alternatives start together.
+        t = Math.min(1, this.stage.scrub * Math.max(original.duration, proposed.duration) / result.duration);
+      }
       if (this.stage.holding) {
         this.holdT = (this.holdT + delta / Math.max(0.6, result.duration)) % 1;
         t = this.holdT;
         caption = 'Real-speed rehearsal';
+      } else if (this.stage.holdFeedback.startsWith('Tracking') && view?.place === 'slot') {
+        t = this.holdT; caption = 'Tracking interrupted / rehearsal paused';
       } else {
         this.holdT = 0;
-        caption = `Rehearsal ${Math.round(t * 100)}%`;
+        caption = `${original ? (this.stage.comparison === 'original' ? 'Original rehearsal' : 'Proposed rehearsal') : 'Rehearsal'} ${Math.round(this.stage.scrub * 100)}%${original ? ' / dashed = original' : ''}`;
       }
     }
-    this.renderGhost(result, t, caption);
+    this.renderGhost(result, t, caption, original, proposed);
   }
 
   private controls(delta: number, id: string): void {
@@ -226,7 +246,7 @@ export class GhostRehearsalSystem extends createSystem({
       }
     } else {
       this.placeHandle();
-      if (this.wiggle.handle > 0) {
+      if (this.wiggle.handle > 0 && !this.app.settings.get('reducedMotion')) {
         this.wiggle.handle -= delta;
         this.handleRoot.position.z += Math.sin(this.wiggle.handle * 18) * 0.008 * this.wiggle.handle;
       }
@@ -245,14 +265,14 @@ export class GhostRehearsalSystem extends createSystem({
           if (t) this.app.cue('scrub', `Amended to ${t.value}${spec.unit}${t.rehearsal.breach ? ' — still breaches' : ' — breach clear'}`);
         });
       }
-    } else if (this.wiggle.dial > 0) {
+    } else if (this.wiggle.dial > 0 && !this.app.settings.get('reducedMotion')) {
       this.wiggle.dial -= delta;
       this.dialRoot.rotation.y = Math.sin(this.wiggle.dial * 16) * 0.35 * this.wiggle.dial;
     }
     if (spec) {
       const breach = token.rehearsal.breach;
-      this.dialLabel.draw([{ text: `${token.value}${spec.unit}`, size: 0.011, weight: 700, color: breach ? '#a8287f' : '#2f6fb8' }], {
-        background: '#f6efe2',
+      this.dialLabel.draw([{ text: `${token.value} ${spec.unit}`, size: 0.01, weight: 700, color: breach ? Palette.ui.danger : Palette.ui.accent }], {
+        background: Palette.ui.surface,
         align: 'center',
         padding: 0.003,
         radius: 0.004,
@@ -261,34 +281,46 @@ export class GhostRehearsalSystem extends createSystem({
     }
   }
 
-  private ensureGhost(assetId: string): Rig | null {
-    if (this.ghostAsset === assetId && this.ghost) return this.ghost;
+  private ensureGhost(result: RehearsalResult): Rig | null {
+    const key = result.historical ? result.key : result.asset_id;
+    if (this.ghostAsset === key && this.ghost) return this.ghost;
     this.ghost?.root.removeFromParent();
-    const asset = this.app.rehearsal.asset(assetId);
+    const asset = result.historical?.asset ?? this.app.rehearsal.asset(result.asset_id);
     if (!asset) return null;
     this.ghost = Machines.build(asset, true);
-    this.ghostAsset = assetId;
+    this.ghostAsset = key;
+    this.ghost.root.name = 'active-rehearsal-ghost';
     this.twinGroup().add(this.ghost.root);
     return this.ghost;
   }
 
-  private renderGhost(result: RehearsalResult | null, t: number, caption: string): void {
+  private path(line: Line, result: RehearsalResult): void {
+    if (line.userData.path === result.key) return;
+    const points = new Float32Array(result.samples.length / 4 * 3);
+    for (let i = 0; i < points.length / 3; i++) points.set(result.samples.subarray(i * 4, i * 4 + 3), i * 3);
+    line.geometry.setAttribute('position', new BufferAttribute(points, 3));
+    line.geometry.setDrawRange(0, points.length / 3);
+    line.geometry.computeBoundingSphere();
+    if (line === this.originalTrail) line.computeLineDistances();
+    line.userData.path = result.key;
+  }
+
+  private renderGhost(result: RehearsalResult | null, t: number, caption: string, original: RehearsalResult | null, proposed: RehearsalResult | null): void {
     const show = !!result;
     if (this.ghost) this.ghost.root.visible = show;
     this.trail.visible = this.flare.visible = this.zoneBox.visible = this.caption.mesh.visible = show;
+    this.originalTrail.visible = show && !!original;
     if (!result) return;
-    const rig = this.ensureGhost(result.asset_id);
+    const rig = this.ensureGhost(result);
     if (!rig) return;
-    const asset = this.app.rehearsal.asset(result.asset_id)!;
-    this.app.rehearsal.poseAt(result.tool, result.asset_id, result.args, t, this.pose);
+    const asset = result.historical?.asset ?? this.app.rehearsal.asset(result.asset_id)!;
+    Receipt.pose(result, t, this.pose);
     Machines.pose(rig, asset.position, this.pose);
+    rig.root.visible = true;
 
     // trail of the probe path
-    const pos = this.trail.geometry.getAttribute('position') as BufferAttribute;
-    const n = result.samples.length / 4;
-    for (let i = 0; i < n; i++) pos.setXYZ(i, result.samples[i * 4], result.samples[i * 4 + 1], result.samples[i * 4 + 2]);
-    pos.needsUpdate = true;
-    this.trail.geometry.setDrawRange(0, n);
+    this.path(this.trail, proposed ?? result);
+    if (original) this.path(this.originalTrail, original);
 
     // breach flare at the exact crossing, bright once the ghost reaches it
     const b = result.breach;
@@ -297,10 +329,10 @@ export class GhostRehearsalSystem extends createSystem({
     if (b) {
       this.flare.position.set(...b.position);
       const reached = t >= b.t;
-      const pulse = reached ? 1 + Math.sin(this.app.clock.ms / 70) * 0.35 : 0.45;
+      const pulse = reached ? (this.app.settings.get('reducedMotion') ? 1 : 1 + Math.sin(this.app.clock.ms / 70) * 0.35) : 0.45;
       this.flare.scale.setScalar(pulse);
       Palette.flareMaterial.opacity = reached ? 0.9 : 0.3;
-      const zone = this.app.rehearsal.zone(b.zone_id);
+      const zone = result.historical ? result.historical.zones.find(z => z.id === b.zone_id) : this.app.rehearsal.zone(b.zone_id);
       if (zone?.kind === 'box') {
         this.zoneBox.position.set((zone.min[0] + zone.max[0]) / 2, (zone.min[1] + zone.max[1]) / 2, (zone.min[2] + zone.max[2]) / 2);
         this.zoneBox.scale.set(zone.max[0] - zone.min[0], zone.max[1] - zone.min[1], zone.max[2] - zone.min[2]);
@@ -316,8 +348,8 @@ export class GhostRehearsalSystem extends createSystem({
 
     this.caption.mesh.position.set(asset.position[0], 0.2, asset.position[2]);
     this.caption.mesh.lookAt(this.v.copy(this.stage.head).applyMatrix4(this.stage.root.matrixWorld));
-    this.caption.draw([{ text: caption, size: 0.011, weight: 600, color: '#1d5f8f' }], {
-      background: 'rgba(240,250,255,0.85)',
+    this.caption.draw([{ text: caption, size: 0.009, weight: 600, color: Palette.ui.accent }], {
+      background: Palette.ui.surface,
       align: 'center',
       padding: 0.004,
       radius: 0.005,

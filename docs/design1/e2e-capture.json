@@ -1,0 +1,85 @@
+{
+  "at": "2026-11-10T04:11:28.158Z",
+  "source": "IWSDK IWER; capture data setup is programmatic",
+  "results": [
+    {
+      "name": "capture mode is deterministic (same first intent hash across runs)",
+      "ok": true,
+      "detail": "ad6fdcac6ffacca6"
+    },
+    {
+      "name": "capture captions start on",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "end card has four seals and an empty holding tray",
+      "ok": true,
+      "detail": {
+        "seals": 4,
+        "tokens": 0
+      }
+    },
+    {
+      "name": "end card hides HUD, captions and rehearsal ghost",
+      "ok": true,
+      "detail": [
+        {
+          "name": "cue-caption",
+          "visible": false
+        },
+        {
+          "name": "feedback",
+          "visible": false
+        },
+        {
+          "name": "shift-summary",
+          "visible": false
+        },
+        {
+          "name": "inspection",
+          "visible": false
+        },
+        {
+          "name": "receipt-detail",
+          "visible": false
+        },
+        {
+          "name": "settings-panel",
+          "visible": false
+        }
+      ]
+    },
+    {
+      "name": "end card machines remain idle",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "end card seals form an even row",
+      "ok": true,
+      "detail": [
+        [
+          -0.303,
+          1.202,
+          -0.328
+        ],
+        [
+          -0.271,
+          1.202,
+          -0.328
+        ],
+        [
+          -0.239,
+          1.202,
+          -0.328
+        ],
+        [
+          -0.207,
+          1.202,
+          -0.328
+        ]
+      ]
+    }
+  ]
+}

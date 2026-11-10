@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-10T04:34:36.271861+00:00",
+  "baseCommit": "481fa6d946c178727741d7fdaeb1154b8d1685df",
+  "buildState": "task working tree; committed with the M5 design milestone",
+  "node": "v25.9.0",
+  "dependencies": {
+    "@iwsdk/core": "1.0.1",
+    "@iwsdk/cli": "1.0.1",
+    "vite": "7.3.7",
+    "typescript": "5.9.3"
+  },
+  "result": "npm run build exit 0; 12.40 seconds",
+  "mainAsset": "assets/index-J9rBOy-f.js",
+  "mainAssetBytes": 7945194,
+  "mainAssetSha256": "34d2cb6f4d00d35cfe2e009b98df5c14fb58ba5b1ff062ac193af85e6530b2ab",
+  "indexSha256": "572f7a1f7160e5050d8576141b20d7ac797cdbfbe504aad3ff0360add4d4ac08",
+  "warnings": [
+    "Existing large JavaScript bundle (about 7.94 MB / 2.07 MB gzip); no new rendering framework.",
+    "Vite leaves inline relative font URLs for runtime resolution; production subpath check verifies them.",
+    "Upstream zod annotation comments removed by Rollup."
+  ],
+  "typecheck": "passed",
+  "appTests": "68 passed in seven files after the final reading-layer correction",
+  "relay": "unchanged; typecheck and 46 tests passed",
+  "nodeExecutable": "/opt/homebrew/Cellar/node/25.9.0_1/bin/node"
+}

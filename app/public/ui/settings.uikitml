@@ -1,68 +1,27 @@
-<!--
-  Cyclone settings (C31). Opened from the settings puck on the desk by poke
-  or gaze + pinch. Panel, Button and ButtonLabel come from the bundled
-  Horizon kit. Sizes are UIKit units (centimetres).
--->
+<!-- All dimensions are centimetres. Override Horizon's 80 cm button minimum. -->
 <style>
-  .root {
-    flex-direction: column;
-    width: 22;
-    padding-top: 1.2;
-    padding-bottom: 1.2;
-    padding-left: 1.4;
-    padding-right: 1.4;
-    gap: 0.6;
-  }
-
-  .title {
-    font-size: 1.4;
-    font-weight: 700;
-    color: #2b2622;
-  }
-
-  .note {
-    font-size: 0.75;
-    color: #5d6b78;
-  }
-
-  .row {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0.6;
-  }
-
-  .button {
-    width: 9.6;
-    height: 2.6;
-  }
-
-  .label {
-    font-size: 0.9;
-  }
+  @font-face { font-family: atkinson; src: url(../assets/fonts/atkinson400.ttf); font-weight: 400; }
+  @font-face { font-family: atkinson; src: url(../assets/fonts/atkinson700.ttf); font-weight: 700; }
+  @font-face { font-family: manrope; src: url(../assets/fonts/manrope700.ttf); font-weight: 700; }
+  .root { font-family: atkinson; flex-direction: column; width: 28; height: 26; min-width: 0; padding-top: 1.2; padding-bottom: 1.2; padding-left: 1.2; padding-right: 1.2; gap: 0.8; }
+  .title { font-family: manrope; font-size: 1.5; font-weight: 700; height: 2.25; color: #142B36; }
+  .note { font-size: 0.9; line-height: 1.25; height: 3.1; color: #526773; }
+  .body { flex-direction: column; height: 12.1; gap: 0.8; }
+  .button { width: 25.6; min-width: 0; max-width: 25.6; height: 3.5; min-height: 3.5; padding-left: 0.5; padding-right: 0.5; padding-top: 0; padding-bottom: 0; border-width: 0.08; border-radius: 0.6; }
+  .label { font-family: atkinson; font-size: 1; font-weight: 700; line-height: 1.2; color: #142B36; }
+  .footer { flex-direction: row; gap: 0.8; height: 3.5; }
+  .nav { width: 12.4; min-width: 0; max-width: 12.4; height: 3.5; min-height: 3.5; padding-left: 0.4; padding-right: 0.4; padding-top: 0; padding-bottom: 0; border-width: 0.08; border-radius: 0.6; }
 </style>
-<Panel class="root">
-  <div class="title">Cyclone settings</div>
-  <div class="note">Poke a button, or look at it and pinch.</div>
-  <div class="row">
-    <Button id="eyes" class="button"><ButtonLabel id="eyes-label" class="label">Eyes-only: off</ButtonLabel></Button>
-    <Button id="onehand" class="button"><ButtonLabel id="onehand-label" class="label">One-handed: off</ButtonLabel></Button>
+<Panel id="settings-root" class="root">
+  <div id="title" class="title">Settings</div>
+  <div id="status" class="note">Choose a page. Your task stays here.</div>
+  <div class="body">
+    <Button id="action-a" class="button"><ButtonLabel id="label-a" class="label">Input</ButtonLabel></Button>
+    <Button id="action-b" class="button"><ButtonLabel id="label-b" class="label">Display and comfort</ButtonLabel></Button>
+    <Button id="action-c" class="button"><ButtonLabel id="label-c" class="label">Session</ButtonLabel></Button>
   </div>
-  <div class="row">
-    <Button id="contrast" class="button"><ButtonLabel id="contrast-label" class="label">High contrast: off</ButtonLabel></Button>
-    <Button id="captions" class="button"><ButtonLabel id="captions-label" class="label">Captions: on</ButtonLabel></Button>
+  <div class="footer">
+    <Button id="back" class="nav"><ButtonLabel id="back-label" class="label">Back</ButtonLabel></Button>
+    <Button id="close" class="nav"><ButtonLabel id="close-label" class="label">Close</ButtonLabel></Button>
   </div>
-  <div class="row">
-    <Button id="passthrough" class="button"><ButtonLabel id="passthrough-label" class="label">Passthrough: on</ButtonLabel></Button>
-    <Button id="amend" class="button"><ButtonLabel id="amend-label" class="label">Amend: approve</ButtonLabel></Button>
-  </div>
-  <div class="row">
-    <Button id="mode" class="button"><ButtonLabel id="mode-label" class="label">Gate: demo</ButtonLabel></Button>
-    <Button id="shift" class="button"><ButtonLabel id="shift-label" class="label">Replay first shift</ButtonLabel></Button>
-  </div>
-  <div class="row">
-    <Button id="reset" class="button"><ButtonLabel id="reset-label" class="label">Reset all data</ButtonLabel></Button>
-    <Button id="close" class="button"><ButtonLabel id="close-label" class="label">Close</ButtonLabel></Button>
-  </div>
-  <div id="status" class="note">Demo mode. Execution is simulated.</div>
 </Panel>

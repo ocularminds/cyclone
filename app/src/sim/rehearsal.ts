@@ -19,6 +19,8 @@ export type RehearsalResult = {
   duration: number;
   /** N × [x, y, z, dof] probe samples at uniform normalised time. */
   samples: Float32Array;
+  poses: Pose[];
+  historical?: { asset: AssetSpec; zones: Zone[] };
   breach: Breach | null;
   /** Blast radius: target asset, downstream assets, breached zones (C38). */
   affected: string[];
@@ -68,11 +70,13 @@ export class Rehearsal {
     const motion = this.motion(tool, assetId);
     const n = Rehearsal.SAMPLES;
     const samples = new Float32Array(n * 4);
+    const poses: Pose[] = [];
     let firstBad = -1;
     let zone: Zone | null = null;
     for (let i = 0; i < n; i++) {
       const t = i / (n - 1);
       motion.sample(args, t, this.pose);
+      poses.push(structuredClone(this.pose));
       samples.set([...this.pose.center, this.pose.dof], i * 4);
       if (firstBad < 0) {
         const z = this.envelope.breach(this.pose, asset.guards);
@@ -102,6 +106,7 @@ export class Rehearsal {
       args: { ...args },
       duration: motion.duration(args),
       samples,
+      poses,
       breach,
       affected,
     };

@@ -5,6 +5,7 @@ import type { RuleTemplate } from '../contracts/scenario';
 import { Furniture } from '../models/desk';
 import { Layout } from '../models/layout';
 import { Tokens } from '../models/token';
+import { Palette } from '../models/palette';
 import type { Stage } from '../stage';
 import { Label } from '../ui/label';
 
@@ -21,7 +22,7 @@ export class TrustSystem extends createSystem({
 }) {
   private app!: Cyclone;
   private stage!: Stage;
-  private readonly rings = new Map<string, { ring: Mesh; root: Group; fill: number; shown: number }>();
+  private readonly rings = new Map<string, { ring: Mesh; root: Group; fill: number; shown: number; label: Label; name: string }>();
   private readonly rules: RuleView[] = [];
   private readonly v = new Vector3();
 
@@ -34,9 +35,9 @@ export class TrustSystem extends createSystem({
       e.addComponent(AgentTag, { agentId: spec.id });
       const fill = this.app.trust.ring(spec.id);
       Furniture.setRing(ring, fill);
-      this.rings.set(spec.id, { ring, root, fill, shown: fill });
-      const name = new Label(0.07, 0.014);
-      name.draw([{ text: spec.label, size: 0.0085, weight: 600 }], { align: 'center', padding: 0.002 });
+      const name = new Label(0.07, 0.024);
+      name.mesh.name = `agent-label:${spec.id}`;
+      this.rings.set(spec.id, { ring, root, fill, shown: fill, label: name, name: spec.label.replace(/ Agent$/, '') });
       name.mesh.position.set(0, 0.042, 0);
       root.add(name.mesh);
     });
@@ -53,29 +54,25 @@ export class TrustSystem extends createSystem({
   }
 
   private offer(rule: RuleTemplate): void {
+    if (this.app.gate.capabilities.source !== 'demo' || this.app.trust.status(rule.id) !== 'offered') return;
     if (this.rules.some((r) => r.rule.id === rule.id)) return;
     const root = Tokens.ruleTablet();
     const entity = this.world.createTransformEntity(root, { parent: this.stage.rootEntity! });
     entity.addComponent(RuleTag, { ruleId: rule.id });
     entity.addComponent(OneHandGrabbable, { rotate: false, translate: true });
-    const label = new Label(0.12, 0.03);
+    const label = new Label(0.20, 0.075);
     const agent = this.app.cast.agents.find((a) => a.id === rule.agent_id);
-    label.draw(
-      [
-        { text: rule.label, size: 0.0085, weight: 700 },
-        { text: `Drop on ${agent?.label ?? 'the agent'} to accept`, size: 0.007, color: '#5d6b78' },
-      ],
-      { background: '#f6efe2', border: '#4a8fe0', padding: 0.004, radius: 0.005, align: 'center' },
-    );
-    label.mesh.position.set(0, 0.03, 0);
+    label.mesh.name = 'rule-label';
+    label.mesh.position.set(0, 0.055, 0);
     root.add(label.mesh);
     const home = new Vector3(...Layout.RULE).add(new Vector3(this.rules.length * 0.04, 0, 0));
-    root.position.copy(home).setY(home.y + 0.15);
+    root.position.copy(home).setY(home.y + (this.app.settings.get('reducedMotion') ? 0 : 0.15));
     this.rules.push({ rule, entity, root, label, home, absorbed: 0 });
     this.app.cue('rule', `${agent?.label ?? 'Agent'} earned a rule offer: ${rule.label}`, [home.x, home.y, home.z]);
   }
 
   private drop(e: Entity): void {
+    if (this.stage.settingsOpen || this.app.clock.isPaused) return;
     const view = this.rules.find((r) => r.entity === e);
     if (!view) return;
     view.root.getWorldPosition(this.v);
@@ -84,7 +81,7 @@ export class TrustSystem extends createSystem({
       if (this.v.distanceTo(r.root.position) > Layout.AGENT_RADIUS * 1.6) continue;
       if (this.app.shift.acceptRule(view.rule.id, agentId)) {
         view.absorbed = 0.0001;
-        this.app.cue('rule', `Rule accepted: ${view.rule.label}. Matching intents now auto-execute and auto-seal.`, [r.root.position.x, r.root.position.y, r.root.position.z]);
+        this.app.cue('rule', `Demo rule accepted: ${view.rule.label}. Revoke it in Settings.`, [r.root.position.x, r.root.position.y, r.root.position.z]);
       } else {
         const owner = this.app.cast.agents.find((a) => a.id === view.rule.agent_id)?.label;
         this.app.bus.emit('toast', { text: `This rule belongs to ${owner}.`, tone: 'info' });
@@ -95,16 +92,25 @@ export class TrustSystem extends createSystem({
 
   update(delta: number): void {
     for (const r of this.rings.values()) {
+      r.label.draw([{ text: r.name, size: 0.009, weight: 600 }], { background: Palette.ui.surface, align: 'center', padding: 0.002 });
       if (Math.abs(r.shown - r.fill) > 0.001) {
-        r.shown += (r.fill - r.shown) * Math.min(1, delta * 4);
+        r.shown += (r.fill - r.shown) * (this.app.settings.get('reducedMotion') ? 1 : Math.min(1, delta * 4));
         Furniture.setRing(r.ring, r.shown);
       }
     }
     for (let i = this.rules.length - 1; i >= 0; i--) {
       const view = this.rules[i];
+      if (this.app.trust.status(view.rule.id) !== 'offered' && view.absorbed === 0) { view.entity.dispose(); this.rules.splice(i, 1); continue; }
+      const agentName = this.app.cast.agents.find(a => a.id === view.rule.agent_id)?.label ?? 'the agent';
+      view.label.draw([
+        { text: view.rule.label, size: 0.009, weight: 700 },
+        { text: `Drop on ${agentName} to accept.`, size: 0.009, color: Palette.ui.muted },
+        { text: 'Revoke in Settings.', size: 0.009, color: Palette.ui.muted },
+      ], { background: Palette.ui.surface, border: Palette.ui.border, padding: 0.004, radius: 0.005, align: 'center' });
+      view.label.mesh.lookAt(this.v.copy(this.stage.head).applyMatrix4(this.stage.root.matrixWorld));
       if (view.entity.hasComponent(Grabbed)) continue;
       if (view.absorbed > 0) {
-        view.absorbed += delta * 1.5;
+        view.absorbed += this.app.settings.get('reducedMotion') ? 1 : delta * 1.5;
         const agent = this.rings.get(view.rule.agent_id)!;
         view.root.position.lerp(agent.root.position, Math.min(1, view.absorbed));
         view.root.scale.setScalar(Math.max(0.001, 1 - view.absorbed));
@@ -114,8 +120,7 @@ export class TrustSystem extends createSystem({
         }
         continue;
       }
-      view.root.position.lerp(view.home, Math.min(1, delta * 3));
-      view.root.rotation.y += delta * 0.6;
+      view.root.position.lerp(view.home, this.app.settings.get('reducedMotion') ? 1 : Math.min(1, delta * 3));
     }
   }
 }

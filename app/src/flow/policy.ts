@@ -34,8 +34,8 @@ export class GesturePolicy {
       case 'single':
         if (gesture === 'place') return null;
         if (gesture === 'gaze_pinch') {
-          if (!ctx.eyesOnly) return 'Turn on eyes-only mode to approve by gaze.';
-          return intent.risk.level <= 1 ? null : 'Gaze approval is for low-risk actions only.';
+          if (!ctx.eyesOnly) return 'Choose Gaze + pinch in settings to approve by gaze.';
+          return intent.risk.level <= 1 ? null : 'Gaze + pinch approval is for low-risk single actions only.';
         }
         return 'Place the token in the execute slot.';
       case 'two_hand':
@@ -53,7 +53,7 @@ export class GesturePolicy {
       case 'forbidden':
         return 'Slot locked — veto or escalate';
       case 'two_hand':
-        return ctx.oneHanded ? 'Hold with one hand and look at the seal' : 'Hold with both hands';
+        return ctx.oneHanded ? 'Hold with one hand and look at the seal' : 'Both palms for 1.5 s; release cancels';
       default:
         return ctx.eyesOnly && intent.risk.level <= 1 ? 'Look and pinch to approve' : 'Place in the slot';
     }

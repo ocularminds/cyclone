@@ -2,106 +2,127 @@
 
 **The calm eye where humans decide what AI agents do.**
 
-When an AI agent wants to change something in the physical world, a policy gate holds the call and Cyclone puts
-it on your real desk as a small token beside a tabletop twin of the machines. Look at it to inspect, pull its
-timeline to rehearse the outcome, twist its dial to amend it, then decide with your hands — and seal the decision
-as a signed record bound to exactly what you rehearsed. *Approve the outcome, not the payload.*
+A held action lands on your desk as a token beside a miniature factory. Inspect it, rehearse the motion,
+amend the value, decide with your hands, and keep a signed decision receipt. Cyclone uses IWSDK 1.0.1,
+TypeScript and WebXR, with hands-first interactions for Meta VR Glasses and Quest 3/3S.
 
-Built with Meta's Immersive Web SDK 1.0 (WebXR, Three.js + ECS) for Meta VR Glasses (gaze + pinch) and Quest 3/3S.
-Hands only, seated, everything within arm's reach.
-
-> **Honesty notes.** Ghosts are *rehearsals* from each machine's kinematic model in the twin — not predictions or
-> guarantees. In the demo, physical execution is simulated on the twin; no real machine is driven.
+Ghosts are **rehearsals from a kinematic model**, not predictions or guarantees. Demo execution is simulated
+on the miniature; no real machine is driven. A signature, an authorization and physical execution are separate facts.
 
 ## Try it
 
-**Public demo:** https://ocularminds.github.io/cyclone/
+[Open the public demo](https://ocularminds.github.io/cyclone/).
 
-- **Headset (Quest 3/3S, Meta VR Glasses browser):** open the public URL and press **Enter**. Seated at a table is
-  best: the twin anchors to the detected table; with no table it appears on a plinth at desk height after 3 s.
-- **Desktop browser:** the same URL injects the Immersive Web Emulator so you can drive emulated hands.
-- First visit plays the **first shift** (onboarding, ~5 min); later visits open the **shift handover**.
-  `?mode=onboarding` or `?mode=handover` picks one; `?reset=1` clears local data.
+- On a headset, open the URL and select **Enter**. A suitable table anchors the miniature; after three seconds
+  without one, a seated plinth appears. Physical Quest performance, room placement and narrow FoV checks remain H3.
+- On desktop, the Immersive Web Emulator provides emulated hands.
+- The first shift resumes unfinished scenarios after reload. Completing all four graduates the next launch into
+  handover. Opening settings or refreshing does not count as completing onboarding.
+- `?mode=onboarding` and `?mode=handover` choose a mode. **Settings → Session → Replay first shift** restarts
+  the tutorial while keeping receipts. **Advanced and history → Rules and reset → Reset local data** explains
+  the reset scope and requires confirmation. `?reset=1` is the equivalent development shortcut.
 
-| Gesture | Does |
+| Interaction | Result |
 |---|---|
-| Look at a token | It lifts; its decision card unfolds in your central view |
-| Pinch / poke the card | Full rationale |
-| Pinch the timeline bead, pull it toward you | Scrub the ghost rehearsal; the breach point flares |
-| Pinch the dial, twist | Amend the value; the rehearsal updates live |
-| Place the token in the execute slot | Approve (single) |
-| Then both palms on it for 1.5 s | Approve critical actions (let go to abort) |
-| Push or drop it off the desk edge | Veto |
-| Place it on the escalate pad | Escalate to a second reviewer (stays held) |
-| Pick up a seal on the ledger shelf | Replay the rehearsal you approved |
-| Drop an offered rule on an agent | Accept it; matching intents auto-execute |
+| Look at a token | It lifts and opens its review card |
+| Select **Full rationale**, or pinch an already inspected token | Read the full rationale; long pages have Previous/Next controls |
+| Pinch the timeline bead and pull toward you | Scrub the rehearsal and its envelope crossing |
+| Pinch and twist the dial, or use **Amend** step controls | Change a bounded value; invalid edits retain the last valid rehearsal |
+| Select **Compare** | Dashed original path, solid proposed path, one active translucent ghost |
+| Place in the execute slot | Approve a `single` action |
+| Place, then keep both palms on it for 1.5 seconds | Approve a critical action; release cancels and requires a fresh start |
+| Push or drop past the desk edge | Veto |
+| Place on the escalate pad | Escalate; the action remains held |
+| Pick up a ledger seal | Inspect its action, proof and retained historical rehearsal |
+| Drop an offered rule on its agent | Accept the displayed, bounded demo rule |
 
-Accessibility (settings puck, front-left corner — poke or pinch it): eyes-only mode (dwell to inspect; look at the
-slot, chute or pad and pinch), one-handed mode (one palm + sustained gaze on the slot seal), high contrast, captions
-(on by default). Risk is never colour alone: shape (smooth → spiked), motion (pulse → stutter), sound (rising tone)
-and hatching, on a blue / amber / magenta palette.
+The settings puck supports poke and pinch. Its paged controls include Ink/Porcelain themes, high contrast,
+100%/125% text, captions (initially on), reduced motion, and a preferred hand. **Gaze + pinch** uses head direction
+to inspect and a hand ray to select on Quest/emulator; it is not eyes-only interaction. The one-hand alternative
+requires the selected palm plus sustained head-directed gaze on the slot seal for the same 1.5 seconds.
+Tracking interruption freezes progress and cannot finish a decision; a longer interruption cancels it.
+
+Risk combines text, hatching, motion and sound with circle/triangle/diamond/locked-square silhouettes. Colour alone
+never grants an action. Reduced motion removes decorative bloom, pulsing and recoil while preserving hold timing.
 
 ## Run, test, build
 
 ```bash
 cd app
-npm install
-npm run dev          # IWSDK-managed dev server + emulator (https://localhost:8081)
-npm test             # unit tests: Intent v1 hash parity, kinematics, shift logic, schemas, reach, brand audit
-npm run build        # static site in app/dist (deploys as-is; no backend)
+npm ci
+npm run dev
+npm run typecheck
+npm test
+npm run build
 ```
 
-Emulator end-to-end tests (hands only, controllers never used) need the dev server started with
-`npx iwsdk dev up --allow-browser-automation`:
+The build is a static site in `app/dist/`. GitHub Pages deploys `main` through `.github/workflows/pages.yml`;
+Vite's relative base keeps models, local fonts and icons working under `/cyclone/`. No client service keys ship.
+
+For immersive emulator evidence, start the managed server with
+`npx @iwsdk/cli dev up --allow-browser-automation`, then run:
 
 ```bash
-node tests/e2e/drive.mjs      # the whole first shift, 15 checks
-node tests/e2e/extras.mjs     # escalate, one-handed, eyes-only, push veto, seal replay, pause, handover, trust rules
-node tests/e2e/capture.mjs    # capture mode determinism + end card
+node tests/e2e/drive.mjs       # four scenarios, hands only, including cancellation
+node tests/e2e/extras.mjs      # alternative inputs, escalation, replay and bounded rules
+node tests/e2e/design-ui.mjs   # every settings page at both text sizes, reset and rationale
+node tests/e2e/receipts.mjs    # after drive: reload, stored replay, legacy and tamper checks
+node tests/e2e/spatial.mjs     # actual dial, timeline, ledger and rule geometry
+node tests/e2e/capture.mjs     # deterministic recording and end-card state
+node tests/e2e/occlusion.mjs   # stereo panel draw order plus hand-input regression
 ```
 
-Deploys to GitHub Pages from `main` via `.github/workflows/pages.yml` (Vite `base: './'`, demo mode default, no keys
-in the client).
+Set `CYCLONE_EVIDENCE=../docs/design1` to save current evidence separately from the original baseline.
+See [the design implementation evidence](docs/design1/README.md) and [the capability register](CAPABILITIES.md)
+for what was actually checked. Emulator results do not establish headset frame rate or real hand-tracking quality.
 
-## Demo mode vs live mode
+## Demo and live modes
 
-**Demo mode (default, what judges open)** runs entirely in the browser: a deterministic scenario engine replays
-held-intent payloads in the policy gate's shape (Agent-Safe Intent v1 bindings and hashes) against the kinematic
-simulator, and records are signed locally with a per-install Ed25519 demo key (labelled "demo signature").
-No login, no backend, static hosting.
+**Demo is the default.** A deterministic scenario engine, simulator and per-install Ed25519 key run locally.
+Receipts say **Demo signature**. They retain original/reviewed bindings, values, model version, geometry, poses,
+paths and breach results. The signed snapshot has a separate local rehearsal digest; it does not change the
+Agent-Safe Intent v1 action hash. Ledger replay uses that retained evidence after reload. Older argument-only
+records remain readable and explicitly say that their original rehearsal is unavailable.
 
-**Take-it-away statement:** remove the third-party policy gate and the whole loop still runs — twin, rehearsal,
-gestures, sealing, drills, trust and the daily handover are all Cyclone.
+**Take-it-away statement:** remove the external policy gate and the full loop still runs: twin, rehearsal,
+gestures, seals, drills, trust and handover. No login or backend is needed.
 
-**Live mode** (`?gate=live&relay=<url>&token=<session>`) connects the headset to the relay in `relay/`, which
-receives held intents from Decionis AgentSafe, resolves them through the documented API with a presence
-attestation bound to the intent hash, and verifies every returned Decision Dossier with `@decionis/verify` against
-the pinned production JWKS. A seal shows *verified* only when signatures, required-artifact coverage and the
-official trust anchor all pass. See `relay/README.md`, `policy/README.md` and `docs/agentsafe.md`.
+Drill results distinguish catches, misses, corrections, escalations and timeouts. A timeout counts as a miss;
+an unresolved escalation is unassessed. False alarms are separate. A trust ring is a progression cue. Its offered
+demo rule applies only to the named agent, conveyor, unit and range (0 through +5%), routine risk, and single
+approval for eight hours. Drills never qualify. Rules can be revoked in settings. Live auto-approval is unavailable.
 
-## How it's built
+**Live mode** uses a separately configured Node relay (`?gate=live&relay=<url>&token=<session>`).
+Missing configuration leaves the demo available. The UI requires matching action proof as well as signature,
+artifact coverage and official trust anchor before it can display an official verified seal. The current relay's
+signed-action binding work in technical R1 is still pending, so its responses conservatively remain unverified for
+the action. They never trigger a physical-execution animation. Provisioning and service-backed acceptance also
+remain H1. See [relay setup](relay/README.md), [policy setup](policy/README.md), and [documented integration limits](docs/agentsafe.md).
 
-- `app/` — IWSDK app. Pure logic in classes under `src/core`, `src/sim`, `src/flow`, `src/state`,
-  `src/scenario`, `src/adapters`; thirteen ECS systems in `src/systems`; procedural "precision miniature" models in
-  `src/models`; all sound synthesised with WebAudio.
-- **What you see is what you sign.** Intent hashes follow Agent-Safe Intent v1. The browser port of `intentHash()`
-  is byte-identical to `@decionis/verify` across every scenario binding, the published conformance corpus and edge
-  cases (tests/parity.test.ts). An amended call is a distinct mutation with its own hash; the glyph on the token and
-  on the seal derive from that hash.
-- `relay/` — Node/TypeScript live relay (Fastify + WebSocket), runs the verifier in-process.
-- `agent/` — scripted rule agent that issues the four demo tool calls through the policy gate.
-- `policy/` — the Cyclone policy bundle.
-- `DECISIONS.md` — every interpretation and deviation; `CAPABILITIES.md` — status of every capability.
+## How we built it
 
-## Roadmap (not built)
+- `app/` contains the simulator, scenario engine, state, adapters and thirteen ECS systems. Models are procedural;
+  WebAudio synthesises the sound. The Calm Precision system uses opaque semantic surfaces and local fonts.
+- Intent hashes use Agent-Safe Intent v1. The browser port matches `intentHash()` from `@decionis/verify` for
+  scenario bindings, mutations, conformance vectors and edge cases. The upstream CLI corpus failure remains
+  documented in D20d; parity does not turn that failed CLI check into a pass. Token and seal glyphs derive from
+  the reviewed hash, including amendments.
+- `relay/` integrates Decionis AgentSafe and runs `@decionis/verify` server-side. It is never bundled into the headset.
+  `agent/` contains the scripted live agent, and `policy/` the provisionable policy bundle.
+- [Decisions](DECISIONS.md) record adaptations and dependencies. [Submission copy](SUBMISSION.md) and
+  [the video guide](VIDEO.md) distinguish the working demo from live and hardware checks still needed.
 
-- **Two-person rule:** a second reviewer joins the same desk; escalations land in their rack.
-- **Scenario packs:** data centre (power and cooling changes), lab automation (liquid handlers, incubators),
-  commerce refunds (value and fraud envelopes).
-- **Voice** alternatives to every gesture.
-- **Real PLC integration** behind the relay, with execution receipts on the seal.
+## Roadmap — not built
+
+- Two-person review at the same desk.
+- Data-centre, lab-automation and commerce-refund scenario packs.
+- Voice alternatives.
+- Real PLC integration with physical execution receipts.
 
 ## Licence and assets
 
-All Cyclone code is new (written from 28 Oct 2026). Every model is procedural and every sound synthesised; no
-third-party art, logos or human figures. Third-party packages are used as dependencies under their own licences.
+Cyclone code is new, written from 28 October 2026. Miniatures and markings are procedural, with no human figures.
+The Stillpoint entry mark is original project artwork. Manrope and Atkinson Hyperlegible Next ship locally under
+their preserved OFL notices. The tabular-digit derivative and renderer route are documented in
+[fonts.md](docs/design1/fonts.md). Third-party packages retain their own licences; the brand studio's standalone
+Three.js and cover scene are not application dependencies.

@@ -9,6 +9,7 @@ export type EngineOptions = {
   drills?: IntentTemplate[];
   /** Probability of injecting one random drill into the run (0 in capture mode). */
   drillChance?: number;
+  completedTemplates?: readonly string[];
 };
 
 type Spawned = { key: string; intent: HeldIntent };
@@ -43,6 +44,10 @@ export class ScenarioEngine {
     for (const t of scenario.templates) this.templates.set(t.key, t);
     for (const t of options.drills ?? []) this.templates.set(t.key, t);
     this.beats = scenario.beats.map((b) => ({ ...b }));
+    for (const key of options.completedTemplates ?? []) {
+      if (!this.beats.some(b => b.template === key)) continue;
+      this.spawned.add(key); this.decidedAt.set(key, -60);
+    }
     this.injectDrill();
   }
 
@@ -53,6 +58,8 @@ export class ScenarioEngine {
   get beatList(): readonly Beat[] {
     return this.beats;
   }
+
+  get completedTemplates(): readonly string[] { return [...this.decidedAt.keys()]; }
 
   template(key: string): IntentTemplate | undefined {
     return this.templates.get(key);

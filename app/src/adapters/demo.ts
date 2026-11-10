@@ -1,4 +1,4 @@
-import type { Decision, HeldIntent, SignedRecord } from '../contracts/intent';
+import type { Decision, HeldIntent, SignedRecord, Rehearsed } from '../contracts/intent';
 import type { Clock } from '../core/clock';
 import { IntentHasher } from '../core/hash';
 import type { Rng } from '../core/rng';
@@ -61,7 +61,7 @@ export class DemoAdapter implements PolicyGateAdapter {
     return this.held.get(intentId)?.deadline;
   }
 
-  async resolve(decision: Decision): Promise<SignedRecord> {
+  async resolve(decision: Decision, reviewed?: Rehearsed): Promise<SignedRecord> {
     const prior = this.resolved.get(decision.intent_id);
     if (prior) {
       if (prior.decision.decision === decision.decision) return prior;
@@ -97,7 +97,7 @@ export class DemoAdapter implements PolicyGateAdapter {
       intent_hash: intent.intent_hash,
       ...(decision.amended_hash ? { amended_hash: decision.amended_hash } : {}),
       decided_at: this.clock.iso(),
-      rehearsal: {
+      rehearsal: reviewed ?? {
         args: { ...args },
         path_samples_ref: await Rehearsal.ref(intent.tool, intent.target.asset_id, args),
       },

@@ -1,0 +1,218 @@
+{
+  "source": "Production build, clean isolated Chromium context, all remote traffic blocked; programmatic decision flow",
+  "browserVersion": "156.0.8078.4",
+  "url": "http://127.0.0.1:4177/cyclone/",
+  "checks": [
+    {
+      "name": "production entry is ready for XR",
+      "ok": true
+    },
+    {
+      "name": "default demo arrives within 15 seconds",
+      "ok": true,
+      "detail": {
+        "time": 6.047199999988079,
+        "mode": "demo"
+      }
+    },
+    {
+      "name": "set_conveyor_speed: decision and demo signature",
+      "ok": true,
+      "detail": {
+        "decision": "APPROVE",
+        "verified": true,
+        "snapshot": "cyclone.rehearsal/1"
+      }
+    },
+    {
+      "name": "set_arm_velocity: decision and demo signature",
+      "ok": true,
+      "detail": {
+        "decision": "APPROVE_AMENDED",
+        "verified": true,
+        "snapshot": "cyclone.rehearsal/1"
+      }
+    },
+    {
+      "name": "set_oven_setpoint: decision and demo signature",
+      "ok": true,
+      "detail": {
+        "decision": "REJECT",
+        "verified": true,
+        "snapshot": "cyclone.rehearsal/1"
+      }
+    },
+    {
+      "name": "lift_pallet: decision and demo signature",
+      "ok": true,
+      "detail": {
+        "decision": "REJECT",
+        "verified": true,
+        "snapshot": "cyclone.rehearsal/1"
+      }
+    },
+    {
+      "name": "local fonts load under the production subpath",
+      "ok": true,
+      "detail": [
+        {
+          "url": "http://127.0.0.1:4177/cyclone/assets/fonts/manrope.ttf",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:4177/cyclone/assets/fonts/atkinsonhyperlegiblenext-tabular.ttf",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:4177/cyclone/assets/fonts/manrope700.ttf",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:4177/cyclone/assets/fonts/atkinson400.ttf",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:4177/cyclone/assets/fonts/atkinson700.ttf",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "name": "rendered labels use loaded fonts and tabular digits",
+      "ok": true,
+      "detail": [
+        12.639999389648438,
+        12.639999389648438,
+        12.639999389648438,
+        12.639999389648438,
+        12.639999389648438,
+        12.639999389648438,
+        12.639999389648438,
+        12.639999389648438,
+        12.639999389648438,
+        12.639999389648438
+      ]
+    },
+    {
+      "name": "Stillpoint logo and icon load",
+      "ok": true
+    },
+    {
+      "name": "no failed local requests",
+      "ok": true,
+      "detail": [
+        {
+          "url": "https://www.unpkg.com/@iwer/sem@2.5.0/captures/living_room.json",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "url": "https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0/dist/profiles/meta-quest-touch-plus/left.glb",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "url": "https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0/dist/profiles/meta-quest-touch-plus/right.glb",
+          "error": "net::ERR_FAILED"
+        }
+      ]
+    },
+    {
+      "name": "no page errors",
+      "ok": false,
+      "detail": [
+        "Failed to fetch"
+      ]
+    }
+  ],
+  "fonts": {
+    "faces": [
+      {
+        "family": "Atkinson",
+        "weight": "400 700",
+        "status": "loaded"
+      },
+      {
+        "family": "Manrope",
+        "weight": "600 700",
+        "status": "loaded"
+      },
+      {
+        "family": "\"Atkinson Hyperlegible Next\"",
+        "weight": "400 700",
+        "status": "loaded"
+      },
+      {
+        "family": "Manrope",
+        "weight": "600 700",
+        "status": "loaded"
+      }
+    ],
+    "labels": [
+      "ready",
+      "ready",
+      "ready",
+      "ready",
+      "ready",
+      "ready"
+    ],
+    "digits": [
+      12.639999389648438,
+      12.639999389648438,
+      12.639999389648438,
+      12.639999389648438,
+      12.639999389648438,
+      12.639999389648438,
+      12.639999389648438,
+      12.639999389648438,
+      12.639999389648438,
+      12.639999389648438
+    ]
+  },
+  "at": "2026-11-10T04:03:36.293Z",
+  "blocked": [
+    "https://www.unpkg.com/@iwer/sem@2.5.0/captures/living_room.json",
+    "https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0/dist/profiles/meta-quest-touch-plus/left.glb",
+    "https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0/dist/profiles/meta-quest-touch-plus/right.glb"
+  ],
+  "requests": [
+    "http://127.0.0.1:4177/cyclone/",
+    "http://127.0.0.1:4177/cyclone/assets/index-BQHmKdN3.js",
+    "http://127.0.0.1:4177/cyclone/assets/identity/logo-lockup-ink.svg",
+    "http://127.0.0.1:4177/cyclone/assets/fonts/atkinsonhyperlegiblenext-tabular.ttf",
+    "https://www.unpkg.com/@iwer/sem@2.5.0/captures/living_room.json",
+    "http://127.0.0.1:4177/cyclone/assets/fonts/manrope.ttf",
+    "http://127.0.0.1:4177/cyclone/assets/world-initializer-CGG4lgPE.js",
+    "http://127.0.0.1:4177/cyclone/assets/identity/app-mark-128.png",
+    "http://127.0.0.1:4177/cyclone/ui/review.uikitml",
+    "http://127.0.0.1:4177/cyclone/ui/settings.uikitml",
+    "http://127.0.0.1:4177/cyclone/scenes/main.iwsdk.scene.json",
+    "http://127.0.0.1:4177/cyclone/assets/fonts/atkinson700.ttf",
+    "http://127.0.0.1:4177/cyclone/assets/index-Brupejm_.js",
+    "http://127.0.0.1:4177/cyclone/assets/msdf-worker-BUaSHgMS.js",
+    "https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0/dist/profiles/meta-quest-touch-plus/left.glb",
+    "https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0/dist/profiles/meta-quest-touch-plus/right.glb",
+    "http://127.0.0.1:4177/cyclone/assets/identity/app-mark-128.png",
+    "http://127.0.0.1:4177/cyclone/assets/fonts/manrope.ttf",
+    "http://127.0.0.1:4177/cyclone/assets/fonts/atkinsonhyperlegiblenext-tabular.ttf",
+    "http://127.0.0.1:4177/cyclone/assets/fonts/manrope700.ttf",
+    "http://127.0.0.1:4177/cyclone/assets/fonts/atkinson400.ttf",
+    "http://127.0.0.1:4177/cyclone/assets/fonts/atkinson700.ttf",
+    "http://127.0.0.1:4177/cyclone/assets/identity/app-mark-128.png"
+  ],
+  "failed": [
+    {
+      "url": "https://www.unpkg.com/@iwer/sem@2.5.0/captures/living_room.json",
+      "error": "net::ERR_FAILED"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0/dist/profiles/meta-quest-touch-plus/left.glb",
+      "error": "net::ERR_FAILED"
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0/dist/profiles/meta-quest-touch-plus/right.glb",
+      "error": "net::ERR_FAILED"
+    }
+  ],
+  "errors": [
+    "Failed to fetch"
+  ]
+}
