@@ -1,0 +1,86 @@
+{
+  "checked_at": "2026-11-10T08:03:54.544496+00:00",
+  "url": "https://ocularminds.github.io/cyclone/submission/cyclone-artifacts.zip",
+  "status": 200,
+  "content_type": "application/x-zip-compressed",
+  "bytes": 3117914,
+  "sha256": "861a01bc70723c7ae6819c4520a86c84e85b36ee3845990462410a9f55a7a06f",
+  "archive_crc_and_all_file_hashes": "pass",
+  "files": 28,
+  "deployment": {
+    "status": "completed",
+    "conclusion": "success",
+    "headSha": "249fbd1b1710be50189a77d4725fe063bbeadfe2",
+    "url": "https://github.com/ocularminds/cyclone/actions/runs/42779441127"
+  },
+  "checks": [
+    {
+      "job": "build",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run typecheck",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm test",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run build",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-pages-artifact@v3",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "job": "deploy",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/deploy-pages@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}

@@ -28,5 +28,9 @@
   "terms_accepted": false,
   "submitted": false,
   "private_account_fields_exported": false,
-  "eligibility_confirmed_by_owner": true
+  "eligibility_confirmed_by_owner": true,
+  "artifact_url": "https://ocularminds.github.io/cyclone/submission/cyclone-artifacts.zip",
+  "artifact_sha256": "861a01bc70723c7ae6819c4520a86c84e85b36ee3845990462410a9f55a7a06f",
+  "artifact_public_download_verified": true,
+  "deployment_run": "https://github.com/ocularminds/cyclone/actions/runs/42779441127"
 }

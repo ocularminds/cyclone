@@ -18,8 +18,11 @@ These are unperformed checks, not acceptance evidence. The working local/demo fa
   as permitted by the current competition rules. Publication and playback are verified. The repository's
   older demand for physical headset footage is stricter and remains separately unfulfilled. A published
   video does not establish device performance or confirm a completed contest submission.
-- **H2/H6:** the owner confirms Start membership/developer access, target launch date and submits the final
-  entry. Target remains “Q1 2027 (confirm)”. Do not infer account eligibility from a working app.
+- **H2:** on 10 November, the owner confirmed the four Devpost eligibility declarations, including Start
+  membership. They are saved with the completed technical answers and media. The entry is at 4/5 steps;
+  final acceptance of the Official Rules/Devpost Terms and submission remain pending. See the
+  [current submission record](../devpost/status.json).
+- **H6:** the public beta target is explicitly tentative, Q1 2027. A firm launch date remains unconfirmed.
 
 Current [rules](https://start-developer-competition-26.devpost.com/rules) and
 [FAQ](https://start-developer-competition-26.devpost.com/details/faqs), checked 10 November 2026:
