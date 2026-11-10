@@ -18,10 +18,10 @@ These are unperformed checks, not acceptance evidence. The working local/demo fa
   as permitted by the current competition rules. Publication and playback are verified. The repository's
   older demand for physical headset footage is stricter and remains separately unfulfilled. A published
   video does not establish device performance or confirm a completed contest submission.
-- **H2:** on 10 November, the owner confirmed the four Devpost eligibility declarations, including Start
-  membership. They are saved with the completed technical answers and media. The entry is at 4/5 steps;
-  final acceptance of the Official Rules/Devpost Terms and submission remain pending. See the
-  [current submission record](../devpost/status.json).
+- **H2 complete:** on 10 November, the owner confirmed the four Devpost eligibility declarations, including
+  Start membership, and approved the Official Rules/Devpost Terms at the final step. Cyclone was submitted;
+  Devpost displayed “Project submitted!” See the [confirmation](../devpost/submitted.jpg) and
+  [submission record](../devpost/status.json).
 - **H6:** the public beta target is explicitly tentative, Q1 2027. A firm launch date remains unconfirmed.
 
 Current [rules](https://start-developer-competition-26.devpost.com/rules) and

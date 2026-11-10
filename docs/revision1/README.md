@@ -94,6 +94,7 @@ overnight records never revive authority. [Integration contract](../agentsafe.md
 
 All review-listed unresolved IDs remain accounted for in [CAPABILITIES.md](../../CAPABILITIES.md). The 14 partial
 rows are C07, C12, C13, C14, C20, C21, C22, C24, C35, C36, C39, C40, C47 and C48; C49 is blocked on H1.
-H2 membership/final submission and H6 launch confirmation remain owner facts. No contest entry was submitted.
+H2 is complete: the owner confirmed eligibility and approved the terms, and Devpost confirmed the
+[Cyclone submission](../devpost/status.json) on 10 November 2026. H6's firm launch date remains unconfirmed.
 Checked deadline: **18 November 2026, 21:00 Stockholm**, with repository freeze **17 November** and submitted
 site availability through the winner announcement around **11 December**.

@@ -50,13 +50,17 @@ integration with execution receipts.
 
 ## Submission readiness
 
-This copy describes the implemented demo and its current limitations. Confirm H1 live acceptance, H3 hardware
-checks, H6 launch date and the final capability register before the human submission (H2). The finished 2:49
-emulator video is public on YouTube, with playback verified. The current rules permit emulator footage;
-the repository's stricter headset-recording requirement remains a separate H4 item. No entry has been submitted.
+**Submitted 10 November 2026** to the Meta VR Start Developer Competition 2026, Productivity / New Experience.
+The owner confirmed the four eligibility declarations and explicitly approved the Official Rules and Devpost
+Terms of Service. Devpost displayed **“Project submitted!”** and **“SUBMITTED TO”** after the final action.
+See the [confirmation](docs/devpost/submitted.jpg) and [submission record](docs/devpost/status.json).
 
-The existing [Devpost project](https://devpost.com/software/cyclone-the-calm-eye-for-ai-agents-decisions) now has
-the corrected pitch/story, public video, six captioned images and technical answers. The Devpost story adds
-a short challenges/lessons paragraph and remains below 500 words (467). See [artifacts](docs/devpost/README.md)
-and the [browser-verified status](docs/devpost/status.json). The owner has confirmed the four eligibility declarations, which are saved. Final legal acceptance remains
-pending; the user has authorized proceeding with submission.
+The [Devpost entry](https://devpost.com/software/cyclone-the-calm-eye-for-ai-agents-decisions) includes the
+corrected pitch/story, public 2:49 video, six captioned images, technical answers and
+[artifact download](https://ocularminds.github.io/cyclone/submission/cyclone-artifacts.zip).
+Its story adds a short challenges/lessons paragraph and remains below 500 words (467).
+
+The entry describes the implemented demo and its current limitations. H1 live acceptance, H3 physical-device
+checks, H4's stricter headset recording and H6's firm launch date remain open. The current competition rules
+permit the submitted emulator footage. Edits close 18 November 2026 at 21:00 Stockholm; the repository freeze
+is 17 November, and the hosted submission must stay available through the winner announcement around 11 December.

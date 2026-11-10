@@ -5,8 +5,7 @@
   "competition_id": 31024,
   "project_url": "https://devpost.com/software/cyclone-the-calm-eye-for-ai-agents-decisions",
   "editor_url": "https://devpost.com/submit-to/31024-meta-vr-start-developer-competition-2026/manage/submissions/1292406-cyclone/finalization",
-  "state": "DRAFT",
-  "steps_complete": "4/5",
+  "state": "SUBMITTED",
   "saved": [
     "project name",
     "elevator pitch",
@@ -21,16 +20,19 @@
     "four owner-confirmed eligibility declarations"
   ],
   "verified_public_preview": true,
-  "remaining": [
-    "Action-time approval of the Official Rules and Devpost Terms of Service",
-    "Final Submit project action and confirmation"
-  ],
-  "terms_accepted": false,
-  "submitted": false,
+  "remaining": [],
+  "terms_accepted": true,
+  "submitted": true,
   "private_account_fields_exported": false,
   "eligibility_confirmed_by_owner": true,
   "artifact_url": "https://ocularminds.github.io/cyclone/submission/cyclone-artifacts.zip",
   "artifact_sha256": "861a01bc70723c7ae6819c4520a86c84e85b36ee3845990462410a9f55a7a06f",
   "artifact_public_download_verified": true,
-  "deployment_run": "https://github.com/ocularminds/cyclone/actions/runs/42779441127"
+  "deployment_run": "https://github.com/ocularminds/cyclone/actions/runs/42779441127",
+  "terms_approved_by_owner": true,
+  "verified_at": "2026-11-10T08:17:32Z",
+  "confirmation_text": "Project submitted! Continue to edit your project until the hackathon deadline: November 18, 2026 at 03:00pm EST.",
+  "competition_status_label": "SUBMITTED TO",
+  "confirmation_image": "docs/devpost/submitted.jpg",
+  "deadline_stockholm": "2026-11-18T21:00:00+01:00"
 }
