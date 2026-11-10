@@ -1,0 +1,73 @@
+/* Cyclone design tokens. Web values are not UIKit centimetres. */
+:root {
+  --cy-ink: #142B36;
+  --cy-ink-deep: #0C1B22;
+  --cy-ink-panel: #213D49;
+  --cy-porcelain: #F5F1E8;
+  --cy-white: #FFFFFF;
+  --cy-stone: #D8D4CA;
+  --cy-text-muted-light: #526773;
+  --cy-text-muted-dark: #B7C8CB;
+  --cy-line-light: #71868B;
+  --cy-line-dark: #7C959E;
+  --cy-rehearsal: #62DCE8;
+  --cy-rehearsal-ink: #006775;
+  --cy-attention: #E9B44C;
+  --cy-attention-ink: #805900;
+  --cy-high-attention: #F29B55;
+  --cy-high-attention-ink: #914A16;
+  --cy-limit: #E982CA;
+  --cy-limit-ink: #913C74;
+  --cy-hc-background: #050B0F;
+  --cy-hc-cyan: #8AECFF;
+  --cy-hc-amber: #FFD36A;
+  --cy-hc-magenta: #FF9FE1;
+  --cy-font-display: "Manrope", sans-serif;
+  --cy-font-ui: "Atkinson Hyperlegible Next", sans-serif;
+  --cy-target: 48px;
+  --cy-radius-control: 12px;
+  --cy-radius-panel: 24px;
+  --cy-space: 8px;
+}
+[data-ui-theme="light"] {
+  --ui-canvas: #F5F1E8;
+  --ui-surface: #FFFFFF;
+  --ui-text: #142B36;
+  --ui-muted: #526773;
+  --ui-border: #71868B;
+  --ui-accent: #006775;
+  --ui-accent-fill: #62DCE8;
+  --ui-focus: #006775;
+  --ui-warning: #805900;
+  --ui-danger: #913C74;
+  --ui-control: #142B36;
+  --ui-on-control: #F5F1E8;
+}
+[data-ui-theme="dark"] {
+  --ui-canvas: #0C1B22;
+  --ui-surface: #213D49;
+  --ui-text: #F5F1E8;
+  --ui-muted: #B7C8CB;
+  --ui-border: #7C959E;
+  --ui-accent: #62DCE8;
+  --ui-accent-fill: #62DCE8;
+  --ui-focus: #62DCE8;
+  --ui-warning: #E9B44C;
+  --ui-danger: #E982CA;
+  --ui-control: #62DCE8;
+  --ui-on-control: #142B36;
+}
+[data-ui-theme="high-contrast"] {
+  --ui-canvas: #050B0F;
+  --ui-surface: #050B0F;
+  --ui-text: #FFFFFF;
+  --ui-muted: #FFFFFF;
+  --ui-border: #FFFFFF;
+  --ui-accent: #8AECFF;
+  --ui-accent-fill: #8AECFF;
+  --ui-focus: #8AECFF;
+  --ui-warning: #FFD36A;
+  --ui-danger: #FF9FE1;
+  --ui-control: #FFFFFF;
+  --ui-on-control: #050B0F;
+}
