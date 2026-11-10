@@ -45,6 +45,7 @@ the protocol-string branding failure; the exact machine-key exception then passe
 | Plane selection | **6/6** | [Runtime ECS fixtures](plane-fixtures.json) inject the selection boundary. Native plane/anchor APIs and real-room fit were not tested. |
 | Sensory | **33/33** | [Audio graph / tether / caption checks](sensory.json). Four machine panners and voices; 13 individually injected cue events. Human audible review remains open. |
 | Static production | **11/11** | [Fresh Chromium context](production.json); backend blocked, SDK static models allowed, four decisions and valid snapshots/demo proofs. |
+| Public deployment | **Pass** | [Fresh public browser](public-result.json): XR, first token 6.02 s, retained receipt and proof-bundle 2.0, no page/request errors. [Public JS/MP4 hashes](public-assets.json) equal local output. |
 | Capture | **6/6** | [Fixed hashes and clean four-seal end card](e2e-capture.json) |
 | Visual | No blocking clipping/overlap found | [Single runtime contact sheet](ui-runtime-review.jpg), [review scope](visual-review.json); device legibility not established. |
 

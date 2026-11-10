@@ -14,7 +14,7 @@
       "dir": "app",
       "cmd": "npm test",
       "exit_code": 0,
-      "output": "Final rerun after protocol-metadata brand-audit correction: vitest 3.2.7; 9 files, 81 tests passed; duration 9.06 s; start 07:31:13 UTC. Initial failed audit output is retained in validation-initial.json.",
+      "output": "Final rerun after protocol-metadata brand-audit correction: vitest 3.2.7; 9 files, 81 tests passed; duration 9.06 s; displayed start 07:31:13 (host local time). Initial failed audit output is retained in validation-initial.json.",
       "evidence_kind": "Observed final command result summary"
     },
     {

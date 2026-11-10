@@ -1,0 +1,24 @@
+{
+  "at": "2026-11-10T06:42:40.952184+00:00",
+  "source": "Public HTTP fetch through system curl with certificate validation. The system Python trust store failed; validation was not bypassed.",
+  "results": [
+    {
+      "url": "https://ocularminds.github.io/cyclone/assets/index-BMBlUpu0.js",
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8",
+      "downloadSeconds": 1.044056,
+      "bytes": 7960830,
+      "sha256": "9ecc48d812f071bbf8aeb8d1bab9999a7de1f472a69ef1bdb6c5e5047ac7c613",
+      "matchesBuild": true
+    },
+    {
+      "url": "https://ocularminds.github.io/cyclone/video/cyclone-revision1.mp4",
+      "status": 200,
+      "contentType": "video/mp4",
+      "downloadSeconds": 1.57671,
+      "bytes": 5594820,
+      "sha256": "2e78ea59e510825e1b358b8fe470b0e35e6442cbcb06d73d8e1a06067f9a122c",
+      "matchesBuild": true
+    }
+  ]
+}

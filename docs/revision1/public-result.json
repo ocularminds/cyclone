@@ -1,0 +1,27 @@
+{
+  "ok": true,
+  "data": {
+    "operation": "browser.run",
+    "result": {
+      "url": "https://ocularminds.github.io/cyclone/",
+      "source": "demo",
+      "xr": true,
+      "firstTokenSeconds": 6.01840000000596,
+      "decision": "APPROVE",
+      "snapshot": "cyclone.rehearsal/1",
+      "signature": true,
+      "proofBundle": "2.0",
+      "logo": 300,
+      "assets": [
+        "https://ocularminds.github.io/cyclone/assets/index-BMBlUpu0.js"
+      ],
+      "browserVersion": "156.0.8078.4",
+      "errors": [],
+      "failed": [],
+      "at": "2026-11-10T06:42:48.042Z",
+      "inputEvidence": "Programmatic deployment smoke; immersive hand input is tested separately"
+    },
+    "script": "tests/e2e/public.mjs",
+    "workspaceRoot": "/Users/bonus/.codex/worktrees/cyclone-revision1/Cyclone/app"
+  }
+}

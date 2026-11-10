@@ -55,7 +55,7 @@ Current totals: **35 verified · 14 partial · 1 human-blocked · 0 todo**. No c
 | C41 | No in-app brand strings | ✅ | `tests/brand.test.ts`; relay scrubs brand words from rendered summaries. |
 | C42 | No human models; walkway markings | ✅ | All geometry procedural; walkway is a hatched floor marking; no figures. |
 | C43 | Hands-only full run | ✅ | Both e2e suites run in hand-tracking mode only. |
-| C44 | Deploy to GitHub Pages | ✅ | [Public demo](https://ocularminds.github.io/cyclone/) deploys from main with relative Vite base. Revision1 public build/asset/video checks and workflow IDs are recorded in `docs/revision1/release.json`. Freeze 17 Nov; preserve submitted build through ~11 Dec. |
+| C44 | Deploy to GitHub Pages | ✅ | [Public demo](https://ocularminds.github.io/cyclone/) deploys from main with relative Vite base. Revision1 public smoke: XR, first token 6.02 s, signed retained snapshot and proof-bundle 2.0; JS and video hashes match local output (`docs/revision1/release.json`). Freeze 17 Nov; preserve submitted build through ~11 Dec. |
 | C45 | README | ✅ | |
 | C46 | SUBMISSION | ✅ | 442-word description reflects the implemented demo, access/scoring, repaired proof recovery and remaining live/device limitations. Launch date remains Q1 2027 (confirm/H6); final submission remains H2. |
 | C47 | VIDEO + capture mode + end card | 🟨 | Finished 2:49 actual emulator workflow video, captions and edit provenance retained; capture 6/6 including four-seal empty-tray end card. Public MP4 is a review copy; required YouTube/Vimeo publication awaits account access. Older real-headset footage requirement remains separately H4. |

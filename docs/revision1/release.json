@@ -1,0 +1,70 @@
+{
+  "recordedAt": "2026-11-10T06:45:33.548401+00:00",
+  "runtimeCommit": "a73e18aee5e41383d08ed3919967f2b5369ecc0f",
+  "branch": "codex/revision1",
+  "defaultBranch": "main",
+  "syncedBase": "5a4594d367bc6b1bb2b82b057207b744677ab240",
+  "note": "Runtime commit was fast-forward published to main. This release record is saved in a following evidence-only commit; no source, dependencies, UI or media change after the runtime checks.",
+  "initialRuntimeDeployment": {
+    "runId": 42770118138,
+    "url": "https://github.com/ocularminds/cyclone/actions/runs/42770118138",
+    "conclusion": "success",
+    "checks": [
+      "npm ci",
+      "app typecheck",
+      "81 app tests",
+      "production build",
+      "Pages deploy"
+    ],
+    "runner": "GitHub-hosted Ubuntu / Node 22"
+  },
+  "app": {
+    "url": "https://ocularminds.github.io/cyclone/",
+    "entry": {
+      "path": "assets/index-BMBlUpu0.js",
+      "bytes": 7960830,
+      "gzip": 2063862,
+      "sha256": "9ecc48d812f071bbf8aeb8d1bab9999a7de1f472a69ef1bdb6c5e5047ac7c613"
+    },
+    "publicCheck": "public-result.json",
+    "publicAssetCheck": "public-assets.json"
+  },
+  "video": {
+    "url": "https://ocularminds.github.io/cyclone/video/cyclone-revision1.mp4",
+    "durationSeconds": 169.017334,
+    "sha256": "2e78ea59e510825e1b358b8fe470b0e35e6442cbcb06d73d8e1a06067f9a122c",
+    "evidence": "Actual IWSDK emulator footage, normal-speed edits; local signatures and simulated execution",
+    "entryPlatform": "Public YouTube/Vimeo publication pending account access and requested upload approval"
+  },
+  "validation": {
+    "appTests": 81,
+    "relayTests": 70,
+    "allTypechecks": "passed",
+    "handsFirstShift": "27/27",
+    "publicSmoke": "passed",
+    "intentCli": {
+      "verifier": "0.5.0",
+      "reproduced": 15,
+      "failed": 1,
+      "exitCode": 1,
+      "failure": "policy-projection.json binding-shape validation at policy_projection.channel"
+    }
+  },
+  "capabilities": {
+    "verified": 35,
+    "partial": 14,
+    "humanBlocked": 1,
+    "todo": 0,
+    "total": 50
+  },
+  "actualExternalEvidence": {
+    "physicalQuest": "none connected; no native device result",
+    "productionPolicyGate": "none configured; no live service acceptance",
+    "submission": "not submitted",
+    "membership": "unconfirmed"
+  },
+  "remaining": "human-checks.md",
+  "freeze": "2026-11-17",
+  "entryDeadline": "2026-11-18T21:00:00+01:00",
+  "preserveSubmittedBuildThrough": "approximately 2026-12-11"
+}
