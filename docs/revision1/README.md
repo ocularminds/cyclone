@@ -7,7 +7,7 @@ deployment and asset identifiers are in [release.json](release.json); [build.jso
 
 **Current register: 35 verified, 14 partial, 1 human-blocked, 0 todo. All 50 IDs remain.** Local correctness and
 emulator work is complete. Genuine live dossiers, physical-device acceptance, unfamiliar-user/listening checks,
-required video-platform publication and owner submission facts remain [explicit dependencies](human-checks.md).
+the stricter physical-headset recording requirement and owner submission facts remain [explicit dependencies](human-checks.md).
 
 ## Findings and implementation
 
@@ -79,12 +79,13 @@ The trust source remains a local demo key, not an official issuer. Exports conta
 ## Delivery and remaining acceptance
 
 [Public app](https://ocularminds.github.io/cyclone/) ·
-[finished public review video](https://ocularminds.github.io/cyclone/video/cyclone-revision1.mp4) ·
+[published YouTube video](https://youtu.be/NaKl8JTSMP4) ·
 [shot list and claims](../../VIDEO.md) · [edit/source provenance](video/edit.json).
 
 The finished video is actual IWER footage, edited at normal speed and permanently labelled as emulated input
-and simulated execution. Current rules permit that footage but require public YouTube/Vimeo hosting; account
-reauthentication is still needed. AGENTS H4's stricter real-headset recording remains open separately.
+and simulated execution. It is now [public on YouTube](https://youtu.be/NaKl8JTSMP4); publication and 720p playback are
+verified in [the upload record](video/youtube.json), with a [confirmation screenshot](video/youtube-published.jpg).
+This closes the video-platform publication dependency. AGENTS H4's stricter real-headset recording remains open separately.
 
 H1 availability checks found no configured live credentials, registered key or policy. C49 therefore contains
 no invented real dossiers. The public docs still provide no implemented amendment route; capability is always

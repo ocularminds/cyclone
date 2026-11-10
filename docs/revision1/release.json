@@ -34,7 +34,11 @@
     "durationSeconds": 169.017334,
     "sha256": "2e78ea59e510825e1b358b8fe470b0e35e6442cbcb06d73d8e1a06067f9a122c",
     "evidence": "Actual IWSDK emulator footage, normal-speed edits; local signatures and simulated execution",
-    "entryPlatform": "Public YouTube/Vimeo publication pending account access and requested upload approval"
+    "entryPlatform": "YouTube \u2014 public; publication and playback verified",
+    "youtubeUrl": "https://youtu.be/NaKl8JTSMP4",
+    "publicationEvidence": "video/youtube.json",
+    "publishedOn": "2026-11-10",
+    "youtubeDurationSeconds": 169.041
   },
   "validation": {
     "appTests": 81,

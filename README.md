@@ -12,8 +12,8 @@ on the miniature; no real machine is driven. A signature, an authorization and p
 ## Try it
 
 [Open the public demo](https://ocularminds.github.io/cyclone/).
-[Watch the 2:49 emulator demo](https://ocularminds.github.io/cyclone/video/cyclone-revision1.mp4).
-The video labels simulated execution throughout; competition YouTube/Vimeo publication still needs account access.
+[Watch the 2:49 emulator demo on YouTube](https://youtu.be/NaKl8JTSMP4).
+The video labels simulated execution throughout. The [original MP4](https://ocularminds.github.io/cyclone/video/cyclone-revision1.mp4) is also available.
 
 - On a headset, open the URL and select **Enter**. A suitable table anchors the miniature; after three seconds
   without one, a seated plinth appears. Physical Quest performance, room placement and narrow FoV checks remain H3.

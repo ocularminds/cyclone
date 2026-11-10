@@ -8,6 +8,8 @@
 
 **Target launch:** public beta as a PWA, Q1 2027. *(confirm — H6)*
 
+**Video:** [Public YouTube demo](https://youtu.be/NaKl8JTSMP4)
+
 ## Description
 
 **Inspiration.** AI agents can ask to change a setpoint, move a robot or restart a line. A person may see only
@@ -49,6 +51,6 @@ integration with execution receipts.
 ## Submission readiness
 
 This copy describes the implemented demo and its current limitations. Confirm H1 live acceptance, H3 hardware
-checks, H6 launch date and the final capability register before the human submission (H2). The revision video
-is a finished 2:49 edit of explicitly labelled emulator footage, permitted by the current rules. The Pages MP4
-is a review copy; a public YouTube/Vimeo entry link still requires account access. A headset recording remains a separate H4 item.
+checks, H6 launch date and the final capability register before the human submission (H2). The finished 2:49
+emulator video is public on YouTube, with playback verified. The current rules permit emulator footage;
+the repository's stricter headset-recording requirement remains a separate H4 item. No entry has been submitted.

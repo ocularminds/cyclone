@@ -1,9 +1,11 @@
-# Ready-to-publish video
+# Published video
 
 File: `app/public/video/cyclone-revision1.mp4` (2:49; exact duration and SHA-256 in `edit.json`).
 Public file: https://ocularminds.github.io/cyclone/video/cyclone-revision1.mp4 — deployed and SHA-256 checked.
 The competition requires a **public YouTube or Vimeo link**. A direct MP4 is the review/download copy.
-The available YouTube session requires reauthentication; no upload or account change has been performed.
+Published on YouTube: https://youtu.be/NaKl8JTSMP4
+Public visibility and 720p playback verified on 10 November 2026 after explicit user approval.
+[Publication record](youtube.json) · [Confirmation](youtube-published.jpg).
 
 **Title:** Cyclone — hands-first review of AI actions
 

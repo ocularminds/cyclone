@@ -1,0 +1,34 @@
+{
+  "verifiedAt": "2026-11-10T07:18:54.782Z",
+  "url": "https://youtu.be/NaKl8JTSMP4",
+  "videoId": "NaKl8JTSMP4",
+  "channel": {
+    "name": "Decionis",
+    "id": "UCSfBZAQLtEQOaer9Na0QjfA",
+    "url": "https://www.youtube.com/@Decionis"
+  },
+  "title": "Cyclone — hands-first review of AI actions",
+  "description": "Cyclone puts held AI actions on a miniature factory at your desk. Inspect a proposal, scrub its kinematic rehearsal, amend the value, and decide with your hands. Every demo decision retains a signed local receipt and the model evidence that was reviewed.\n\nThis is actual Immersive Web Emulator footage, edited from two hand-driven takes at normal speed. The end card is the application's capture scene. Inputs are emulated; signatures use a local demo key; execution is simulated. No real machine is connected. A rehearsal is not a prediction or guarantee, and a signed record is not proof of physical execution.\n\nTry the demo: https://ocularminds.github.io/cyclone/\n\nBuilt with IWSDK 1.0.1, TypeScript and WebXR. Physical Quest performance, native room anchoring and provisioned live-service acceptance remain separate checks. Submission target: Productivity / New Experience.",
+  "visibility": "public",
+  "madeForKids": false,
+  "sourceFile": "app/public/video/cyclone-revision1.mp4",
+  "sourceSha256": "2e78ea59e510825e1b358b8fe470b0e35e6442cbcb06d73d8e1a06067f9a122c",
+  "evidence": {
+    "studio": "Public selected, followed by Video published confirmation on 10 November 2026",
+    "copyright": "Checks complete. No issues found.",
+    "publicationScreenshot": "youtube-published.jpg",
+    "publicPlayback": {
+      "currentTime": 30.28431,
+      "duration": 169.041,
+      "paused": false,
+      "readyState": 4,
+      "title": "Cyclone — hands-first review of AI actions - YouTube",
+      "url": "https://www.youtube.com/watch?v=NaKl8JTSMP4",
+      "videoHeight": 720,
+      "videoWidth": 1280
+    },
+    "anonymousViewerCheck": false,
+    "scope": "Visibility is confirmed by the publishing control and success dialog. Playback was checked in a separate browser which still had the owner account; this is not a signed-out viewer test."
+  },
+  "authorization": "The user explicitly approved public YouTube upload in this chat, then asked to continue after signing in."
+}

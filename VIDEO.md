@@ -1,6 +1,6 @@
 # Video — finished workflow and capture mode (C47)
 
-[Watch/download the 2:49 revision video](https://ocularminds.github.io/cyclone/video/cyclone-revision1.mp4).
+[Watch the 2:49 revision video on YouTube](https://youtu.be/NaKl8JTSMP4) · [Download the MP4](https://ocularminds.github.io/cyclone/video/cyclone-revision1.mp4).
 The versioned file is `app/public/video/cyclone-revision1.mp4`: 169.017 seconds, 1280×720 H.264/AAC.
 [Edit provenance](docs/revision1/video/edit.json) records source hashes, normal-speed cut points and ffprobe output.
 
@@ -10,9 +10,11 @@ no generated footage, substituted UI, live authorization claim or physical machi
 room compositor is outside the captured app canvas, so the recorded background is black.
 
 The [current competition rules](https://start-developer-competition-26.devpost.com/rules) allow emulator
-footage and require a public YouTube or Vimeo video under three minutes. The Pages MP4 is a public review copy,
-not the required hosted entry link. YouTube currently requires account reauthentication; no upload has been
-performed. [Ready title and description](docs/revision1/video/UPLOAD.md) accompany the finished file.
+footage and require a public YouTube or Vimeo video under three minutes. The [YouTube upload](https://youtu.be/NaKl8JTSMP4)
+was published on 10 November 2026; its watch page plays at 1280×720 with a duration of 169.041 seconds.
+[Publication evidence](docs/revision1/video/youtube.json) and the [confirmation](docs/revision1/video/youtube-published.jpg)
+record the actual upload and playback. The Pages MP4 remains a downloadable review copy.
+[Published title and description](docs/revision1/video/UPLOAD.md) accompany both versions.
 The repository's stricter H4 request for real-headset footage is still a separate unfulfilled requirement (D55).
 
 ## Finished edit

@@ -14,10 +14,10 @@ These are unperformed checks, not acceptance evidence. The working local/demo fa
   Record time to first inspection/decision, every wrong turn, ability to discover settings and rationale,
   comfort/reach, and whether they distinguish rehearsal, permission, proof and execution. Record their
   listening assessment of the machine locations, risk pitch and cues. Do not count the automated run as this check.
-- **H4 / video delivery:** the finished emulator video is permitted by the current competition rules. Public
-  YouTube or Vimeo hosting is still required for the entry; the available YouTube session currently asks
-  for reauthentication. The repository's older demand for physical headset footage is stricter and remains
-  separately unfulfilled. Neither footage nor a Pages MP4 confirms a completed contest submission.
+- **H4 / physical recording:** the finished emulator video is now [public on YouTube](https://youtu.be/NaKl8JTSMP4),
+  as permitted by the current competition rules. Publication and playback are verified. The repository's
+  older demand for physical headset footage is stricter and remains separately unfulfilled. A published
+  video does not establish device performance or confirm a completed contest submission.
 - **H2/H6:** the owner confirms Start membership/developer access, target launch date and submits the final
   entry. Target remains “Q1 2027 (confirm)”. Do not infer account eligibility from a working app.
 
