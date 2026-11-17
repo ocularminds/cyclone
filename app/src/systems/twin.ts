@@ -217,7 +217,29 @@ export class TwinSystem extends createSystem({
     }
     const entity = this.stage.rootEntity!;
     if (this.sessionActive && !entity.hasComponent(XRAnchor)) entity.addComponent(XRAnchor);
+    else if (!this.sessionActive) this.framePreview();
     this.idle = 0;
+  }
+
+  /**
+   * Flat (non-immersive) page only: look down at the miniature factory from a
+   * seated three-quarter view so the landing page shows the product, not an
+   * empty wall. On wide screens the view is aimed left of centre so the desk
+   * sits beside the intro card. An XR session replaces this pose every frame.
+   */
+  private framePreview(): void {
+    const root = this.stage.root;
+    root.updateWorldMatrix(true, false);
+    const wide = typeof window !== 'undefined' && window.innerWidth / Math.max(1, window.innerHeight) > 1.3;
+    const parent = this.camera.parent;
+    this.v.set(0.06, 0.64, 0.52);
+    root.localToWorld(this.v);
+    if (parent) { parent.updateWorldMatrix(true, false); parent.worldToLocal(this.v); }
+    this.camera.position.copy(this.v);
+    this.w.set(wide ? -0.2 : 0, 0, -0.3);
+    root.localToWorld(this.w);
+    this.camera.lookAt(this.w);
+    this.camera.updateMatrixWorld();
   }
 
   /** Idle state per machine kind: belt at base speed, arm parked, oven at current temperature, lift at rest. */

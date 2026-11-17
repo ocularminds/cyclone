@@ -6,3 +6,6 @@ dist/
 .env.*
 app/.iwsdk/
 relay/.data/
+
+# Draft briefs outside the Cyclone submission
+brief.fit-confidence.md

@@ -1,5 +1,6 @@
 {
-  "at": "2026-10-28T22:03:06.478Z",
+  "at": "2026-11-17T03:50:34.486Z",
+  "source": "IWSDK IWER, hands only",
   "results": [
     {
       "name": "escalate pad → ESCALATE, token parks in rack (C09)",
@@ -12,14 +13,24 @@
       "detail": ""
     },
     {
+      "name": "required hand disconnect cancels without a decision",
+      "ok": true,
+      "detail": ""
+    },
+    {
       "name": "one hand + gaze on the seal 1.5 s → APPROVE (C26)",
       "ok": true,
       "detail": "one_hand_gaze_hold"
     },
     {
-      "name": "eyes-only: pinch on the chute vetoes the inspected token (C25)",
+      "name": "Gaze + pinch: chute selection vetoes the inspected token (C25)",
       "ok": true,
       "detail": "gaze_pinch"
+    },
+    {
+      "name": "release in the air beyond the edge → no decision, token back in the tray",
+      "ok": true,
+      "detail": "ledger=3"
     },
     {
       "name": "push a resting token off the edge → veto (C07)",
@@ -34,17 +45,17 @@
     {
       "name": "pick up a seal → its rehearsal replays (C11)",
       "ok": true,
-      "detail": "Replay: reject 23:00"
+      "detail": "Stored reviewed rehearsal"
     },
     {
       "name": "session hidden → clock frozen (C29)",
       "ok": true,
-      "detail": "t 123.01 → 123.01 over 3 s"
+      "detail": "t 178.73 → 178.73 over 3 s"
     },
     {
       "name": "handover: overnight queue loads, first token ≤ 15 s (C15)",
       "ok": true,
-      "detail": "4 held at 11.3 s"
+      "detail": "4 held; first at 3.0 s"
     },
     {
       "name": "ring full → rule offered (C17)",
@@ -55,6 +66,16 @@
       "name": "drop rule on agent → matching intent auto-executes and auto-seals (C17)",
       "ok": true,
       "detail": "APPROVE,APPROVE,APPROVE,AUTO_APPROVE_RULE"
+    },
+    {
+      "name": "Revoke control removes accepted rule authority",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "matching proposal stays held after revocation",
+      "ok": true,
+      "detail": ""
     }
   ]
 }
