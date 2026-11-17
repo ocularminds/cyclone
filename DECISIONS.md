@@ -78,3 +78,22 @@ live-service limitations. The public story is 487 words; gallery artwork is unch
 second. Saved browser evidence and regenerated the public copy/artifact packet in PR #4. The hosted artifact
 ZIP updates only after that PR is merged and Pages deploys. Alternative: keep the old copy/video; rejected
 because the owner explicitly requested the prepared update. BRIEF §11, §13, §14; C45–C47.
+
+## D65 — Repository cleanup before the edit window closes (17 Nov 2026)
+
+At the owner's request, removed files that no longer serve the submission. All of them remain in git history
+at `beec898`.
+- **Superseded videos:** `app/public/video/cyclone-revision1.mp4` (the 2:49 original stays public on YouTube as
+  history) and `cyclone-revision2.mp4` (never published), plus `docs/revision2/`.
+- **Duplicate or superseded raw takes:** the revision-1 `.webm` takes (sources of the retired edits and of the
+  gallery frames recorded in `docs/devpost/manifest.json`), the earlier 1080p revision-3 takes and manifest, and
+  the Chrome `preflight.webm` test take.
+- **Duplicates and spent drafts:** the root copy of `brief.design1.pdf` (identical to `design/brand1/`),
+  `app/artifacts/` (a duplicate review image; tool output is now ignored) and `docs/devpost/revision2.md` (its
+  story is identical to `docs/devpost/fields.json`, which is now the single copy of the Devpost text).
+- **Untracked and ignored, kept locally in `../Cyclone-archive/`:** `brief.review1.pdf`, `brief.revision1.pdf`,
+  `instruct.design.md`, `instruct.revision1.md`. `brief.submission.v2.md` stays as the source of truth.
+
+The current video (`cyclone-revision3.mp4`), its Chrome takes, the Devpost gallery and the artifact ZIP are
+unchanged. Alternative: rewrite history to shrink the clone; rejected because it would change published
+commit hashes during judging.
