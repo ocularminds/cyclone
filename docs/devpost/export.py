@@ -2,10 +2,13 @@
 
 Requires Pillow and ffmpeg. No AI generation, substitute UI, or changed footage.
 Run from any directory; fonts, logo and raw takes are versioned in this repository.
+Use --cover-only to retain the five existing gallery exports byte for byte.
 """
 import hashlib
 import json
+import shutil
 import subprocess
+import sys
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
@@ -19,6 +22,7 @@ INK = "#142B36"
 PAPER = "#F5F1E8"
 CYAN = "#62DCE8"
 SIZE = (1800, 1200)
+COVER_ONLY = "--cover-only" in sys.argv
 FRAMES = [
     ("inspect", "workflow", 15, "01 / INTERCEPT", "Review the held action",
      "Look to inspect the agent, value, rationale and rule."),
@@ -53,22 +57,22 @@ def digest(path):
 
 OUT.mkdir(parents=True, exist_ok=True)
 (OUT / "frames").mkdir(exist_ok=True)
-cover_source = Image.open(BRAND / "cover-1920x1080.png").convert("RGB")
-cover = Image.new("RGB", SIZE, cover_source.getpixel((0, 0)))
-cover.paste(cover_source.resize((1800, 1012), Image.Resampling.LANCZOS), (0, 40))
-cd = ImageDraw.Draw(cover)
-cd.line((98, 1100, 1702, 1100), fill="#496068", width=2)
-tagline = "The calm eye where humans decide what AI agents do."
-face = font(35, True)
-cd.text(((1800-cd.textlength(tagline, font=face))/2, 1130), tagline, font=face, fill=PAPER)
-save(cover, "cover.png")
+cover_source = OUT / "source/cover-v2.png"
+assert Image.open(cover_source).size == SIZE
+shutil.copyfile(cover_source, OUT / "cover.png")
 
 logo = Image.open(BRAND / "logo-lockup-ink.png").convert("RGBA")
 logo.thumbnail((260, 72), Image.Resampling.LANCZOS)
-exports = [{"file": "cover.png", "kind": "concept artwork",
-            "source": "design/brand1/assets/cover-1920x1080.png",
-            "transforms": "Proportional resize; background padding and exact tagline. No crop."}]
+exports = [{"file": "cover.png", "kind": "actual emulator capture with editorial branding",
+            "source": "docs/devpost/source/cover-v2.png",
+            "source_sha256": digest(cover_source),
+            "supplied_filename": "cyclone-cover-v2.png",
+            "transforms": "Owner-supplied 1800x1200 cover preserved byte for byte. No resize, sharpening or UI replacement."}]
+previous = {item["file"]: item for item in json.loads((OUT / "manifest.json").read_text())["exports"]} if COVER_ONLY else {}
 for name, take, seconds, label, title, caption in FRAMES:
+    if COVER_ONLY:
+        exports.append(previous[name + ".png"])
+        continue
     source = TAKES / f"{take}.webm"
     frame_path = OUT / "frames" / f"{name}.png"
     subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-nostdin", "-y",
@@ -110,13 +114,13 @@ for item in exports:
     assert Image.open(p).size == SIZE
     assert p.stat().st_size < 5_000_000
     item.update(width=1800, height=1200, bytes=p.stat().st_size, sha256=digest(p))
-manifest = {"version": 1, "project": "Cyclone", "created": "2026-11-10",
+manifest = {"version": 2, "project": "Cyclone", "created": "2026-11-10", "updated": "2026-11-17",
             "destination": "Devpost project 1292406 / Meta VR Start Developer Competition 2026",
             "spec": {"ratio": "3:2", "max_bytes_per_image": 5_000_000, "format": "PNG"},
             "exports": exports, "ai_generated": False,
-            "art_source": "Original local Three.js scene in design/brand1/source; concept art is not app evidence.",
+            "art_source": "Owner-supplied cover-v2 uses actual app/emulator imagery with editorial branding; the room and hands are synthetic. Remaining gallery images retain revision-1 capture provenance.",
             "evidence_scope": "Emulated hands, demo signatures, simulated execution. No physical device, live service or actuator claim.",
-            "reproduction": "python3 docs/devpost/export.py",
+            "reproduction": "python3 docs/devpost/export.py --cover-only",
             "review_status": "Reviewed at full size and on contact sheet; no overlaid or invented app UI. Crops retain decision panels. Not a device legibility check."}
 (OUT / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
 print(json.dumps({"images": len(exports), "max_bytes": max(x["bytes"] for x in exports), "contact": str(OUT / "contact.jpg")}))

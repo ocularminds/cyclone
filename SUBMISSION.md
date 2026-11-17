@@ -64,8 +64,10 @@ now uses the approved revision-2 pitch, 487-word story, hand-interaction answer 
 The public 2:00 revision-3 video was recaptured in external Chrome from native 4K source footage and verified
 playing at 1080p on YouTube. The entry remains Submitted; [public preview](docs/devpost/revision2-public.jpg)
 and [saved state](docs/devpost/revision2-submitted.jpg) record the update. Physical Quest claims remain pending.
+The owner-supplied emulator cover subsequently replaced the thumbnail and first gallery image; its
+[publication proof](docs/devpost/cover-v2-published.jpg) includes the requested rehearsal/breach caption.
 The refreshed [artifact pack](app/public/submission/cyclone-artifacts.zip) will reach the hosted download
-when PR #4 is merged and Pages deploys.
+after the cover update is merged and Pages deploys.
 
 The entry describes the implemented demo and its current limitations. H1 live acceptance, H3 physical-device
 checks, H4's stricter headset recording and H6's firm launch date remain open. The current competition rules
