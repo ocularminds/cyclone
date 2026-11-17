@@ -1,10 +1,10 @@
-# Devpost copy — revision 2 (staged, not posted)
+# Devpost copy — revision 2 (published)
 
-Status: **draft for owner approval.** Nothing below is on Devpost yet. Paste only after approval, and before
-edits close (18 Nov 2026, 21:00 Stockholm). Fill the `[Quest]` placeholders from today's device session, or
-delete them if it doesn't happen. Never claim a device result that wasn't measured.
+Status: **published on 17 November 2026**, following the owner's request to apply this copy and the new
+video. The [existing submission](https://devpost.com/software/cyclone-the-calm-eye-for-ai-agents-decisions)
+still shows Submitted. Physical Quest validation remains pending; no unmeasured device results are claimed.
 
-What changed from the submitted copy (`story.md`):
+What changed from the original 10 November submission:
 - Opens with a concrete 30-second scenario, so a judge who reads only the first lines knows the product.
 - Brings the daily habit loop (handover, drills, trust rings) up into its own section, since the brief rated Productivity track fit a High risk.
 - Moves all the limitations into one honest **Status** section instead of hedging inside every section, and replaces jargon with plain words.
@@ -50,7 +50,7 @@ live mode. The demo needs no login or backend.
 a convincing animation. Hand-tracking drift taught us to fail closed: a token let go in mid-air is not a veto.
 
 **Status.** The full four-scenario shift is verified end to end with emulated hands, and the video is emulator
-footage. [Quest: "Tested on Quest 3: N fps, hands only."] Demo execution is simulated, rehearsals are not
+footage. Physical Quest validation remains pending. Demo execution is simulated, rehearsals are not
 predictions, and demo seals carry a local demo signature. Live policy-gate acceptance is still pending.
 
 **What's next.** Two-person review; data-centre, lab and commerce packs; voice; and real PLC integration with
@@ -68,7 +68,7 @@ agent to accept it.
 Alternatives: one hand plus sustained gaze on the seal replaces the two-hand hold; Gaze + pinch uses head direction
 to inspect and a hand ray to select; low-risk actions can be approved with a pinch. Poke the settings puck for
 input, contrast, text size, captions and reduced motion. Cyclone is used with hands; if controllers are in hand it
-asks you to put them down. [Quest: "Completed hands-only on Quest 3."] The emulated-hands run passes end to end.
+asks you to put them down. The emulated-hands run passes end to end.
 
 ## Gallery order
 
@@ -79,8 +79,8 @@ asks you to put them down. [Quest: "Completed hands-only on Quest 3."] The emula
 5. `receipt.png`: A locally signed demo receipt with retained rehearsal evidence. No official issuer or physical execution claim.
 6. `access.png`: Desk settings at 125% text size, with theme and caption controls. Actual emulator capture.
 
-## Other fields to update after the device session
+## Other fields
 
-- `meta_capabilities`: replace "Physical Quest 3/3S performance, native room anchoring and narrow-field validation remain pending" with what was measured.
+- `meta_capabilities`: keeps "Physical Quest 3/3S performance, native room anchoring and narrow-field validation remain pending" and identifies the external Chrome / Meta Quest 3 emulator capture.
 - `target_launch`: unchanged ("Tentative public beta: Q1 2027"), pending H6.
-- Video: swap in the revision-2 YouTube link only if the re-cut is approved and uploaded.
+- Video: [revision 3, recaptured in external Chrome](https://www.youtube.com/watch?v=bEx3UlCG-IE), published publicly and verified playing at 1920×1080.

@@ -1,37 +1,37 @@
-**Inspiration.** AI agents can ask to change a setpoint, move a robot or restart a line. A person may see only
-an approval prompt, even though the consequences are spatial. Cyclone puts the proposed action beside a miniature
-of the affected machine, so reviewing it becomes something you can see and handle at your desk.
+**In 30 seconds.** An AI agent asks to run a robot arm at 250°/s beside a walkway. In Cyclone, that request
+isn't a pop-up. It lands on your desk as a token beside a miniature of the arm. Pull a ghost of the motion and
+watch it flare where it crosses the walkway. Twist the dial down to 180°/s, the breach clears, and you approve by
+holding the token with both hands for 1.5 seconds.
 
-**What it does.** A held action arrives as a glowing token, connected to its target by a light thread. Look at
-it to inspect the agent, requested value, rationale, rule and affected area. Pull the timeline to scrub a
-translucent rehearsal from the machine's kinematic model. Where the model crosses an envelope, the breach flares.
-Twist the dial to amend the value and compare the dashed original path with the solid proposed path. One active
-ghost keeps the difference legible without doubling the moving model.
+**Inspiration.** AI agents now change setpoints and move robots, yet the accountable person usually sees a yes/no
+prompt for consequences that are spatial. We wanted review to feel like handling the action, not clicking past it.
 
-Decide with your hands: place a routine token in the execute slot, maintain a two-hand hold for a critical action,
-or push it off the desk edge to veto. Releasing a hold cancels it. A forbidden action locks the slot; escalation
-keeps the action held. Each demo decision produces a locally signed receipt with the reviewed values, model
-snapshot and matching action glyph. Pick up its seal to inspect the proof separately and replay the retained
-rehearsal, including after a reload.
+**What it does.** Each held action arrives as a glowing token, tethered by a light thread to its machine in a
+tabletop factory placed on your desk, or on a seated plinth if no desk is found. Look at a token to see who asked, why, and
+which rule stopped it. Pull the timeline to scrub a rehearsal from the machine's kinematic model; the
+breach point flares. Twist the dial to amend, then compare the original and amended paths.
 
-A first shift teaches four scenarios: conveyor speed, robot-arm velocity near a walkway, an excessive oven
-setpoint and a pallet-lift drill. Unfinished onboarding resumes; completed onboarding opens daily handover.
-Drills count timeouts as misses and leave unresolved escalations unassessed. Trust rings can offer a bounded,
-expiring demo rule that the user physically accepts and can later revoke.
+Decide with your hands: place a routine token in the execute slot, hold a critical one with both hands while the
+rehearsal plays (let go to cancel), or push it off the desk edge to veto. Forbidden actions lock the slot. Every
+decision becomes a signed seal stamped with the same glyph as its token, so what you saw is what you signed. Pick
+up a seal to replay what you reviewed.
 
-**How we built it.** Cyclone uses Meta's Immersive Web SDK 1.0, TypeScript, Three.js and ECS systems. Procedural
-machines, deterministic kinematics, local fonts and synthesised sound keep the demo self-contained. Intent hashes
-match the Agent-Safe Intent v1 reference implementation; amended actions have distinct hashes. A separate relay
-integrates Decionis AgentSafe and checks signed action bindings. Provisioned service acceptance remains open;
-incomplete proof stays unverified, with recovery that never repeats approval. Judges can use the full demo without that service,
-a login or a backend. Demo execution is simulated, and rehearsals are never predictions or guarantees.
+**Why come back.** A short daily handover presents what your agents held overnight. Drills occasionally slip in a
+plausible but unsafe request and reveal themselves only after you decide, keeping a calibration score so approval
+never becomes a reflex. Agents with a clean record fill a trust ring and can earn a narrow, expiring rule that you
+accept by placing it on them, so the desk gets quieter.
 
-**Hand interactions.** Inspect, pull, twist, place, hold and push form the core loop. Paged settings and named
-detail controls support Gaze + pinch, a preferred-hand alternative, larger text, high contrast, captions and
-reduced motion. The seated workflow is tested with emulated hands. Physical Quest performance and narrow-field
-validation remain required device checks.
+**How we built it.** Meta's Immersive Web SDK 1.0, TypeScript and Three.js with ECS systems; plane detection with a
+fallback plinth; procedural machines and synthesised spatial sound, with captions on by default. Action hashes
+follow the Agent-Safe Intent v1 reference implementation. A separate Node relay integrates Decionis AgentSafe for
+live mode. The demo needs no login or backend.
 
-**Challenges and lessons.** Keeping a decision, its proof and physical execution separate mattered more than a convincing animation. Retained model evidence makes later replay honest.
+**Challenges and lessons.** Keeping the decision, its proof and the physical execution separate mattered more than
+a convincing animation. Hand-tracking drift taught us to fail closed: a token let go in mid-air is not a veto.
 
-**What's next.** Two-person review, data-centre, lab and commerce packs, voice alternatives, and real PLC
-integration with execution receipts.
+**Status.** The full four-scenario shift is verified end to end with emulated hands, and the video is emulator
+footage. Physical Quest validation remains pending. Demo execution is simulated, rehearsals are not
+predictions, and demo seals carry a local demo signature. Live policy-gate acceptance is still pending.
+
+**What's next.** Two-person review; data-centre, lab and commerce packs; voice; and real PLC integration with
+execution receipts.

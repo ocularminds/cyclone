@@ -28,4 +28,7 @@ No scene, material, font, layout, application system or asset was edited. The on
 8. From the repository root, run `python3 docs/revision3/video/chrome/edit.py`. It uses the existing revision-3 graphic renderer and retimes cuts against the newly recorded event marks.
 9. Inspect the output and contact sheet; reset the temporary Chrome viewport override.
 
-Recordings stay local. This recapture does not upload or replace the published YouTube video.
+The delivered edit was [published publicly on YouTube](https://youtu.be/bEx3UlCG-IE) on 17 November 2026
+and added to the existing Devpost submission. The watch page was verified playing at 1920×1080 with no media error.
+[Publication metadata](youtube.json), [confirmation](youtube-published.jpg), and [HD playback](youtube-1080p.jpg)
+record the upload. The capture/rebuild scripts themselves perform no upload.
