@@ -102,6 +102,15 @@ check('Gaze + pinch: chute selection vetoes the inspected token (C25)', s.ledger
 d.page(`window.cyclone.app.settings.set('eyesOnly', false)`);
 d.park();
 
+// lifted beyond the edge and released in the air (or tracking lost) → not a veto; stays held (fail closed)
+tok = inspect('lift_pallet');
+s = d.probe();
+d.carry(tok.at, [s.offEdge[0], s.offEdge[1] + 0.28, s.offEdge[2]], 'hand-right', tok.id);
+d.sleep(1500);
+s = d.probe();
+check('release in the air beyond the edge → no decision, token back in the tray', s.ledger.length === 3 && s.tokens.find(t => t.id === tok.id)?.place === 'tray', `ledger=${s.ledger.length}`);
+d.park();
+
 // drill: shove it off the desk edge with an open hand → caught (C07 push, C16)
 tok = inspect('lift_pallet');
 s = d.probe();

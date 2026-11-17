@@ -31,6 +31,8 @@ export class DecisionGestureSystem extends createSystem({
 }) {
   static readonly HOLD_SECONDS = Commitment.SECONDS;
   static readonly PALM_RADIUS = 0.075;
+  /** A release beyond the edge counts as a veto only this close to desk height (m). */
+  static readonly VETO_MAX_HEIGHT = 0.15;
   private app!: Cyclone;
   private stage!: Stage;
   private shutter!: Mesh;
@@ -109,6 +111,14 @@ export class DecisionGestureSystem extends createSystem({
     const intent = v.token.intent;
     console.info(`[cyclone][land] ${intent.tool} desk=(${p.x.toFixed(3)}, ${p.y.toFixed(3)}, ${p.z.toFixed(3)}) onDesk=${this.stage.onDesk(p.x, p.z)}`);
     v.from.copy(p);
+    if (!this.stage.onDesk(p.x, p.z) && p.y > DecisionGestureSystem.VETO_MAX_HEIGHT) {
+      // Released in the air beyond the desk (lifted toward the face, or hand
+      // tracking dropped mid-carry): not a deliberate edge veto. Fail closed:
+      // the action stays held and returns to the tray.
+      this.app.cue('lock', 'Not vetoed. To veto, push or drop the token just past the desk edge.', [p.x, p.y, p.z]);
+      this.toTray(v);
+      return;
+    }
     if (!this.stage.onDesk(p.x, p.z)) {
       // over the edge: into the veto chute (real desk edge or plinth edge)
       v.moveTo([p.x, p.y - 0.3, p.z + 0.05], 'leaving');
@@ -187,6 +197,7 @@ export class DecisionGestureSystem extends createSystem({
   }
 
   private rayClock = 1;
+  private controllerHinted = false;
 
   /** Gaze present (VR Glasses) or eyes-only → stations and card take gaze/ray pinches (C25). */
   private syncRayTargets(delta: number): void {
@@ -195,7 +206,17 @@ export class DecisionGestureSystem extends createSystem({
     this.rayClock = 0;
     const sources = this.world.session?.inputSources;
     let gaze = false;
-    if (sources) for (const src of sources) if (src.targetRayMode === 'gaze') gaze = true;
+    let controller = false;
+    if (sources) for (const src of sources) {
+      if (src.targetRayMode === 'gaze') gaze = true;
+      if (src.targetRayMode === 'tracked-pointer' && !src.hand && src.gamepad) controller = true;
+    }
+    // Cyclone is hands-first; tokens are carried by hand. Tell a controller user once per
+    // pick-up of the controllers (Quest switches to hand tracking when they are put down).
+    if (controller && !this.controllerHinted) {
+      this.controllerHinted = true;
+      this.app.bus.emit('toast', { text: 'Put the controllers down. Cyclone is used with your hands.', tone: 'info' });
+    } else if (!controller && sources) this.controllerHinted = false;
     const enabled = gaze || this.app.settings.get('eyesOnly') || !this.world.session;
     for (const e of this.stage.rayTargets) {
       const want = (enabled || this.stage.alwaysRayTargets.has(e)) && !this.stage.suppressedRayTargets.has(e);

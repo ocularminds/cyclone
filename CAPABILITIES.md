@@ -18,7 +18,7 @@ Current totals: **35 verified · 14 partial · 1 human-blocked · 0 todo**. No c
 | C04 | Amend: twist dial; live re-rehearsal; breach clears | ✅ | e2e 250→180, breach cleared; unit ≤2 ms per re-rehearsal. |
 | C05 | Decide — single: place in slot | ✅ | e2e APPROVE `place` with matching hash. |
 | C06 | Dead-man's hold 1.5 s; release aborts | ✅ | Hands-only hold → APPROVE_AMENDED; early release aborts. Required-hand disconnect cannot finish; reconnect needs a fresh hold. Unit edit/pause/brief tracking-loss cases. |
-| C07 | Veto: push off the desk edge | 🟨 | e2e: drop off plinth edge and open-hand push off the edge → REJECT `veto_push`. Real detected-desk edge needs H3. |
+| C07 | Veto: push off the desk edge | 🟨 | e2e: drop off plinth edge and open-hand push off the edge → REJECT `veto_push`; release in the air beyond the edge → no decision, back to tray (D62). Real detected-desk edge needs H3. |
 | C08 | Forbidden: slot locks; veto/escalate only | ✅ | e2e lock + return; unit escalate/veto. |
 | C09 | Escalate pad | ✅ | e2e: pad → ESCALATE, token parks in rack. |
 | C10 | Seal crystal with hash glyph == token glyph | ✅ | e2e glyph match; unit signature verify/tamper. |
@@ -54,7 +54,7 @@ Current totals: **35 verified · 14 partial · 1 human-blocked · 0 todo**. No c
 | C40 | Performance | 🟨 | Revision1 desktop IWER: 480 frames, 60.002 fps, p95 16.9 ms, 30,312 triangles, 276 calls, one active ghost. Clean local production cold first token 7.311 s. Bundle audited. These are not sustained Quest measurements; H3 remains (`docs/perf.md`). |
 | C41 | No in-app brand strings | ✅ | `tests/brand.test.ts`; relay scrubs brand words from rendered summaries. |
 | C42 | No human models; walkway markings | ✅ | All geometry procedural; walkway is a hatched floor marking; no figures. |
-| C43 | Hands-only full run | ✅ | Both e2e suites run in hand-tracking mode only. |
+| C43 | Hands-only full run | ✅ | Both e2e suites run in hand-tracking mode only. Controllers in hand → "put the controllers down" hint (`controllers.mjs`, D62). |
 | C44 | Deploy to GitHub Pages | ✅ | [Public demo](https://ocularminds.github.io/cyclone/) deploys from main with relative Vite base. Revision1 public smoke: XR, first token 6.02 s, signed retained snapshot and proof-bundle 2.0; JS and video hashes match local output (`docs/revision1/release.json`). Freeze 17 Nov; preserve submitted build through ~11 Dec. |
 | C45 | README | ✅ | |
 | C46 | SUBMISSION | ✅ | 442-word description reflects the implemented demo, access/scoring, repaired proof recovery and remaining live/device limitations. Launch date remains Q1 2027 (confirm/H6); final submission remains H2. |
