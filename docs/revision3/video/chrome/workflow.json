@@ -1,0 +1,642 @@
+{
+  "source": "External Google Chrome; installed Immersive Web Emulator 2.0.0 / IWER 2.3.0",
+  "name": "workflow",
+  "at": "2026-11-17T05:56:27.919Z",
+  "duration": 112.34359999996424,
+  "canvas": [
+    3840,
+    2160
+  ],
+  "sources": [
+    {
+      "app": false,
+      "width": 3840,
+      "height": 2160
+    },
+    {
+      "app": true,
+      "width": 3840,
+      "height": 2160
+    }
+  ],
+  "type": "video/webm;codecs=vp9,opus",
+  "bytes": 27302557,
+  "compositorFrames": 4565,
+  "compositorFps": 40.634268440760785,
+  "events": [
+    {
+      "seconds": 0.0050999999642372135,
+      "mark": "shift-start"
+    },
+    {
+      "seconds": 5.5838999999761585,
+      "name": "drop",
+      "caption": "Held: Line Agent wants to Speed up conveyor 1 by 10% to clear the backlog.",
+      "at": [
+        -0.125,
+        0.013000000000000001,
+        -0.06
+      ],
+      "level": 0
+    },
+    {
+      "seconds": 10.152799999952316,
+      "name": "unfold",
+      "caption": "Inspecting: Line Agent",
+      "at": [
+        -0.17500000000000002,
+        0.013000000000000001,
+        -0.06
+      ]
+    },
+    {
+      "seconds": 10.304199999988079,
+      "mark": "conveyor-inspect"
+    },
+    {
+      "seconds": 17.30519999998808,
+      "name": "seal",
+      "caption": "Decision recorded: approve. Proof is checked separately.",
+      "at": [
+        -0.255,
+        0,
+        -0.056
+      ]
+    },
+    {
+      "seconds": 18.273299999952318,
+      "mark": "conveyor-sealed"
+    },
+    {
+      "seconds": 19.320599999964237,
+      "name": "drop",
+      "caption": "Held: Cell Agent wants to Raise cell 3 axis 3 to 250°/s to recover cycle time.",
+      "at": [
+        -0.125,
+        0.013000000000000001,
+        -0.06
+      ],
+      "level": 2
+    },
+    {
+      "seconds": 20.016,
+      "name": "unfold",
+      "caption": "Inspecting: Cell Agent",
+      "at": [
+        -0.17500000000000002,
+        0.013000000000000001,
+        -0.06
+      ]
+    },
+    {
+      "seconds": 20.764099999964237,
+      "mark": "arm-inspect"
+    },
+    {
+      "seconds": 25.3015,
+      "mark": "scrub-start"
+    },
+    {
+      "seconds": 27.00469999998808,
+      "name": "scrub",
+      "caption": "Scrubbing the rehearsal: 1%"
+    },
+    {
+      "seconds": 27.126899999976157,
+      "name": "scrub",
+      "caption": "Scrubbing the rehearsal: 8%"
+    },
+    {
+      "seconds": 27.257099999964236,
+      "name": "scrub",
+      "caption": "Scrubbing the rehearsal: 15%"
+    },
+    {
+      "seconds": 27.393399999976157,
+      "name": "scrub",
+      "caption": "Scrubbing the rehearsal: 23%"
+    },
+    {
+      "seconds": 27.539299999952316,
+      "name": "scrub",
+      "caption": "Scrubbing the rehearsal: 31%"
+    },
+    {
+      "seconds": 27.6845,
+      "name": "scrub",
+      "caption": "Scrubbing the rehearsal: 39%"
+    },
+    {
+      "seconds": 27.844299999952316,
+      "name": "scrub",
+      "caption": "Scrubbing the rehearsal: 48%"
+    },
+    {
+      "seconds": 27.972399999976158,
+      "name": "scrub",
+      "caption": "Scrubbing the rehearsal: 55%"
+    },
+    {
+      "seconds": 28.109,
+      "name": "scrub",
+      "caption": "Scrubbing the rehearsal: 62%"
+    },
+    {
+      "seconds": 28.1405,
+      "name": "risk",
+      "caption": "Breach: Walkway W1",
+      "at": [
+        0.24267823452186607,
+        0.06,
+        -0.24499997877847748
+      ],
+      "level": 3
+    },
+    {
+      "seconds": 28.23219999998808,
+      "name": "scrub",
+      "caption": "Scrubbing the rehearsal: 69%"
+    },
+    {
+      "seconds": 28.363799999952317,
+      "name": "scrub",
+      "caption": "Scrubbing the rehearsal: 76%"
+    },
+    {
+      "seconds": 28.489399999976158,
+      "name": "scrub",
+      "caption": "Scrubbing the rehearsal: 83%"
+    },
+    {
+      "seconds": 29.742399999976158,
+      "mark": "scrub-complete"
+    },
+    {
+      "seconds": 32.79519999998808,
+      "mark": "amend-start"
+    },
+    {
+      "seconds": 34.11209999996424,
+      "name": "scrub",
+      "caption": "Amended to 240°/s — still breaches"
+    },
+    {
+      "seconds": 34.2375,
+      "name": "scrub",
+      "caption": "Amended to 220°/s — still breaches"
+    },
+    {
+      "seconds": 34.38879999995232,
+      "name": "scrub",
+      "caption": "Amended to 210°/s — still breaches"
+    },
+    {
+      "seconds": 34.55469999998808,
+      "name": "scrub",
+      "caption": "Amended to 200°/s — still breaches"
+    },
+    {
+      "seconds": 34.73169999998808,
+      "name": "scrub",
+      "caption": "Amended to 190°/s — still breaches"
+    },
+    {
+      "seconds": 34.91209999996424,
+      "name": "scrub",
+      "caption": "Amended to 180°/s — breach clear"
+    },
+    {
+      "seconds": 37.197399999976156,
+      "mark": "amend-complete"
+    },
+    {
+      "seconds": 42.58789999997616,
+      "name": "unfold",
+      "caption": "Review page 1"
+    },
+    {
+      "seconds": 43.51479999995232,
+      "name": "unfold",
+      "caption": "Compare original and proposed"
+    },
+    {
+      "seconds": 43.864699999988076,
+      "mark": "compare-start"
+    },
+    {
+      "seconds": 44.4685,
+      "name": "unfold",
+      "caption": "Compare original and proposed"
+    },
+    {
+      "seconds": 44.46969999998808,
+      "name": "risk",
+      "caption": "Breach: Walkway W1",
+      "at": [
+        0.24267823452186607,
+        0.06,
+        -0.24499997877847748
+      ],
+      "level": 3
+    },
+    {
+      "seconds": 48.94979999995232,
+      "name": "unfold",
+      "caption": "Compare original and proposed"
+    },
+    {
+      "seconds": 52.806,
+      "mark": "compare-complete"
+    },
+    {
+      "seconds": 53.41869999998808,
+      "name": "unfold",
+      "caption": "Review page 2"
+    },
+    {
+      "seconds": 54.34359999996424,
+      "name": "unfold",
+      "caption": "Review summary"
+    },
+    {
+      "seconds": 59.48009999996424,
+      "name": "hold",
+      "caption": "Critical: hold it with both hands for 1.5 seconds"
+    },
+    {
+      "seconds": 60.46419999998808,
+      "mark": "abort-start"
+    },
+    {
+      "seconds": 60.48319999998808,
+      "name": "hold",
+      "caption": "Hold with both palms; release cancels.",
+      "at": [
+        0.1034923428096548,
+        0.01800432801246643,
+        -0.06199780578891147
+      ],
+      "level": 2
+    },
+    {
+      "seconds": 61.12919999998808,
+      "name": "lock",
+      "caption": "Hold cancelled. Nothing sent. Place the token again.",
+      "at": [
+        0.10349234193563461,
+        0.018000012263655663,
+        -0.061997804790735245
+      ]
+    },
+    {
+      "seconds": 63.329899999976156,
+      "mark": "abort-complete"
+    },
+    {
+      "seconds": 69.81679999995232,
+      "name": "hold",
+      "caption": "Critical: hold it with both hands for 1.5 seconds"
+    },
+    {
+      "seconds": 70.78739999997616,
+      "mark": "hold-start"
+    },
+    {
+      "seconds": 70.81729999995231,
+      "name": "hold",
+      "caption": "Hold with both palms; release cancels.",
+      "at": [
+        0.10421122725394466,
+        0.018004655838012695,
+        -0.06138332646344089
+      ],
+      "level": 2
+    },
+    {
+      "seconds": 72.29429999995232,
+      "name": "seal",
+      "caption": "Decision recorded: amended. Proof is checked separately.",
+      "at": [
+        -0.255,
+        0,
+        -0.056
+      ]
+    },
+    {
+      "seconds": 72.377,
+      "mark": "arm-sealed"
+    },
+    {
+      "seconds": 74.32059999996423,
+      "name": "drop",
+      "caption": "Held: Thermal Agent wants to Set the Zone B oven to 450°C to halve cure time.",
+      "at": [
+        -0.125,
+        0.013000000000000001,
+        -0.06
+      ],
+      "level": 3
+    },
+    {
+      "seconds": 74.99669999998808,
+      "name": "unfold",
+      "caption": "Inspecting: Thermal Agent",
+      "at": [
+        -0.17500000000000002,
+        0.013000000000000001,
+        -0.06
+      ]
+    },
+    {
+      "seconds": 74.99839999997616,
+      "name": "lock",
+      "caption": "This one breaks a hard limit: the slot is locked. Push it off the desk edge to veto."
+    },
+    {
+      "seconds": 77.84889999997615,
+      "mark": "oven-lock-start"
+    },
+    {
+      "seconds": 81.38329999995231,
+      "name": "lock",
+      "caption": "Execute slot locked: this action breaks a hard limit.",
+      "at": [
+        -0.17500000000000002,
+        0.013000000000000001,
+        -0.06
+      ],
+      "level": 3
+    },
+    {
+      "seconds": 82.33689999997615,
+      "mark": "oven-locked"
+    },
+    {
+      "seconds": 85.3725,
+      "mark": "veto-start"
+    },
+    {
+      "seconds": 88.86719999998807,
+      "name": "veto",
+      "caption": "Vetoed: Set the Zone B oven to 450°C to halve cure time.",
+      "at": [
+        0.30000001192092896,
+        0.01997571438550949,
+        0.07999999076128006
+      ]
+    },
+    {
+      "seconds": 88.87569999998809,
+      "name": "seal",
+      "caption": "Decision recorded: reject. Proof is checked separately.",
+      "at": [
+        -0.255,
+        0,
+        -0.056
+      ]
+    },
+    {
+      "seconds": 89.83409999996424,
+      "mark": "oven-vetoed"
+    },
+    {
+      "seconds": 90.89389999997616,
+      "name": "drop",
+      "caption": "Held: Line Agent wants to Stage pallet P-14 into bay S2-3 for the morning pick.",
+      "at": [
+        -0.125,
+        0.013000000000000001,
+        -0.06
+      ],
+      "level": 0
+    },
+    {
+      "seconds": 91.53619999998809,
+      "name": "unfold",
+      "caption": "Inspecting: Line Agent",
+      "at": [
+        -0.17500000000000002,
+        0.013000000000000001,
+        -0.06
+      ]
+    },
+    {
+      "seconds": 92.74259999996424,
+      "mark": "pallet-inspect"
+    },
+    {
+      "seconds": 97.288,
+      "mark": "pallet-decide"
+    },
+    {
+      "seconds": 100.793,
+      "name": "seal",
+      "caption": "Decision recorded: approve. Proof is checked separately.",
+      "at": [
+        -0.255,
+        0,
+        -0.056
+      ]
+    },
+    {
+      "seconds": 100.79319999998808,
+      "name": "drill",
+      "caption": "Drill - you missed it. Watch the replay. Calibration: 0% caught (0/1)",
+      "at": [
+        0,
+        0.2,
+        -0.12
+      ],
+      "level": 3
+    },
+    {
+      "seconds": 101.73569999998809,
+      "mark": "drill-revealed"
+    },
+    {
+      "seconds": 104.85019999998808,
+      "name": "risk",
+      "caption": "Breach: Shelf S2 beam",
+      "at": [
+        0.06,
+        0.11500000000000002,
+        -0.41500002321714763
+      ],
+      "level": 3
+    },
+    {
+      "seconds": 109.77839999997616,
+      "mark": "summary"
+    },
+    {
+      "seconds": 110.88179999995232,
+      "name": "risk",
+      "caption": "Breach: Shelf S2 beam",
+      "at": [
+        0.06,
+        0.11500000000000002,
+        -0.41500002321714763
+      ],
+      "level": 3
+    }
+  ],
+  "checks": [
+    {
+      "name": "Quest 3 hands-only immersive session",
+      "ok": true
+    },
+    {
+      "name": "Plane or plinth anchor",
+      "ok": true,
+      "detail": "plinth"
+    },
+    {
+      "name": "First token within 15 seconds",
+      "ok": true,
+      "detail": [
+        "bloom@0.0",
+        "first_token@6.0"
+      ]
+    },
+    {
+      "name": "Place approves the conveyor",
+      "ok": true
+    },
+    {
+      "name": "Conveyor seal preserves its glyph",
+      "ok": true
+    },
+    {
+      "name": "Satisfying beat within 90 seconds",
+      "ok": true,
+      "detail": 18.70330000001192
+    },
+    {
+      "name": "Arm at 250 breaches the walkway",
+      "ok": true
+    },
+    {
+      "name": "Timeline pull scrubs the real ghost",
+      "ok": true,
+      "detail": 0.828751769165198
+    },
+    {
+      "name": "Twist changes to 180 and clears the breach",
+      "ok": true,
+      "detail": {
+        "value": 180,
+        "breach": null
+      }
+    },
+    {
+      "name": "Amendment changes the visible hash glyph",
+      "ok": true
+    },
+    {
+      "name": "Compare opens from the actual card controls",
+      "ok": true
+    },
+    {
+      "name": "Early release cancels without a decision",
+      "ok": true
+    },
+    {
+      "name": "Two-hand hold approves the amended binding",
+      "ok": true,
+      "detail": {
+        "decision": "APPROVE_AMENDED",
+        "gesture": "two_hand_hold",
+        "glyph": "707e9460f3da8149",
+        "amended_args": {
+          "cell": 3,
+          "joint": "axis_3",
+          "deg_s": 180
+        }
+      }
+    },
+    {
+      "name": "Forbidden oven cannot execute",
+      "ok": true
+    },
+    {
+      "name": "Desk-edge gesture vetoes the oven",
+      "ok": true
+    },
+    {
+      "name": "Drill reveal follows the decision and updates calibration",
+      "ok": true,
+      "detail": "0% caught (0/1)"
+    },
+    {
+      "name": "Summary matches the captured decisions",
+      "ok": true,
+      "detail": {
+        "decisions": 4,
+        "approved": 3,
+        "amended": 1,
+        "vetoed": 1,
+        "escalated": 0,
+        "expired": 0,
+        "auto": 0,
+        "drillsCaught": 0,
+        "drillsMissed": 1,
+        "drillsUnassessed": 0,
+        "falseAlarms": 0
+      }
+    }
+  ],
+  "beats": [
+    "bloom@0.0",
+    "first_token@6.0",
+    "first_seal@17.7",
+    "second_token@19.7",
+    "third_token@74.7",
+    "drill@91.2",
+    "drill_missed@101.1",
+    "summary@101.2"
+  ],
+  "ledger": [
+    {
+      "decision": "APPROVE",
+      "gesture": "place",
+      "glyph": "ad6fdcac6ffacca6",
+      "amended_args": null
+    },
+    {
+      "decision": "APPROVE_AMENDED",
+      "gesture": "two_hand_hold",
+      "glyph": "707e9460f3da8149",
+      "amended_args": {
+        "cell": 3,
+        "joint": "axis_3",
+        "deg_s": 180
+      }
+    },
+    {
+      "decision": "REJECT",
+      "gesture": "veto_push",
+      "glyph": "39e590cff4fe3d0a",
+      "amended_args": null
+    },
+    {
+      "decision": "APPROVE",
+      "gesture": "place",
+      "glyph": "79b2017a3e7466e9",
+      "amended_args": null
+    }
+  ],
+  "summary": {
+    "decisions": 4,
+    "approved": 3,
+    "amended": 1,
+    "vetoed": 1,
+    "escalated": 0,
+    "expired": 0,
+    "auto": 0,
+    "drillsCaught": 0,
+    "drillsMissed": 1,
+    "drillsUnassessed": 0,
+    "falseAlarms": 0
+  },
+  "claims": "Synthetic hands; demo signatures; simulated execution; real-time capture, no generated or substituted UI."
+}
