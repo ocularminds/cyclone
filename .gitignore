@@ -9,3 +9,12 @@ relay/.data/
 
 # Draft briefs outside the Cyclone submission
 brief.fit-confidence.md
+
+# Superseded revision briefs and instructions (kept locally in ../Cyclone-archive)
+brief.review1.pdf
+brief.revision1.pdf
+instruct.design.md
+instruct.revision1.md
+
+# IWSDK tool artifacts
+app/artifacts/
