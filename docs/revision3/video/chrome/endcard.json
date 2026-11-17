@@ -1,0 +1,106 @@
+{
+  "source": "External Google Chrome; installed Immersive Web Emulator 2.0.0 / IWER 2.3.0",
+  "name": "endcard",
+  "at": "2026-11-17T06:00:10.235Z",
+  "duration": 10.078399999976158,
+  "canvas": [
+    3840,
+    2160
+  ],
+  "sources": [
+    {
+      "app": false,
+      "width": 3840,
+      "height": 2160
+    },
+    {
+      "app": true,
+      "width": 3840,
+      "height": 2160
+    }
+  ],
+  "type": "video/webm;codecs=vp9,opus",
+  "bytes": 1089692,
+  "compositorFrames": 420,
+  "compositorFps": 41.673281473348304,
+  "events": [
+    {
+      "seconds": 0.022599999964237213,
+      "mark": "endcard"
+    }
+  ],
+  "checks": [
+    {
+      "name": "Quest 3 hands-only immersive session",
+      "ok": true
+    },
+    {
+      "name": "Plane or plinth anchor",
+      "ok": true,
+      "detail": "plinth"
+    },
+    {
+      "name": "End card contains the four captured seals",
+      "ok": true,
+      "detail": {
+        "seals": 4,
+        "tokens": 0
+      }
+    },
+    {
+      "name": "End card hides the application HUD and captions",
+      "ok": true
+    },
+    {
+      "name": "Seals are evenly spaced",
+      "ok": true
+    }
+  ],
+  "beats": [
+    "bloom@0.0"
+  ],
+  "ledger": [
+    {
+      "decision": "APPROVE",
+      "gesture": "place",
+      "glyph": "ad6fdcac6ffacca6",
+      "amended_args": null
+    },
+    {
+      "decision": "APPROVE_AMENDED",
+      "gesture": "two_hand_hold",
+      "glyph": "707e9460f3da8149",
+      "amended_args": {
+        "cell": 3,
+        "joint": "axis_3",
+        "deg_s": 180
+      }
+    },
+    {
+      "decision": "REJECT",
+      "gesture": "veto_push",
+      "glyph": "39e590cff4fe3d0a",
+      "amended_args": null
+    },
+    {
+      "decision": "APPROVE",
+      "gesture": "place",
+      "glyph": "79b2017a3e7466e9",
+      "amended_args": null
+    }
+  ],
+  "summary": {
+    "decisions": 0,
+    "approved": 0,
+    "amended": 0,
+    "vetoed": 0,
+    "escalated": 0,
+    "expired": 0,
+    "auto": 0,
+    "drillsCaught": 0,
+    "drillsMissed": 0,
+    "drillsUnassessed": 0,
+    "falseAlarms": 0
+  },
+  "claims": "Synthetic hands; demo signatures; simulated execution; real-time capture, no generated or substituted UI."
+}

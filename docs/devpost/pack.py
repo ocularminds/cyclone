@@ -21,7 +21,7 @@ assert report["trust_anchor"]["status"] == "UNESTABLISHED"
 report["jwks_url"] = "proof/demo-jwks.json"
 report["trust_anchor"]["source"] = "proof/demo-jwks.json"
 (OUT / "proof-check.json").write_text(json.dumps(report, indent=2) + "\n")
-files = {name: OUT / name for name in ["README.md", "story.md", "fields.json", "manifest.json", "proof-check.json", "contact.jpg"]}
+files = {name: OUT / name for name in ["README.md", "revision2.md", "revision2-public.jpg", "revision2-submitted.jpg", "story.md", "fields.json", "manifest.json", "proof-check.json", "contact.jpg"]}
 files.update({"gallery/" + name: OUT / name for name in ["cover.png", "inspect.png", "amend.png", "locked.png", "receipt.png", "access.png"]})
 files.update({"proof/demo-dossier.json": proof, "proof/demo-jwks.json": jwks})
 files.update({"source/" + name: OUT / name for name in ["export.py", "copy.py", "pack.py"]})

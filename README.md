@@ -12,8 +12,9 @@ on the miniature; no real machine is driven. A signature, an authorization and p
 ## Try it
 
 [Open the public demo](https://ocularminds.github.io/cyclone/).
-[Watch the 2:49 emulator demo on YouTube](https://youtu.be/NaKl8JTSMP4).
-The video labels simulated execution throughout. The [original MP4](https://ocularminds.github.io/cyclone/video/cyclone-revision1.mp4) is also available.
+[Watch the 2:00 HD emulator demo on YouTube](https://youtu.be/bEx3UlCG-IE).
+The video labels simulated execution throughout. The [revision-3 MP4](app/public/video/cyclone-revision3.mp4)
+uses native 4K source footage from external Chrome, downsampled to 1080p for clear text.
 
 [Devpost project](https://devpost.com/software/cyclone-the-calm-eye-for-ai-agents-decisions) ·
 [Artwork and proof artifact pack](https://ocularminds.github.io/cyclone/submission/cyclone-artifacts.zip).

@@ -1,8 +1,8 @@
 {
   "file": "app/public/submission/cyclone-artifacts.zip",
-  "bytes": 3117914,
-  "sha256": "861a01bc70723c7ae6819c4520a86c84e85b36ee3845990462410a9f55a7a06f",
-  "files": 28,
+  "bytes": 3321677,
+  "sha256": "3e162eac1bfd224748f0d53c35a2719b15da1761d47ed24e77d3a4a356047f89",
+  "files": 31,
   "url": "https://ocularminds.github.io/cyclone/submission/cyclone-artifacts.zip",
   "proof_cli_exit": 0,
   "contains_private_keys": false

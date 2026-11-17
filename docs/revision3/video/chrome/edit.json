@@ -1,0 +1,593 @@
+{
+  "source": "Actual external Google Chrome, installed Immersive Web Emulator 2.0.0 (Meta Quest 3, IWER 2.3.0), synthetic hands only. App and synthetic-room canvases both render natively at 3840×2160 and are captured with the application's actual WebAudio mix. Existing revision-3 graphics, captions, pacing and crop framing are retained; source crops are downsampled to 1920×960, with no upscaling.",
+  "claims": "Emulated input, demo signatures, simulated execution. No live authorization or physical-device claim.",
+  "output": "app/public/video/cyclone-revision3.mp4",
+  "sha256": "6fbefc91387c6d2ddf8e015e0d128a774d0c8d61d102d1d5c5f293a703c3bd29",
+  "timeline": [
+    {
+      "source": "workflow.webm",
+      "in": 20.0641,
+      "out": 23.6641,
+      "at": 0.0,
+      "crop": [
+        1120,
+        320,
+        2560,
+        1280
+      ],
+      "caption": "A held action lands on your desk",
+      "overlay": "hook",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 27.4424,
+      "out": 31.7424,
+      "at": 3.6,
+      "crop": [
+        1280,
+        400,
+        2240,
+        1120
+      ],
+      "caption": "Pull to rehearse. The breach flares at the walkway.",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 32.9952,
+      "out": 38.2952,
+      "at": 7.9,
+      "crop": [
+        1280,
+        400,
+        2240,
+        1120
+      ],
+      "caption": "Twist 250 to 180°/s. The breach clears.",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 70.4874,
+      "out": 74.7874,
+      "at": 13.2,
+      "crop": [
+        840,
+        660,
+        3000,
+        1500
+      ],
+      "caption": "Both hands for 1.5 s. Sealed as reviewed.",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "endcard.webm",
+      "in": 0,
+      "out": 3.5,
+      "at": 17.5,
+      "crop": [
+        840,
+        760,
+        2160,
+        1080
+      ],
+      "caption": "Rehearse. Reshape. Decide. Hands only, on your desk.",
+      "overlay": "card",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 3,
+      "out": 11.0,
+      "at": 21.0,
+      "crop": [
+        480,
+        720,
+        2880,
+        1440
+      ],
+      "caption": "A shift begins: each held action drops into the tray",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 7.9042,
+      "out": 19.9042,
+      "at": 29.0,
+      "crop": [
+        600,
+        400,
+        3040,
+        1520
+      ],
+      "caption": "Look to inspect. Place a routine action in the slot.",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 44.0147,
+      "out": 52.5147,
+      "at": 41.0,
+      "crop": [
+        600,
+        400,
+        3040,
+        1520
+      ],
+      "caption": "Compare the original and amended paths",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 60.3642,
+      "out": 66.8642,
+      "at": 49.5,
+      "crop": [
+        600,
+        400,
+        3040,
+        1520
+      ],
+      "caption": "Let go during a hold: cancelled, nothing sent",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 76.2489,
+      "out": 83.7489,
+      "at": 56.0,
+      "crop": [
+        600,
+        400,
+        3040,
+        1520
+      ],
+      "caption": "A hard limit locks the execute slot",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 84.6725,
+      "out": 92.2725,
+      "at": 63.5,
+      "crop": [
+        600,
+        400,
+        3040,
+        1520
+      ],
+      "caption": "Push it off the desk edge to veto",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 91.7426,
+      "out": 99.5426,
+      "at": 71.1,
+      "crop": [
+        600,
+        400,
+        3040,
+        1520
+      ],
+      "caption": "Routine-looking requests still need review",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 100.5357,
+      "out": 108.9357,
+      "at": 78.9,
+      "crop": [
+        600,
+        400,
+        3040,
+        1520
+      ],
+      "caption": "Drill revealed after the decision: the rehearsal clips the shelf",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "details.webm",
+      "in": 2.4342,
+      "out": 10.5342,
+      "at": 87.3,
+      "crop": [
+        1040,
+        500,
+        2800,
+        1400
+      ],
+      "caption": "Pick up a seal to replay what you reviewed",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "details.webm",
+      "in": 13.3501,
+      "out": 20.3501,
+      "at": 95.4,
+      "crop": [
+        1040,
+        500,
+        2800,
+        1400
+      ],
+      "caption": "Demo signature. Approval, proof and execution stay separate.",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "details.webm",
+      "in": 29.8771,
+      "out": 34.6771,
+      "at": 102.4,
+      "crop": [
+        1040,
+        500,
+        2800,
+        1400
+      ],
+      "caption": "Gaze + pinch and one-hand alternatives",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "details.webm",
+      "in": 39.2794,
+      "out": 43.7794,
+      "at": 107.2,
+      "crop": [
+        1040,
+        500,
+        2800,
+        1400
+      ],
+      "caption": "Larger text and high contrast",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "endcard.webm",
+      "in": 0,
+      "out": 8.2,
+      "at": 111.7,
+      "crop": [
+        840,
+        760,
+        2160,
+        1080
+      ],
+      "caption": "Cyclone — the calm eye where humans decide what AI agents do.",
+      "overlay": "plain",
+      "speed": 1
+    }
+  ],
+  "sources": {
+    "details": "3a268f8af63824a0578d30c46596651028e9f52275a2d454404ec0136769ec4d",
+    "endcard": "425c918ffffd263da27f7d8f2c4a49b40281e100c466b30019abf58b8a677c6b",
+    "workflow": "ac7d257bf2b59046c39037fb35f2ffe48a5de8fe6bd98c23f7c3949f686fbc0d"
+  },
+  "probe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "High",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "mime_codec_string": "avc1.640028",
+        "width": 1920,
+        "height": 1080,
+        "coded_width": 1920,
+        "coded_height": 1080,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "16:9",
+        "pix_fmt": "yuv420p",
+        "level": 40,
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_transfer": "bt709",
+        "color_primaries": "bt709",
+        "chroma_location": "left",
+        "field_order": "progressive",
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "1674240/55817",
+        "time_base": "1/15360",
+        "start_pts": 328,
+        "start_time": "0.021354",
+        "duration_ts": 1841961,
+        "duration": "119.919336",
+        "bit_rate": "444668",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "3597",
+        "extradata_size": 51,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "VideoHandler",
+          "encoder": "Lavc63.1.102 libx264"
+        }
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "mime_codec_string": "mp4a.40.2",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 5759296,
+        "duration": "119.985333",
+        "bit_rate": "162851",
+        "nb_frames": "5619",
+        "extradata_size": 5,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "eng",
+          "handler_name": "SoundHandler"
+        }
+      }
+    ],
+    "format": {
+      "filename": "/Users/bonus/develop/products/Cyclone/app/public/video/cyclone-revision3.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "nb_stream_groups": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "119.985333",
+      "size": "9257098",
+      "bit_rate": "617215",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "isom",
+        "minor_version": "512",
+        "compatible_brands": "isomiso2avc1mp41",
+        "title": "Cyclone — hands-first demo (revision 3)",
+        "encoder": "Lavf63.1.102",
+        "comment": "Actual IWSDK emulator footage, cropped and reordered; every segment at normal speed. Demo signatures and simulated execution; no physical machine operation."
+      }
+    }
+  },
+  "app_base_commit": "f9f40c7",
+  "application_design_changed": false,
+  "capture_url": "http://cyclone.localhost:8082/?mode=onboarding&capture=1",
+  "native_source_resolution": [
+    3840,
+    2160
+  ],
+  "capture_checks": {
+    "workflow": [
+      {
+        "name": "Quest 3 hands-only immersive session",
+        "ok": true
+      },
+      {
+        "name": "Plane or plinth anchor",
+        "ok": true,
+        "detail": "plinth"
+      },
+      {
+        "name": "First token within 15 seconds",
+        "ok": true,
+        "detail": [
+          "bloom@0.0",
+          "first_token@6.0"
+        ]
+      },
+      {
+        "name": "Place approves the conveyor",
+        "ok": true
+      },
+      {
+        "name": "Conveyor seal preserves its glyph",
+        "ok": true
+      },
+      {
+        "name": "Satisfying beat within 90 seconds",
+        "ok": true,
+        "detail": 18.70330000001192
+      },
+      {
+        "name": "Arm at 250 breaches the walkway",
+        "ok": true
+      },
+      {
+        "name": "Timeline pull scrubs the real ghost",
+        "ok": true,
+        "detail": 0.828751769165198
+      },
+      {
+        "name": "Twist changes to 180 and clears the breach",
+        "ok": true,
+        "detail": {
+          "value": 180,
+          "breach": null
+        }
+      },
+      {
+        "name": "Amendment changes the visible hash glyph",
+        "ok": true
+      },
+      {
+        "name": "Compare opens from the actual card controls",
+        "ok": true
+      },
+      {
+        "name": "Early release cancels without a decision",
+        "ok": true
+      },
+      {
+        "name": "Two-hand hold approves the amended binding",
+        "ok": true,
+        "detail": {
+          "decision": "APPROVE_AMENDED",
+          "gesture": "two_hand_hold",
+          "glyph": "707e9460f3da8149",
+          "amended_args": {
+            "cell": 3,
+            "joint": "axis_3",
+            "deg_s": 180
+          }
+        }
+      },
+      {
+        "name": "Forbidden oven cannot execute",
+        "ok": true
+      },
+      {
+        "name": "Desk-edge gesture vetoes the oven",
+        "ok": true
+      },
+      {
+        "name": "Drill reveal follows the decision and updates calibration",
+        "ok": true,
+        "detail": "0% caught (0/1)"
+      },
+      {
+        "name": "Summary matches the captured decisions",
+        "ok": true,
+        "detail": {
+          "decisions": 4,
+          "approved": 3,
+          "amended": 1,
+          "vetoed": 1,
+          "escalated": 0,
+          "expired": 0,
+          "auto": 0,
+          "drillsCaught": 0,
+          "drillsMissed": 1,
+          "drillsUnassessed": 0,
+          "falseAlarms": 0
+        }
+      }
+    ],
+    "details": [
+      {
+        "name": "Quest 3 hands-only immersive session",
+        "ok": true
+      },
+      {
+        "name": "Plane or plinth anchor",
+        "ok": true,
+        "detail": "plinth"
+      },
+      {
+        "name": "Physical seal pickup opens retained rehearsal",
+        "ok": true
+      },
+      {
+        "name": "Receipt controls open actual proof page",
+        "ok": true
+      },
+      {
+        "name": "Receipt closes from its controls",
+        "ok": true
+      },
+      {
+        "name": "Settings changes actual text scale",
+        "ok": true
+      }
+    ],
+    "endcard": [
+      {
+        "name": "Quest 3 hands-only immersive session",
+        "ok": true
+      },
+      {
+        "name": "Plane or plinth anchor",
+        "ok": true,
+        "detail": "plinth"
+      },
+      {
+        "name": "End card contains the four captured seals",
+        "ok": true,
+        "detail": {
+          "seals": 4,
+          "tokens": 0
+        }
+      },
+      {
+        "name": "End card hides the application HUD and captions",
+        "ok": true
+      },
+      {
+        "name": "Seals are evenly spaced",
+        "ok": true
+      }
+    ]
+  }
+}

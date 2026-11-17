@@ -1,0 +1,20 @@
+No narration; the following captions accompany the actual app audio.
+
+00:00:00  A held action lands on your desk
+00:00:03  Pull to rehearse. The breach flares at the walkway.
+00:00:07  Twist 250 to 180°/s. The breach clears.
+00:00:13  Both hands for 1.5 s. Sealed as reviewed.
+00:00:17  Rehearse. Reshape. Decide. Hands only, on your desk.
+00:00:21  A shift begins: each held action drops into the tray
+00:00:29  Look to inspect. Place a routine action in the slot.
+00:00:41  Compare the original and amended paths
+00:00:49  Let go during a hold: cancelled, nothing sent
+00:00:56  A hard limit locks the execute slot
+00:01:03  Push it off the desk edge to veto
+00:01:11  Routine-looking requests still need review
+00:01:18  Drill revealed after the decision: the rehearsal clips the shelf
+00:01:27  Pick up a seal to replay what you reviewed
+00:01:35  Demo signature. Approval, proof and execution stay separate.
+00:01:42  Gaze + pinch and one-hand alternatives
+00:01:47  Larger text and high contrast
+00:01:51  Cyclone — the calm eye where humans decide what AI agents do.

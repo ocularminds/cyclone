@@ -1,9 +1,9 @@
 # Cyclone — Devpost artifacts
 
-Prepared 10 November 2026 for [Meta VR Start Developer Competition 2026](https://start-developer-competition-26.devpost.com/).
+Prepared 10 November 2026; copy and video updated 17 November 2026 for [Meta VR Start Developer Competition 2026](https://start-developer-competition-26.devpost.com/).
 Track: **Productivity**. Division: **New**. Build path: **IWSDK (Web XR)**.
 
-[Open the demo](https://ocularminds.github.io/cyclone/) · [Watch the 2:49 video](https://youtu.be/NaKl8JTSMP4) ·
+[Open the demo](https://ocularminds.github.io/cyclone/) · [Watch the 2:00 HD video](https://youtu.be/bEx3UlCG-IE) ·
 [Source and evidence](https://github.com/ocularminds/cyclone) ·
 [Devpost project](https://devpost.com/software/cyclone-the-calm-eye-for-ai-agents-decisions)
 
@@ -12,21 +12,22 @@ Track: **Productivity**. Division: **New**. Build path: **IWSDK (Web XR)**.
 All six upload images are **1800 × 1200 PNG (3:2), below 5 MB**. `cover.png` is the project thumbnail and first
 gallery image. It preserves the approved Cyclone logo, original Three.js concept illustration and exact
 “Rehearse. Reshape. Decide.” typography. It is explicitly labelled concept artwork. The other five images are
-cropped frames from the real, hand-driven IWSDK emulator takes used in the public video. Cropping removes
+cropped frames from the real, hand-driven IWSDK emulator takes used in the original revision-1 video. Cropping removes
 surrounding black canvas; it does not redraw, replace or rearrange any application interface.
 
 | File | Subject | Source |
 |---|---|---|
 | `cover.png` | Cover artwork | `design/brand1/assets/cover-1920x1080.png` |
-| `inspect.png` | Held conveyor action | `workflow.webm`, 15 s |
 | `amend.png` | Arm, 250°/s → 180°/s | `workflow.webm`, 75 s |
+| `inspect.png` | Held conveyor action | `workflow.webm`, 15 s |
 | `locked.png` | Forbidden oven request | `workflow.webm`, 140 s |
 | `receipt.png` | Demo receipt and retained evidence | `details.webm`, 30 s |
 | `access.png` | Desk settings, 125% text | `details.webm`, 78 s |
 
 `manifest.json` records source hashes, timestamps, crop rectangles, export sizes and hashes. `contact.jpg` is the
 review sheet. `story.md` and `fields.json` preserve the public story and technical submission answers; private
-account fields are excluded. The target public beta is explicitly tentative, Q1 2027.
+account fields are excluded. `revision2.md` is the applied copy source: 487 words, with no unmeasured Quest claims.
+The target public beta is explicitly tentative, Q1 2027.
 
 Reproduce images with `python3 docs/devpost/export.py` (Pillow and ffmpeg). Regenerate copy with
 `python3 docs/devpost/copy.py`. `export.py` retains the unmodified extracted frames under `frames/`.
@@ -56,7 +57,16 @@ usability review remain open. No gallery image or signature export claims these 
 
 ## Publication status
 
-The artwork and technical copy are saved to the existing Devpost project. This packet documents the creative
+The revised pitch, story, hand-interaction answer, capture description, gallery order/captions and new
+YouTube link were saved to the existing Devpost project on 17 November 2026. Its public page was verified and
+the entry remains **Submitted**. [Public preview](revision2-public.jpg) and [submission state](revision2-submitted.jpg)
+record the result. The new video uses native 4K source footage from external Chrome; YouTube playback was
+verified at 1920×1080. The gallery artwork is unchanged.
+
+The refreshed artifact ZIP in this branch will reach the hosted download when [PR #4](https://github.com/ocularminds/cyclone/pull/4)
+is merged and the Pages workflow deploys. `release.json` retains the previous deployed archive's verification.
+
+This packet documents the creative
 assets and demo evidence, not competition eligibility. The separate
 [submission status record](https://github.com/ocularminds/cyclone/blob/main/docs/devpost/status.json)
 contains the last browser-verified save/submission state.

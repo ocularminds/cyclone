@@ -1,0 +1,72 @@
+1
+00:00:00,000 --> 00:00:03,600
+A held action lands on your desk
+
+2
+00:00:03,600 --> 00:00:07,900
+Pull to rehearse. The breach flares at the walkway.
+
+3
+00:00:07,900 --> 00:00:13,200
+Twist 250 to 180°/s. The breach clears.
+
+4
+00:00:13,200 --> 00:00:17,500
+Both hands for 1.5 s. Sealed as reviewed.
+
+5
+00:00:17,500 --> 00:00:21,000
+Rehearse. Reshape. Decide.
+Hands only, on your desk.
+
+6
+00:00:21,000 --> 00:00:29,000
+A shift begins: each held action drops into the tray
+
+7
+00:00:29,000 --> 00:00:41,000
+Look to inspect. Place a routine action in the slot.
+
+8
+00:00:41,000 --> 00:00:49,500
+Compare the original and amended paths
+
+9
+00:00:49,500 --> 00:00:56,000
+Let go during a hold: cancelled, nothing sent
+
+10
+00:00:56,000 --> 00:01:03,500
+A hard limit locks the execute slot
+
+11
+00:01:03,500 --> 00:01:11,100
+Push it off the desk edge to veto
+
+12
+00:01:11,100 --> 00:01:18,900
+Routine-looking requests still need review
+
+13
+00:01:18,900 --> 00:01:27,300
+Drill revealed after the decision: the rehearsal clips the shelf
+
+14
+00:01:27,300 --> 00:01:35,400
+Pick up a seal to replay what you reviewed
+
+15
+00:01:35,400 --> 00:01:42,400
+Demo signature. Approval, proof and execution stay separate.
+
+16
+00:01:42,400 --> 00:01:47,200
+Gaze + pinch and one-hand alternatives
+
+17
+00:01:47,200 --> 00:01:51,700
+Larger text and high contrast
+
+18
+00:01:51,700 --> 00:01:59,900
+Cyclone — the calm eye where humans decide what AI agents do.

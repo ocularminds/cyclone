@@ -1,0 +1,33 @@
+{
+  "url": "https://www.youtube.com/watch?v=bEx3UlCG-IE",
+  "title": "Cyclone — hands-first review of AI actions (HD demo)",
+  "description": "Cyclone puts held AI actions on a miniature factory at your desk. Inspect a proposal, scrub its kinematic rehearsal, amend the value, and decide with your hands. Every demo decision retains a signed local receipt and the model evidence that was reviewed.\n\nThis is actual Immersive Web Emulator footage recorded in external Chrome with the Meta Quest 3 emulator, edited from hand-driven takes at normal speed. Captured natively at 3840×2160 and delivered at 1080p. The end card is the application's capture scene. Inputs are emulated; signatures use a local demo key; execution is simulated. No real machine is connected. A rehearsal is not a prediction or guarantee, and a signed record is not proof of physical execution.\n\nTry the demo: https://ocularminds.github.io/cyclone/\nSource: https://github.com/ocularminds/cyclone\n\nBuilt with IWSDK 1.0.1, TypeScript and WebXR. Physical Quest performance, native room anchoring and provisioned live-service acceptance remain separate checks. Submission target: Productivity / New Experience.",
+  "visibility": "Public",
+  "confirmation": "Video published",
+  "copyright": "No issues found",
+  "playback": {
+    "width": 1920,
+    "height": 1080,
+    "duration": 120.021,
+    "readyState": 4,
+    "error": null
+  },
+  "checked_at": "2026-11-17T06:38:05.047Z",
+  "source_file": "app/public/video/cyclone-revision3.mp4",
+  "source_sha256": "6fbefc91387c6d2ddf8e015e0d128a774d0c8d61d102d1d5c5f293a703c3bd29",
+  "source_bytes": 9257098,
+  "source_duration_seconds": 119.985333,
+  "source_resolution": [
+    1920,
+    1080
+  ],
+  "native_capture_resolution": [
+    3840,
+    2160
+  ],
+  "channel": "Decionis",
+  "channel_id": "UCSfBZAQLtEQOaer9Na0QjfA",
+  "not_made_for_kids": true,
+  "confirmation_image": "docs/revision3/video/chrome/youtube-published.jpg",
+  "playback_image": "docs/revision3/video/chrome/youtube-1080p.jpg"
+}

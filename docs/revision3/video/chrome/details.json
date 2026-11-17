@@ -1,0 +1,152 @@
+{
+  "source": "External Google Chrome; installed Immersive Web Emulator 2.0.0 / IWER 2.3.0",
+  "name": "details",
+  "at": "2026-11-17T06:03:41.642Z",
+  "duration": 48.12539999997616,
+  "canvas": [
+    3840,
+    2160
+  ],
+  "sources": [
+    {
+      "app": false,
+      "width": 3840,
+      "height": 2160
+    },
+    {
+      "app": true,
+      "width": 3840,
+      "height": 2160
+    }
+  ],
+  "type": "video/webm;codecs=vp9,opus",
+  "bytes": 9910866,
+  "compositorFrames": 1896,
+  "compositorFps": 39.39707514121315,
+  "events": [
+    {
+      "seconds": 0.03780000001192093,
+      "mark": "details-start"
+    },
+    {
+      "seconds": 2.091300000011921,
+      "name": "unfold",
+      "caption": "Replaying the stored model evidence"
+    },
+    {
+      "seconds": 2.7341999999880793,
+      "mark": "receipt-open"
+    },
+    {
+      "seconds": 12.816599999964238,
+      "name": "unfold",
+      "caption": "Receipt proof"
+    },
+    {
+      "seconds": 13.150099999964237,
+      "mark": "demo-proof"
+    },
+    {
+      "seconds": 22.721399999976157,
+      "name": "unfold",
+      "caption": "Receipt closed"
+    },
+    {
+      "seconds": 23.551099999964237,
+      "name": "unfold",
+      "caption": "Inspecting: Cell Agent",
+      "at": [
+        -0.17500000000000002,
+        0.013000000000000001,
+        -0.06
+      ]
+    },
+    {
+      "seconds": 25.07169999998808,
+      "name": "unfold",
+      "caption": "Settings open",
+      "at": [
+        -0.255,
+        0,
+        -0.022
+      ]
+    },
+    {
+      "seconds": 29.677099999964238,
+      "mark": "input-controls"
+    },
+    {
+      "seconds": 39.07939999997616,
+      "mark": "larger-text"
+    },
+    {
+      "seconds": 46.22530000001192,
+      "name": "unfold",
+      "caption": "Settings closed",
+      "at": [
+        -0.255,
+        0,
+        -0.022
+      ]
+    },
+    {
+      "seconds": 46.555899999976155,
+      "mark": "settings-closed"
+    }
+  ],
+  "checks": [
+    {
+      "name": "Quest 3 hands-only immersive session",
+      "ok": true
+    },
+    {
+      "name": "Plane or plinth anchor",
+      "ok": true,
+      "detail": "plinth"
+    },
+    {
+      "name": "Physical seal pickup opens retained rehearsal",
+      "ok": true
+    },
+    {
+      "name": "Receipt controls open actual proof page",
+      "ok": true
+    },
+    {
+      "name": "Receipt closes from its controls",
+      "ok": true
+    },
+    {
+      "name": "Settings changes actual text scale",
+      "ok": true
+    }
+  ],
+  "beats": [
+    "bloom@0.0",
+    "first_token@6.0",
+    "first_seal@11.0",
+    "second_token@13.0"
+  ],
+  "ledger": [
+    {
+      "decision": "APPROVE",
+      "gesture": "place",
+      "glyph": "ad6fdcac6ffacca6",
+      "amended_args": null
+    }
+  ],
+  "summary": {
+    "decisions": 1,
+    "approved": 1,
+    "amended": 0,
+    "vetoed": 0,
+    "escalated": 0,
+    "expired": 0,
+    "auto": 0,
+    "drillsCaught": 0,
+    "drillsMissed": 0,
+    "drillsUnassessed": 0,
+    "falseAlarms": 0
+  },
+  "claims": "Synthetic hands; demo signatures; simulated execution; real-time capture, no generated or substituted UI."
+}

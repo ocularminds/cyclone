@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-11-17T06:38:05.047Z",
+  "project_url": "https://devpost.com/software/cyclone-the-calm-eye-for-ai-agents-decisions",
+  "state": "SUBMITTED",
+  "public_checks": {
+    "pitch": true,
+    "story": true,
+    "submitted": true,
+    "video": true
+  },
+  "saved_fields_match_versioned_copy": true,
+  "story_words": 487,
+  "gallery_order": [
+    "cover.png",
+    "amend.png",
+    "inspect.png",
+    "locked.png",
+    "receipt.png",
+    "access.png"
+  ],
+  "video": "https://www.youtube.com/watch?v=bEx3UlCG-IE",
+  "fields_sha256": "b08fbb07e757834d901d43123a181ee8a3443518a209c6168026f684114d1399",
+  "public_preview": "docs/devpost/revision2-public.jpg",
+  "submission_state": "docs/devpost/revision2-submitted.jpg",
+  "private_account_fields_exported": false
+}
