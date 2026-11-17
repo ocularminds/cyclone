@@ -7,7 +7,7 @@ let s=d.waitFor('first proposal',s=>s.tokens.some(t=>t.tool==='set_conveyor_spee
 d.leftRest=[s.head[0]-.25,s.head[1]-.3,s.head[2]-.1];d.rightRest=[s.head[0]+.25,s.head[1]-.3,s.head[2]-.1];d.park();
 const token=d.probe().tokens.find(t=>t.tool==='set_conveyor_speed');d.look(token.at);d.sleep(900);s=d.probe();
 d.carry(s.tokens.find(t=>t.id===token.id).at,s.slot);d.waitFor('signed conveyor receipt',s=>s.ledger.length===1);d.park();
-d.page(`window.cycloneCaptureName='details'`);d.cli(['browser','run','tests/e2e/video-start.mjs']);
+d.page(`window.cycloneCaptureName='details'`);d.cli(['browser','run',`tests/e2e/video-${process.env.CYCLONE_VIDEO === 'hd' ? 'hd-' : ''}start.mjs`]);
 const mark=name=>d.page(`window.cycloneRecording.events.push({seconds:(performance.now()-window.cycloneRecording.start)/1000,mark:${JSON.stringify(name)}})`);
 s=d.probe();const at=s.seals[0];d.look(at);d.move('hand-right',[at[0],at[1]+.10,at[2]]);d.move('hand-right',[at[0],at[1]+.01,at[2]]);d.pinch('hand-right',1);
 d.waitFor('receipt open',()=>d.page(`window.cyclone.stage.replayOpen`));d.pinch('hand-right',0);d.lift('hand-right',d.rightRest);mark('receipt-open');d.sleep(5000);
@@ -23,4 +23,4 @@ const action=id=>{const a=d.page(`window.cyclone.stage.root.getObjectByName('set
 action('page:input');mark('input-controls');d.sleep(5000);
 d.click('settings-panel','back');action('page:display');action('text');mark('larger-text');d.sleep(5000);
 d.click('settings-panel','close');mark('settings-closed');d.sleep(1500);
-d.cli(['browser','run','tests/e2e/video-stop.mjs']);console.log('PASS actual hands receipt and settings take recorded');
+d.cli(['browser','run',`tests/e2e/video-${process.env.CYCLONE_VIDEO === 'hd' ? 'hd-' : ''}stop.mjs`]);console.log('PASS actual hands receipt and settings take recorded');

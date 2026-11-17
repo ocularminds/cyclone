@@ -1,0 +1,425 @@
+{
+  "source": "New HD takes: the IWSDK emulator room layer plus the actual application canvas and WebAudio, recorded at 1920×1080 from the headed emulator window; two hand-driven takes plus the still end-card capture. Reordered into a cold open, cropped and scaled into a 1920×960 picture area.",
+  "claims": "Emulated input, demo signatures, simulated execution. No live authorization or physical-device claim.",
+  "output": "app/public/video/cyclone-revision3.mp4",
+  "sha256": "e4d8469a3af7241b0a0ec0f07a295c367c362729db1e504f64793632a55206e7",
+  "timeline": [
+    {
+      "source": "workflow.webm",
+      "in": 27.5,
+      "out": 31.1,
+      "at": 0.0,
+      "crop": [
+        560,
+        160,
+        1280,
+        640
+      ],
+      "caption": "A held action lands on your desk",
+      "overlay": "hook",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 37.3,
+      "out": 41.6,
+      "at": 3.6,
+      "crop": [
+        640,
+        200,
+        1120,
+        560
+      ],
+      "caption": "Pull to rehearse. The breach flares at the walkway.",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 48.0,
+      "out": 53.3,
+      "at": 7.9,
+      "crop": [
+        640,
+        200,
+        1120,
+        560
+      ],
+      "caption": "Twist 250 to 180°/s. The breach clears.",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 138.1,
+      "out": 142.4,
+      "at": 13.2,
+      "crop": [
+        420,
+        330,
+        1500,
+        750
+      ],
+      "caption": "Both hands for 1.5 s. Sealed as reviewed.",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "endcard.webm",
+      "in": 0,
+      "out": 3.5,
+      "at": 17.5,
+      "crop": [
+        420,
+        380,
+        1080,
+        540
+      ],
+      "caption": "Rehearse. Reshape. Decide. Hands only, on your desk.",
+      "overlay": "card",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 3.0,
+      "out": 11.0,
+      "at": 21.0,
+      "crop": [
+        240,
+        360,
+        1440,
+        720
+      ],
+      "caption": "A shift begins: each held action drops into the tray",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 14.5,
+      "out": 26.5,
+      "at": 29.0,
+      "crop": [
+        300,
+        200,
+        1520,
+        760
+      ],
+      "caption": "Look to inspect. Place a routine action in the slot.",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 79.0,
+      "out": 87.5,
+      "at": 41.0,
+      "crop": [
+        300,
+        200,
+        1520,
+        760
+      ],
+      "caption": "Compare the original and amended paths",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 114.0,
+      "out": 120.5,
+      "at": 49.5,
+      "crop": [
+        300,
+        200,
+        1520,
+        760
+      ],
+      "caption": "Let go during a hold: cancelled, nothing sent",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 152.0,
+      "out": 159.5,
+      "at": 56.0,
+      "crop": [
+        300,
+        200,
+        1520,
+        760
+      ],
+      "caption": "A hard limit locks the execute slot",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 166.1,
+      "out": 173.7,
+      "at": 63.5,
+      "crop": [
+        300,
+        200,
+        1520,
+        760
+      ],
+      "caption": "Push it off the desk edge to veto",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 181.0,
+      "out": 188.8,
+      "at": 71.1,
+      "crop": [
+        300,
+        200,
+        1520,
+        760
+      ],
+      "caption": "Routine-looking requests still need review",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "workflow.webm",
+      "in": 188.8,
+      "out": 197.2,
+      "at": 78.9,
+      "crop": [
+        300,
+        200,
+        1520,
+        760
+      ],
+      "caption": "Drill revealed after the decision: the rehearsal clips the shelf",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "details.webm",
+      "in": 4.9,
+      "out": 13.0,
+      "at": 87.3,
+      "crop": [
+        520,
+        250,
+        1400,
+        700
+      ],
+      "caption": "Pick up a seal to replay what you reviewed",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "details.webm",
+      "in": 28.0,
+      "out": 35.0,
+      "at": 95.4,
+      "crop": [
+        520,
+        250,
+        1400,
+        700
+      ],
+      "caption": "Demo signature. Approval, proof and execution stay separate.",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "details.webm",
+      "in": 61.2,
+      "out": 66.0,
+      "at": 102.4,
+      "crop": [
+        520,
+        250,
+        1400,
+        700
+      ],
+      "caption": "Gaze + pinch and one-hand alternatives",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "details.webm",
+      "in": 80.0,
+      "out": 84.5,
+      "at": 107.2,
+      "crop": [
+        520,
+        250,
+        1400,
+        700
+      ],
+      "caption": "Larger text and high contrast",
+      "overlay": "plain",
+      "speed": 1
+    },
+    {
+      "source": "endcard.webm",
+      "in": 0,
+      "out": 8.2,
+      "at": 111.7,
+      "crop": [
+        420,
+        380,
+        1080,
+        540
+      ],
+      "caption": "Cyclone — the calm eye where humans decide what AI agents do.",
+      "overlay": "plain",
+      "speed": 1
+    }
+  ],
+  "sources": {
+    "details": "3e1726e2e47664d18ca21e77a20b60533096f906b5ff4e101fa7e96b4ffdd4cd",
+    "endcard": "82329e814497c8957782dc6d8d6c1740f54efd9b3a84579cee706b1f955ea88c",
+    "workflow": "ff52cc15520e074ef38f3a3c32b47d2ff5224f7a5bb4bc5e5742dec0e0069ff8"
+  },
+  "probe": {
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+        "profile": "High",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "codec_tag": "0x31637661",
+        "mime_codec_string": "avc1.640028",
+        "width": 1920,
+        "height": 1080,
+        "coded_width": 1920,
+        "coded_height": 1080,
+        "has_b_frames": 2,
+        "sample_aspect_ratio": "1:1",
+        "display_aspect_ratio": "16:9",
+        "pix_fmt": "yuvj420p",
+        "level": 40,
+        "color_range": "pc",
+        "color_space": "bt709",
+        "color_transfer": "iec61966-2-1",
+        "color_primaries": "bt709",
+        "chroma_location": "left",
+        "field_order": "progressive",
+        "is_avc": "true",
+        "nal_length_size": "4",
+        "id": "0x1",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "55249920/1842007",
+        "time_base": "1/15360",
+        "start_pts": 328,
+        "start_time": "0.021354",
+        "duration_ts": 1842007,
+        "duration": "119.922331",
+        "bit_rate": "428955",
+        "bits_per_raw_sample": "8",
+        "nb_frames": "3597",
+        "extradata_size": 51,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "und",
+          "handler_name": "VideoHandler",
+          "encoder": "Lavc63.1.102 libx264"
+        }
+      },
+      {
+        "index": 1,
+        "codec_name": "aac",
+        "codec_long_name": "AAC (Advanced Audio Coding)",
+        "profile": "LC",
+        "codec_type": "audio",
+        "codec_tag_string": "mp4a",
+        "codec_tag": "0x6134706d",
+        "mime_codec_string": "mp4a.40.2",
+        "sample_fmt": "fltp",
+        "sample_rate": "48000",
+        "channels": 2,
+        "channel_layout": "stereo",
+        "bits_per_sample": 0,
+        "initial_padding": 0,
+        "id": "0x2",
+        "r_frame_rate": "0/0",
+        "avg_frame_rate": "0/0",
+        "time_base": "1/48000",
+        "start_pts": 0,
+        "start_time": "0.000000",
+        "duration_ts": 5758112,
+        "duration": "119.960667",
+        "bit_rate": "162844",
+        "nb_frames": "5622",
+        "extradata_size": 5,
+        "disposition": {
+          "default": 1,
+          "dub": 0,
+          "original": 0,
+          "comment": 0,
+          "lyrics": 0,
+          "karaoke": 0,
+          "forced": 0,
+          "hearing_impaired": 0,
+          "visual_impaired": 0,
+          "clean_effects": 0,
+          "attached_pic": 0,
+          "timed_thumbnails": 0,
+          "non_diegetic": 0,
+          "captions": 0,
+          "descriptions": 0,
+          "metadata": 0,
+          "dependent": 0,
+          "still_image": 0,
+          "multilayer": 0
+        },
+        "tags": {
+          "language": "eng",
+          "handler_name": "SoundHandler"
+        }
+      }
+    ],
+    "format": {
+      "filename": "/Users/bonus/develop/products/Cyclone/app/public/video/cyclone-revision3.mp4",
+      "nb_streams": 2,
+      "nb_programs": 0,
+      "nb_stream_groups": 0,
+      "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+      "format_long_name": "QuickTime / MOV",
+      "start_time": "0.000000",
+      "duration": "119.960667",
+      "size": "9021077",
+      "bit_rate": "601602",
+      "probe_score": 100,
+      "tags": {
+        "major_brand": "isom",
+        "minor_version": "512",
+        "compatible_brands": "isomiso2avc1mp41",
+        "title": "Cyclone — hands-first demo (revision 3)",
+        "encoder": "Lavf63.1.102",
+        "comment": "Actual IWSDK emulator footage, cropped and reordered; every segment at normal speed. Demo signatures and simulated execution; no physical machine operation."
+      }
+    }
+  }
+}

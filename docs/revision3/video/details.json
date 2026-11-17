@@ -1,0 +1,85 @@
+{
+  "source": "Emulator room layer + actual IWSDK canvas (Chrome for Testing, headed, GPU); synthetic hands, demo execution, uncut capture",
+  "name": "details",
+  "events": [
+    {
+      "seconds": 6.914100000023842,
+      "name": "unfold",
+      "caption": "Replaying the stored model evidence"
+    },
+    {
+      "seconds": 12.246400000035763,
+      "mark": "receipt-open"
+    },
+    {
+      "seconds": 28.110400000035764,
+      "name": "unfold",
+      "caption": "Receipt proof"
+    },
+    {
+      "seconds": 31.59960000002384,
+      "mark": "demo-proof"
+    },
+    {
+      "seconds": 46.28030000001192,
+      "name": "unfold",
+      "caption": "Receipt closed"
+    },
+    {
+      "seconds": 55.4435,
+      "name": "unfold",
+      "caption": "Settings open",
+      "at": [
+        -0.255,
+        0,
+        -0.022
+      ]
+    },
+    {
+      "seconds": 64.26,
+      "mark": "input-controls"
+    },
+    {
+      "seconds": 82.73940000003576,
+      "mark": "larger-text"
+    },
+    {
+      "seconds": 90.87930000001192,
+      "name": "unfold",
+      "caption": "Settings closed",
+      "at": [
+        -0.255,
+        0,
+        -0.022
+      ]
+    },
+    {
+      "seconds": 92.28790000003576,
+      "mark": "settings-closed"
+    }
+  ],
+  "duration": 94.9915,
+  "size": [
+    1920,
+    1080
+  ],
+  "sources": [
+    [
+      2880,
+      1620
+    ],
+    [
+      1440,
+      810
+    ]
+  ],
+  "type": "video/webm;codecs=vp9,opus",
+  "bytes": 12145880,
+  "records": [
+    {
+      "id": "74c5fe3d-c127-4269-bf26-b99320430c9f",
+      "tool": "set_conveyor_speed",
+      "decision": "APPROVE"
+    }
+  ]
+}
