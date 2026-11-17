@@ -10,14 +10,15 @@ Track: **Productivity**. Division: **New**. Build path: **IWSDK (Web XR)**.
 ## Artwork and gallery
 
 All six upload images are **1800 × 1200 PNG (3:2), below 5 MB**. `cover.png` is the project thumbnail and first
-gallery image. It preserves the approved Cyclone logo, original Three.js concept illustration and exact
-“Rehearse. Reshape. Decide.” typography. It is explicitly labelled concept artwork. The other five images are
+gallery image. The owner-supplied `cyclone-cover-v2.png` is preserved byte for byte in `source/cover-v2.png`:
+Cyclone branding beside an actual emulator view of the 250°/s robot-arm request, rehearsal ghost, walkway
+breach, synthetic room and hands. The image labels emulator footage and simulated execution. The other five images are
 cropped frames from the real, hand-driven IWSDK emulator takes used in the original revision-1 video. Cropping removes
 surrounding black canvas; it does not redraw, replace or rearrange any application interface.
 
 | File | Subject | Source |
 |---|---|---|
-| `cover.png` | Cover artwork | `design/brand1/assets/cover-1920x1080.png` |
+| `cover.png` | Arm request, rehearsal breach, room and hands | Owner-supplied `source/cover-v2.png` |
 | `amend.png` | Arm, 250°/s → 180°/s | `workflow.webm`, 75 s |
 | `inspect.png` | Held conveyor action | `workflow.webm`, 15 s |
 | `locked.png` | Forbidden oven request | `workflow.webm`, 140 s |
@@ -29,7 +30,8 @@ review sheet. `story.md` and `fields.json` preserve the public story and technic
 account fields are excluded. `revision2.md` is the applied copy source: 487 words, with no unmeasured Quest claims.
 The target public beta is explicitly tentative, Q1 2027.
 
-Reproduce images with `python3 docs/devpost/export.py` (Pillow and ffmpeg). Regenerate copy with
+Refresh the cover, contact sheet and manifest with `python3 docs/devpost/export.py --cover-only` (Pillow).
+The five original gallery exports remain unchanged. To re-render all captures, omit `--cover-only` (requires ffmpeg). Regenerate copy with
 `python3 docs/devpost/copy.py`. `export.py` retains the unmodified extracted frames under `frames/`.
 The editable concept scene, vector logos, local fonts and licence notices live in `design/brand1/`.
 
@@ -60,11 +62,17 @@ usability review remain open. No gallery image or signature export claims these 
 The revised pitch, story, hand-interaction answer, capture description, gallery order/captions and new
 YouTube link were saved to the existing Devpost project on 17 November 2026. Its public page was verified and
 the entry remains **Submitted**. [Public preview](revision2-public.jpg) and [submission state](revision2-submitted.jpg)
-record the result. The new video uses native 4K source footage from external Chrome; YouTube playback was
-verified at 1920×1080. The gallery artwork is unchanged.
+record that copy/video update. The new video uses native 4K source footage from external Chrome; YouTube playback was
+verified at 1920×1080.
 
-The refreshed artifact ZIP in this branch will reach the hosted download when [PR #4](https://github.com/ocularminds/cyclone/pull/4)
-is merged and the Pages workflow deploys. `release.json` retains the previous deployed archive's verification.
+Later on 17 November, the owner requested `cyclone-cover-v2.png` as the project thumbnail and first gallery
+image. Both were uploaded and verified on Devpost with the caption: “Actual emulator capture: a robot-arm
+request at 250°/s, its rehearsal ghost and the walkway breach. Simulated execution.”
+[Cover publication](cover-v2-published.jpg) and [verification](cover-v2-verification.json) record the saved
+thumbnail, first image, caption and Submitted state. The remaining five gallery images keep their existing order.
+
+The refreshed artifact ZIP in this branch reaches the hosted download after merge and the Pages deployment.
+`release.json` retains the previous deployed archive's verification.
 
 This packet documents the creative
 assets and demo evidence, not competition eligibility. The separate

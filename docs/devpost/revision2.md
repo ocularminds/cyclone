@@ -72,7 +72,7 @@ asks you to put them down. The emulated-hands run passes end to end.
 
 ## Gallery order
 
-1. `cover.png`: Cyclone, Rehearse. Reshape. Decide. Original concept artwork; application captures follow.
+1. `cover.png`: Actual emulator capture: a robot-arm request at 250°/s, its rehearsal ghost and the walkway breach. Simulated execution.
 2. `amend.png`: Amend robot-arm velocity from 250 to 180°/s and compare the rehearsal paths. Actual emulator capture.
 3. `inspect.png`: Inspect a held conveyor action. Actual emulator capture; simulated execution.
 4. `locked.png`: A forbidden 450°C oven action locks the execute slot. Actual emulator capture; simulated execution.

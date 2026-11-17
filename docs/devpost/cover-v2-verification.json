@@ -1,0 +1,37 @@
+{
+  "checked_at": "2026-11-17T07:35:29.849Z",
+  "project_url": "https://devpost.com/software/cyclone-the-calm-eye-for-ai-agents-decisions",
+  "thumbnail": {
+    "complete": true,
+    "height": 222,
+    "src": "https://d112y698adiu2z.cloudfront.net/photos/production/software_thumbnail_photos/005/938/223/datas/medium.png",
+    "width": 333
+  },
+  "thumbnail_persisted": true,
+  "first_gallery_image": "https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/005/938/267/datas/original.png",
+  "first_gallery_caption": "Actual emulator capture: a robot-arm request at 250°/s, its rehearsal ghost and the walkway breach. Simulated execution.",
+  "caption_visible": true,
+  "state": "SUBMITTED",
+  "gallery_images": 6,
+  "source_filename": "cyclone-cover-v2.png",
+  "source_file": "docs/devpost/source/cover-v2.png",
+  "file": "docs/devpost/cover.png",
+  "source_sha256": "6f6272dbebfc0e1c09ff545d0dec0f39001c9d57129441ab29ba5046a2f5a20a",
+  "upload_sha256": "6f6272dbebfc0e1c09ff545d0dec0f39001c9d57129441ab29ba5046a2f5a20a",
+  "dimensions": [
+    1800,
+    1200
+  ],
+  "bytes": 576866,
+  "source_preserved_verbatim": true,
+  "gallery_order": [
+    "cover.png",
+    "amend.png",
+    "inspect.png",
+    "locked.png",
+    "receipt.png",
+    "access.png"
+  ],
+  "screenshot": "docs/devpost/cover-v2-published.jpg",
+  "fields_sha256": "703144e1cfc5dfff1ab55c9b015613308c25c559bd8743b0a5de8d3fa510ae57"
+}

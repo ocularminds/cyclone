@@ -21,10 +21,11 @@ assert report["trust_anchor"]["status"] == "UNESTABLISHED"
 report["jwks_url"] = "proof/demo-jwks.json"
 report["trust_anchor"]["source"] = "proof/demo-jwks.json"
 (OUT / "proof-check.json").write_text(json.dumps(report, indent=2) + "\n")
-files = {name: OUT / name for name in ["README.md", "revision2.md", "revision2-public.jpg", "revision2-submitted.jpg", "story.md", "fields.json", "manifest.json", "proof-check.json", "contact.jpg"]}
+files = {name: OUT / name for name in ["README.md", "revision2.md", "revision2-public.jpg", "revision2-submitted.jpg", "cover-v2-published.jpg", "cover-v2-verification.json", "story.md", "fields.json", "manifest.json", "proof-check.json", "contact.jpg"]}
 files.update({"gallery/" + name: OUT / name for name in ["cover.png", "inspect.png", "amend.png", "locked.png", "receipt.png", "access.png"]})
 files.update({"proof/demo-dossier.json": proof, "proof/demo-jwks.json": jwks})
 files.update({"source/" + name: OUT / name for name in ["export.py", "copy.py", "pack.py"]})
+files["source/cover-v2.png"] = OUT / "source/cover-v2.png"
 for name in ["app-icon-1024.png", "logo-lockup-ink.svg", "logo-lockup-paper.svg", "logo-mark-ink.svg", "logo-mark-paper.svg", "cover-social-1200x630.png", "cover-1920x1080.png"]:
     files["brand/" + name] = ROOT / "design/brand1/assets" / name
 for name in ["manrope-OFL.txt", "atkinsonhyperlegiblenext-OFL.txt"]:

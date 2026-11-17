@@ -1,7 +1,8 @@
 {
-  "version": 1,
+  "version": 2,
   "project": "Cyclone",
   "created": "2026-11-10",
+  "updated": "2026-11-17",
   "destination": "Devpost project 1292406 / Meta VR Start Developer Competition 2026",
   "spec": {
     "ratio": "3:2",
@@ -11,13 +12,15 @@
   "exports": [
     {
       "file": "cover.png",
-      "kind": "concept artwork",
-      "source": "design/brand1/assets/cover-1920x1080.png",
-      "transforms": "Proportional resize; background padding and exact tagline. No crop.",
+      "kind": "actual emulator capture with editorial branding",
+      "source": "docs/devpost/source/cover-v2.png",
+      "source_sha256": "6f6272dbebfc0e1c09ff545d0dec0f39001c9d57129441ab29ba5046a2f5a20a",
+      "supplied_filename": "cyclone-cover-v2.png",
+      "transforms": "Owner-supplied 1800x1200 cover preserved byte for byte. No resize, sharpening or UI replacement.",
       "width": 1800,
       "height": 1200,
-      "bytes": 356795,
-      "sha256": "d9d0d2b7de11beb2982ec0dc0db705affc91983afcf9588983219d4c066b1c89"
+      "bytes": 576866,
+      "sha256": "6f6272dbebfc0e1c09ff545d0dec0f39001c9d57129441ab29ba5046a2f5a20a"
     },
     {
       "file": "inspect.png",
@@ -121,8 +124,8 @@
     }
   ],
   "ai_generated": false,
-  "art_source": "Original local Three.js scene in design/brand1/source; concept art is not app evidence.",
+  "art_source": "Owner-supplied cover-v2 uses actual app/emulator imagery with editorial branding; the room and hands are synthetic. Remaining gallery images retain revision-1 capture provenance.",
   "evidence_scope": "Emulated hands, demo signatures, simulated execution. No physical device, live service or actuator claim.",
-  "reproduction": "python3 docs/devpost/export.py",
+  "reproduction": "python3 docs/devpost/export.py --cover-only",
   "review_status": "Reviewed at full size and on contact sheet; no overlaid or invented app UI. Crops retain decision panels. Not a device legibility check."
 }

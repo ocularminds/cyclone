@@ -9,7 +9,7 @@
   "saved": [
     "project name",
     "elevator pitch",
-    "cover thumbnail",
+    "cover-v2 thumbnail and first gallery image",
     "487-word story",
     "11 technology tags",
     "3 links",
@@ -18,7 +18,7 @@
     "technical capability and hand-interaction answers",
     "tentative launch date",
     "four owner-confirmed eligibility declarations",
-    "revision-2 gallery order and captions"
+    "gallery order and cover-v2 caption"
   ],
   "verified_public_preview": true,
   "remaining": [],
@@ -27,11 +27,10 @@
   "private_account_fields_exported": false,
   "eligibility_confirmed_by_owner": true,
   "artifact_url": "https://ocularminds.github.io/cyclone/submission/cyclone-artifacts.zip",
-  "artifact_sha256": "861a01bc70723c7ae6819c4520a86c84e85b36ee3845990462410a9f55a7a06f",
-  "artifact_public_download_verified": true,
-  "deployment_run": "https://github.com/ocularminds/cyclone/actions/runs/42779441127",
+  "artifact_sha256": "a8ec73f689df535925715e958e22b0963335e644f3a4b1e97a17a5bd01971eb1",
+  "artifact_public_download_verified": false,
   "terms_approved_by_owner": true,
-  "verified_at": "2026-11-17T06:38:05.047Z",
+  "verified_at": "2026-11-17T07:35:29.849Z",
   "confirmation_text": "Project submitted!",
   "competition_status_label": "SUBMITTED TO",
   "confirmation_image": "docs/devpost/revision2-submitted.jpg",
@@ -39,11 +38,25 @@
   "video_url": "https://www.youtube.com/watch?v=bEx3UlCG-IE",
   "copy_revision": "revision2.md",
   "story_words": 487,
-  "public_preview_image": "docs/devpost/revision2-public.jpg",
-  "latest_verification": "docs/devpost/revision2-verification.json",
+  "public_preview_image": "docs/devpost/cover-v2-published.jpg",
+  "latest_verification": "docs/devpost/cover-v2-verification.json",
+  "cover": {
+    "image": "docs/devpost/cover.png",
+    "source_sha256": "6f6272dbebfc0e1c09ff545d0dec0f39001c9d57129441ab29ba5046a2f5a20a",
+    "thumbnail_saved": true,
+    "first_gallery_image_saved": true,
+    "caption": "Actual emulator capture: a robot-arm request at 250°/s, its rehearsal ghost and the walkway breach. Simulated execution."
+  },
+  "previous_artifact_verification": {
+    "sha256": "861a01bc70723c7ae6819c4520a86c84e85b36ee3845990462410a9f55a7a06f",
+    "public_download_verified": true,
+    "deployment_run": "https://github.com/ocularminds/cyclone/actions/runs/42779441127",
+    "record": "docs/devpost/release.json"
+  },
+  "artifact_pending_deploy": true,
   "pending_artifact_update": {
-    "pull_request": "https://github.com/ocularminds/cyclone/pull/4",
-    "sha256": "3e162eac1bfd224748f0d53c35a2719b15da1761d47ed24e77d3a4a356047f89",
-    "status": "Ready in PR; hosted archive still matches the earlier deployment record."
+    "branch": "codex/devpost-cover-v2",
+    "sha256": "a8ec73f689df535925715e958e22b0963335e644f3a4b1e97a17a5bd01971eb1",
+    "status": "Cover-v2 archive is ready for review; deployment follows merge."
   }
 }

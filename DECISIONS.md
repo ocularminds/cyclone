@@ -78,3 +78,14 @@ live-service limitations. The public story is 487 words; gallery artwork is unch
 second. Saved browser evidence and regenerated the public copy/artifact packet in PR #4. The hosted artifact
 ZIP updates only after that PR is merged and Pages deploys. Alternative: keep the old copy/video; rejected
 because the owner explicitly requested the prepared update. BRIEF §11, §13, §14; C45–C47.
+
+## D65 — Use the supplied emulator cover on Devpost (17 Nov 2026)
+
+The owner requested `cyclone-cover-v2.png` as the project thumbnail and first gallery image, with a caption
+identifying the 250°/s robot-arm request, rehearsal ghost, walkway breach and simulated execution. The supplied
+1800×1200 PNG already meets the 3:2 upload requirement and visibly includes the room, hands and request, so
+it was uploaded unchanged. Its source bytes, checksum, published caption and browser proof are versioned.
+The thumbnail was verified after reload; the public first image and caption match, with six gallery images
+and the entry still Submitted. The other five image files remain unchanged. Added a cover-only export option
+to preserve those exports while refreshing the contact sheet and manifest. Alternative: generate new artwork;
+the supplied actual-emulator composition already met the requested concept. BRIEF §9, §11, §13; C30, C46.
